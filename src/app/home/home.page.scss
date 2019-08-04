@@ -1,1 +1,62 @@
+@import url('https://fonts.googleapis.com/css?family=Khula:800|Paytone+One&display=swap');
 
+ion-content {
+  --background: #507DBC;
+  ion-grid.app-name-container {
+    margin-top: 39%;
+    ion-col {
+      padding: 0;
+      ion-text.app-name {
+        color: var(--white-color);
+        font-family: 'Khula', sans-serif;
+        font-size: 1.7em;
+        line-height: 1.2em;
+      }
+    }
+  
+  }
+
+  .field-row {
+    ion-item {
+      --background: #507DBC;
+      --highlight-height: 1px;
+      --highlight-color: white;
+      --placeholder-color: white;
+      --color: white;
+      --highlight-color-focused: white;
+    }
+  }
+
+  ion-button.signin-button {
+    --color: grey;
+  }
+
+  hr {
+    border-bottom: 1px solid white !important;
+    height: 1px !important;
+    width: 100% !important;
+    display: block !important;
+    font-size: 2em !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    position: relative;
+  }
+
+  ion-col.or-container {
+    ion-text.or {
+      font-size: 10px;
+      vertical-align: bottom;
+      padding-left: 2px;
+    }
+  }
+
+  ion-row.forgot-password {
+    ion-col {
+      padding-top: 0;
+      ion-text {
+        font-size: 10px;
+      }
+    }
+  }
+
+}

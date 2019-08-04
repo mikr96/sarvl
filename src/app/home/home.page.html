@@ -1,14 +1,52 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-  <div class="ion-padding">
-    The world is your oyster.
-    <p>If you get lost, the <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/">docs</a> will be your guide.</p>
-  </div>
+<ion-content padding>
+  <ion-grid class="app-name-container">
+    <ion-row>
+      <ion-col offset="1" size="8">
+        <ion-text class="app-name">
+          VOLUNTEER
+        </ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col  offset="5" size="7">
+        <ion-text class="app-name">
+          SARAWAK
+        </ion-text> 
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid>
+    <ion-row class="field-row">
+        <ion-item mode="ios" lines="full">
+          <ion-icon slot="start" name="contact"></ion-icon>
+          <ion-input padding-start="2" autocomplete="off" type="text" required placeholder="Username" debounce="500"></ion-input>
+        </ion-item>
+        <ion-item mode="ios" lines="full">
+          <ion-icon slot="start" name="lock"></ion-icon>
+          <ion-input padding-start="2" autocomplete="off" type="password" required placeholder="Password" debounce="500"></ion-input>
+        </ion-item>
+    </ion-row>
+    <ion-row class="forgot-password">
+      <ion-col></ion-col>
+      <ion-col size="5">
+        <ion-text color="light">Forgot password ?</ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row justify-content-center align-items-center>
+      <ion-col size="9">
+        <ion-button class="signin-button" expand="block" size="small" color="light">SUBMIT</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <hr>
+      </ion-col>
+      <ion-col class="or-container" size="1">
+        <ion-text class="or" color="light">or</ion-text>
+      </ion-col>  
+      <ion-col>
+        <hr>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
