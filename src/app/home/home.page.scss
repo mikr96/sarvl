@@ -3,7 +3,7 @@
 ion-content {
   --background: #507DBC;
   ion-grid.app-name-container {
-    margin-top: 39%;
+    margin-top: 36%;
     ion-col {
       padding: 0;
       ion-text.app-name {
@@ -55,8 +55,47 @@ ion-content {
       padding-top: 0;
       ion-text {
         font-size: 10px;
+        cursor: pointer;
       }
     }
   }
 
-}
+  ion-grid.signin-other {
+    --ion-grid-padding: 0;
+    ion-col {
+      &:not(:last-child) {
+        --ion-grid-column-padding: 0px;
+      }
+      ion-button {
+          --border-color: white;
+          --border-width: 1px;
+          --border-style: solid;
+          &.signin-fb {
+            --background: var(--ion-color-facebook);
+            --background-activated: var(--ion-color-facebook);
+            --background-focused: var(--ion-color-facebook);
+            --background-hover: var(--ion-color-facebook);
+          }
+          &.signin-gl {
+            --background: var(--ion-color-google);
+            --background-activated: var(--ion-color-google);
+            --background-focused: var(--ion-color-google);
+            --background-hover: var(--ion-color-google);
+            
+          }
+        }
+
+      }
+    }
+    
+    ion-row.no-account {
+      ion-text {
+        font-size: 12px;
+
+        &.ion-color-warning {
+          text-decoration: underline;
+          cursor: pointer;
+        }
+      }
+    }
+  }

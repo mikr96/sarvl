@@ -15,8 +15,9 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <ion-grid>
-    <ion-row class="field-row">
+  <form>
+    <ion-grid>
+      <ion-row class="field-row">
         <ion-item mode="ios" lines="full">
           <ion-icon slot="start" name="contact"></ion-icon>
           <ion-input padding-start="2" autocomplete="off" type="text" required placeholder="Username" debounce="500"></ion-input>
@@ -25,27 +26,55 @@
           <ion-icon slot="start" name="lock"></ion-icon>
           <ion-input padding-start="2" autocomplete="off" type="password" required placeholder="Password" debounce="500"></ion-input>
         </ion-item>
-    </ion-row>
-    <ion-row class="forgot-password">
-      <ion-col></ion-col>
-      <ion-col size="5">
-        <ion-text color="light">Forgot password ?</ion-text>
-      </ion-col>
-    </ion-row>
-    <ion-row justify-content-center align-items-center>
-      <ion-col size="9">
-        <ion-button class="signin-button" expand="block" size="small" color="light">SUBMIT</ion-button>
+      </ion-row>
+      <ion-row class="forgot-password">
+        <ion-col></ion-col>
+        <ion-col size="5">
+          <ion-text color="light">
+            <ion-ripple-effect></ion-ripple-effect>
+            Forgot password ?
+          </ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row justify-content-center align-items-center>
+        <ion-col size="9">
+          <ion-button class="signin-button" expand="block" size="small" color="light">SUBMIT</ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <hr>
+        </ion-col>
+        <ion-col class="or-container" size="1">
+          <ion-text class="or" color="light">or</ion-text>
+        </ion-col>  
+        <ion-col>
+          <hr>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+  <ion-grid class="signin-other">
+    <ion-row>
+      <ion-col>
+        <ion-button mode="ios" class="signin-fb" expand="block" size="small" >
+          <ion-icon slot="start" name="logo-facebook"></ion-icon>
+          <ion-text>Sign-in with Facebook</ion-text>
+        </ion-button>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
-        <hr>
+        <ion-button class="signin-gl" mode="ios" expand="block" size="small">
+          <ion-icon slot="start" name="logo-googleplus"></ion-icon>
+          Sign-in with Google +
+        </ion-button>
       </ion-col>
-      <ion-col class="or-container" size="1">
-        <ion-text class="or" color="light">or</ion-text>
-      </ion-col>  
-      <ion-col>
-        <hr>
+    </ion-row>
+    <ion-row class="no-account" justify-content-center>
+      <ion-col offset="1" align-self-center>
+        <ion-text color="light">Doesn't have an account ? </ion-text>
+        <ion-text color="warning">Sign up now!</ion-text>
       </ion-col>
     </ion-row>
   </ion-grid>
