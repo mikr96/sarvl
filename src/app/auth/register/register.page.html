@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/auth"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Register</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row class="ion-justify-content-center">
+        <ion-col size="8">
+          <div class="mt-70">
+            <img src="../assets/logo.png" />
+          </div>
+        </ion-col>
+    </ion-row>
+    <form onsubmit="processForm(event)">
+      <ion-row class="ion-justify-content-center" margin-vertical>
+        <ion-col size="8" no-padding>
+          <ion-list class="ion-no-margin ion-no-padding">
+              <ion-item>
+                <ion-input autocomplete="off" type="text" placeholder="Enter full name" required>
+                </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-input padding-start="2" autocomplete="off" type="text" placeholder="Enter ic" required>
+                </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-input padding-start="2" autocomplete="off" type="text" placeholder="Enter email" required>
+                </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-input padding-start="2" autocomplete="off" type="password" placeholder="Enter password" required>
+                </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-input padding-start="2" autocomplete="off" type="password" placeholder="Enter entry password" required>
+                </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-input padding-start="2" autocomplete="off" type="text" placeholder="Enter location / office / university" required>
+                </ion-input>
+              </ion-item>
+            </ion-list>
+          <ion-button color="primary" type="submit" expand="block" margin-vertical>SIGN IN</ion-button>
+        </ion-col>
+      </ion-row>
+    </form>
+  </ion-grid>
+</ion-content>
