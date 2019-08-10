@@ -1,25 +1,37 @@
 <ion-content>
   <ion-grid>
-    <ion-row class="ion-justify-content-center">
+    <ion-row class="ion-margin-top">
+      <ion-col class="ion-margin-top">
+        <div class="ion-margin-top">
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center ion-margin-top">
       <ion-col size="7">
-        <div class="mt-70">
+        <div>
           <img src="../assets/logo.png" />
         </div>
       </ion-col>
     </ion-row>
-    <!-- <form onsubmit="processForm(event)"> -->
+    <form [formGroup]="form" #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
       <ion-row class="ion-justify-content-center">
         <ion-col size="8">
-          <ion-list class="ion-no-margin ion-no-padding mt-70">
+          <ion-list class="ion-no-margin ion-no-padding">
             <ion-item>
               <ion-icon name="person"></ion-icon>
-              <ion-input autocomplete="off" type="email" placeholder="Username" required>
+              <ion-input autocomplete="off" placeholder="Username" required formControlName="username">
               </ion-input>
+            </ion-item>
+            <ion-item *ngIf="!form.get('username').valid && form.get('username').touched" lines="none" no-margin no-padding>
+                <ion-text>Should be a valid email address</ion-text>
             </ion-item>
             <ion-item>
               <ion-icon name="lock"></ion-icon>
-              <ion-input padding-start="2" autocomplete="off" type="password" placeholder="Password" required>
+              <ion-input padding-start="2" autocomplete="off" type="password" placeholder="Password" required minlength="6" formControlName="password">
               </ion-input>
+            </ion-item>
+            <ion-item *ngIf="!form.get('password').valid && form.get('password').touched" lines="none" no-margin no-padding>
+              <ion-text>Should at least be 6 characters long</ion-text>
             </ion-item>
           </ion-list>
         </ion-col>
@@ -33,11 +45,11 @@
       </ion-row>
       <ion-row class="ion-justify-content-center">
         <ion-col size="8" no-padding>
-          <ion-button color="primary" (click)="onLogin()" expand="block" routerDirection="forward">SIGN IN
+          <ion-button type="submit" color="primary" expand="block" [disabled]="!form.valid">SIGN IN
           </ion-button>
         </ion-col>
       </ion-row>
-    <!-- </form> -->
+    </form>
     <ion-row>
       <ion-col>
         <div></div>
@@ -51,13 +63,13 @@
     </ion-row>
     <ion-row class="ion-justify-content-center">
       <ion-col size="8" no-padding>
-        <ion-button color="facebook" expand="block">Sign-in with Facebook
+        <ion-button color="facebook ion-text-capitalize" expand="block">Sign-in with Facebook
         </ion-button>
       </ion-col>
     </ion-row>
     <ion-row class="ion-justify-content-center">
       <ion-col size="8" no-padding>
-        <ion-button color="google" expand="block">Sign-in with Google+
+        <ion-button color="google ion-text-capitalize" expand="block">Sign-in with Google+
         </ion-button>
       </ion-col>
     </ion-row>

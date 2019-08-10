@@ -8,43 +8,49 @@
 </ion-header>
 <ion-content>
   <ion-grid>
-    <ion-row class="ion-justify-content-center">
+    <ion-row class="ion-justify-content-center ion-margin-top">
         <ion-col size="8">
-          <div class="mt-70">
+          <div>
             <img src="../assets/logo.png" />
           </div>
         </ion-col>
     </ion-row>
-    <form onsubmit="processForm(event)">
-      <ion-row class="ion-justify-content-center" margin-vertical>
-        <ion-col size="8" no-padding>
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="8">
           <ion-list class="ion-no-margin ion-no-padding">
               <ion-item>
-                <ion-input autocomplete="off" type="text" placeholder="Enter full name" required>
+                <ion-label position="floating">Fullname</ion-label>
+                <ion-input autocomplete="off" formControlName="fullname" required>
                 </ion-input>
               </ion-item>
               <ion-item>
-                <ion-input padding-start="2" autocomplete="off" type="text" placeholder="Enter ic" required>
+                <ion-label position="floating">IC</ion-label>
+                <ion-input padding-start="2" autocomplete="off" type="text" formControlName="ic" required>
                 </ion-input>
               </ion-item>
               <ion-item>
-                <ion-input padding-start="2" autocomplete="off" type="text" placeholder="Enter email" required>
+                <ion-label position="floating">Username</ion-label>
+                <ion-input padding-start="2" autocomplete="off" type="text" formControlName="username" required>
                 </ion-input>
               </ion-item>
               <ion-item>
-                <ion-input padding-start="2" autocomplete="off" type="password" placeholder="Enter password" required>
+                <ion-label position="floating">Password</ion-label>
+                <ion-input padding-start="2" autocomplete="off" type="password" formControlName="password" required>
                 </ion-input>
               </ion-item>
               <ion-item>
-                <ion-input padding-start="2" autocomplete="off" type="password" placeholder="Enter entry password" required>
-                </ion-input>
-              </ion-item>
+                  <ion-label position="floating">Confirm Password</ion-label>
+                  <ion-input padding-start="2" autocomplete="off" type="password" formControlName="confirmPassword" required>
+                  </ion-input>
+                </ion-item>
               <ion-item>
-                <ion-input padding-start="2" autocomplete="off" type="text" placeholder="Enter location / office / university" required>
+                <ion-label position="floating">Location</ion-label>
+                <ion-input padding-start="2" autocomplete="off" type="text">
                 </ion-input>
               </ion-item>
             </ion-list>
-          <ion-button color="primary" type="submit" expand="block" margin-vertical>SIGN IN</ion-button>
+          <ion-button color="primary" type="submit" expand="block" [disabled]="!registerForm.valid" margin-vertical>SIGN IN</ion-button>
         </ion-col>
       </ion-row>
     </form>

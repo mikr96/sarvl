@@ -31,3 +31,13 @@
 .mt-70 {
   margin-top: 70px;
 }
+
+::-webkit-scrollbar, *::-webkit-scrollbar {
+  display: none;
+  overflow: hidden;
+}
+
+ion-content {
+  overflow: hidden;
+  --overflow: hidden;
+}
