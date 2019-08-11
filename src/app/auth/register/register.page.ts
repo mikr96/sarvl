@@ -41,28 +41,27 @@ export class RegisterPage implements OnInit {
   }
 
   onSubmit() {
-    if(!this.registerForm.valid) {
+    if (!this.registerForm.valid) {
       return;
     }
 
     console.log(this.registerForm.value)
 
     this.loadingCtrl
-    .create({
-      message: 'Registering...'
-    })
-    .then(loadingEl => {
-      loadingEl.present();
-      this.authService
-        .createAcc(this.registerForm.value)
-        .subscribe(res => {
-          console.log(res)
-          // if(res.token) {
-          //   loadingEl.dismiss();
-          //   this.registerForm.reset();
-          //   this.router.navigate(['/auth']);
-          // }
-        });
-    });
+      .create({
+        message: 'Registering...'
+      })
+      .then(loadingEl => {
+        loadingEl.present();
+        this.authService
+          .createAcc(this.registerForm.value)
+          .subscribe(res => {
+            if (res.user) {
+              loadingEl.dismiss()
+              this.registerForm.reset()
+              this.router.navigate(['/auth'])
+            }
+          });
+      });
   }
 }
