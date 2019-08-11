@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,7 +13,7 @@ export class RegisterPage implements OnInit {
 
   registerForm: FormGroup
 
-  constructor(private authService: AuthService, private loadingCtrl: LoadingController, private router: Router) { }
+  constructor(private authService: AuthService, private loadingCtrl: LoadingController, private router: Router, private toastController: ToastController) { }
 
   ngOnInit() {
     this.registerForm = new FormGroup({
@@ -40,12 +40,20 @@ export class RegisterPage implements OnInit {
     });
   }
 
+  async popToast(message: string) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 2000,
+      position: 'top',
+      color: 'danger',
+    })
+    toast.present()
+  }
+
   onSubmit() {
     if (!this.registerForm.valid) {
       return;
     }
-
-    console.log(this.registerForm.value)
 
     this.loadingCtrl
       .create({
@@ -56,12 +64,18 @@ export class RegisterPage implements OnInit {
         this.authService
           .createAcc(this.registerForm.value)
           .subscribe(res => {
-            if (res.user) {
-              loadingEl.dismiss()
-              this.registerForm.reset()
-              this.router.navigate(['/auth'])
+            loadingEl.dismiss()
+            if (!res.user) {
+              return this.popToast('Something went wrong...')
             }
-          });
+            this.registerForm.reset()
+            this.router.navigate(['/auth'])
+          }, ({ error }) => {
+            const firstError: string = Object.values(error)[0][0]
+            loadingEl.dismiss()
+            return this.popToast(firstError)
+
+          })
       });
   }
 }

@@ -15,16 +15,16 @@ export class AuthPage implements OnInit {
   form: FormGroup;
   token: any;
 
-  constructor(private authService: AuthService, private router: Router, private loadingCtrl: LoadingController) {}
+  constructor(private authService: AuthService, private router: Router, private loadingCtrl: LoadingController) { }
 
   ngOnInit() {
     this.form = new FormGroup({
       username: new FormControl(null, {
-        updateOn: 'blur',
+        updateOn: 'change',
         validators: [Validators.required]
       }),
       password: new FormControl(null, {
-        updateOn: 'blur',
+        updateOn: 'change',
         validators: [Validators.required, Validators.maxLength(6)]
       })
     });
