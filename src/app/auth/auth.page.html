@@ -19,7 +19,7 @@
           <ion-list class="ion-no-margin ion-no-padding">
             <ion-item>
               <ion-icon name="person"></ion-icon>
-              <ion-input autocomplete="off" placeholder="Username" required formControlName="username">
+              <ion-input autocomplete="off" placeholder="Username"  formControlName="username">
               </ion-input>
             </ion-item>
             <ion-item *ngIf="!form.get('username').valid && form.get('username').touched" lines="none" no-margin no-padding>
@@ -27,7 +27,7 @@
             </ion-item>
             <ion-item>
               <ion-icon name="lock"></ion-icon>
-              <ion-input padding-start="2" autocomplete="off" type="password" placeholder="Password" required minlength="6" formControlName="password">
+              <ion-input padding-start="2" autocomplete="off" type="password" placeholder="Password"  minlength="6" formControlName="password">
               </ion-input>
             </ion-item>
             <ion-item *ngIf="!form.get('password').valid && form.get('password').touched" lines="none" no-margin no-padding>
@@ -45,8 +45,11 @@
       </ion-row>
       <ion-row class="ion-justify-content-center">
         <ion-col size="8" no-padding>
-          <ion-button type="submit" color="primary" expand="block" [disabled]="!form.valid">SIGN IN
+          <ion-button type="submit" color="primary" expand="block">SIGN IN
           </ion-button>
+          <!-- [disabled]="!form.valid" <letak dalam button lps testing 
+            letak required jugak kat input tag
+          --> 
         </ion-col>
       </ion-row>
     </form>

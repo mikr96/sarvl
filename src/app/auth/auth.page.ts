@@ -13,6 +13,7 @@ import { LoadingController } from '@ionic/angular';
 export class AuthPage implements OnInit {
 
   form: FormGroup;
+  token: any;
 
   constructor(private authService: AuthService, private router: Router, private loadingCtrl: LoadingController) {}
 
@@ -30,26 +31,30 @@ export class AuthPage implements OnInit {
   }
 
   onSubmit() {
-    if(!this.form.valid) {
-      return;
-    }
-    this.loadingCtrl
-    .create({
-      message: 'Logging in...'
-    })
-    .then(loadingEl => {
-      loadingEl.present();
-      this.authService
-        .login(this.form.value)
-        .subscribe(res => {
-          if(res.token) {
-            loadingEl.dismiss();
-            this.form.reset();
-            this.authService.authenticated();
-            this.router.navigate(['/pages']);
-          }
-        });
-    });
+    this.authService.authenticated();
+    this.router.navigate(['/pages']);
+
+    /* After testing baru uncomment */
+    // if(!this.form.valid) {
+    //   return;
+    // }
+    // this.loadingCtrl
+    // .create({
+    //   message: 'Logging in...'
+    // })
+    // .then(loadingEl => {
+    //   loadingEl.present();
+    //   this.authService
+    //     .login(this.form.value)
+    //     .subscribe(res => {
+    //       if(res) {
+    //         loadingEl.dismiss();
+    //         this.form.reset();
+    //         this.authService.authenticated();
+    //         this.router.navigate(['/pages']);
+    //       }
+    //     });
+    // });
 
   }
 }
