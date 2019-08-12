@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as $ from "jquery";
-import isotope from "isotope-layout";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -9,7 +9,7 @@ import isotope from "isotope-layout";
 })
 export class HomePage implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
     // var $grid = $('div.grid').isotope();
@@ -23,6 +23,15 @@ export class HomePage implements OnInit {
     //   $(this).toggleClass('is-checked');
     //   $grid.isotope({ filter: filterValue });
     // });
+
+    $('.list-group').on('click', 'ion-col', function () {
+      console.log('test')
+      //this.pagesService.getListByCategory()
+    });
+
+    $(".sticky").click(()=>{
+      this.router.navigateByUrl('/pages/create-event')
+    })
   }
 
   
