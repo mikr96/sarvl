@@ -65,7 +65,7 @@ export class RegisterPage implements OnInit {
           .createAcc(this.registerForm.value)
           .subscribe(res => {
             loadingEl.dismiss()
-            if (!res.user) {
+            if (!res) {
               return this.popToast('Something went wrong...')
             }
             this.registerForm.reset()
@@ -74,7 +74,6 @@ export class RegisterPage implements OnInit {
             const firstError: string = Object.values(error)[0][0]
             loadingEl.dismiss()
             return this.popToast(firstError)
-
           })
       });
   }

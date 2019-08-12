@@ -20,6 +20,10 @@ const routes: Routes = [
         loadChildren:'./detail-event/detail-event.module#DetailEventPageModule'
       },
       {
+        path: 'create-event',
+        loadChildren:'./create-event/create-event.module#CreateEventPageModule'
+      },
+      {
         path: '',
         redirectTo: '/pages/home',
         pathMatch: 'full'
