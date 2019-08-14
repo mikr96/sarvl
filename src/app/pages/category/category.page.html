@@ -1,9 +1,40 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>category</ion-title>
-  </ion-toolbar>
-</ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button menu="volunteer"></ion-menu-button>
+      </ion-buttons>
+      <ion-title>{{ category }}</ion-title>
+      <ion-icon name="search" slot="end" margin></ion-icon>
+    </ion-toolbar>
+  </ion-header>
 
 <ion-content>
-
+    <ion-grid *ngIf="loading">
+        <ion-row align-items-center justify-content-center>
+          <div *ngIf="isLoading" text-center>
+            <ion-spinner name="crescent" color="primary"></ion-spinner>
+          </div>
+        </ion-row>
+      </ion-grid>
+      <ion-grid>
+        <ion-row ion-justify-content-centre no-padding no-margin>
+          <ion-col size="3" no-padding>
+            <ion-button color="secondary" style="font-weight: bold;" (click)="changeCategory('latest')">Latest</ion-button>
+          </ion-col>
+          <ion-col size="4" no-padding>
+            <ion-button color="secondary" style="font-weight: bold;" (click)="changeCategory('popular')">Popular</ion-button>
+          </ion-col>
+          <ion-col size="5" no-padding>
+            <ion-button color="secondary" style="font-weight: bold;" (click)="changeCategory('ending_soon')">Ending Soon</ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <h1>Coming Soon...</h1>
+        </ion-row>
+        <div style="position: absolute; bottom: 10px;">
+            <ion-button color="secondary" class="m-10" routerLink="/pages/create-event">
+              <img class="sticky" src="../../../assets/plus.png" />
+            </ion-button>
+        </div>
+      </ion-grid>
 </ion-content>

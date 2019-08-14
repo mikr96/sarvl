@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CategoryPage implements OnInit {
 
+  category: string = ''
+
   constructor() { }
 
   ngOnInit() {
+    this.category = localStorage.getItem('category');
   }
 
 }
