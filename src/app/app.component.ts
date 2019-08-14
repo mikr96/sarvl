@@ -53,8 +53,10 @@ export class AppComponent {
     });
   }
 
-  goToCategory(event){
+  goToCategory(category){
     //plugin.storage
+    localStorage.removeItem('category')
+    localStorage.setItem('category', category)
     this.router.navigateByUrl('/pages/category');
   }
 
