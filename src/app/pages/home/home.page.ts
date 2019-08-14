@@ -32,7 +32,7 @@ export class HomePage implements OnInit {
   ngOnInit() {
     this.loading = true
     this.eventService.get(this.currentPage)
-      .subscribe((data: any) => {
+    .subscribe((data: any) => {
         this.loading = false
         this.events = data.events
       }, ({ error }) => this.handleError(error))
@@ -49,7 +49,7 @@ export class HomePage implements OnInit {
       }, ({ error }) => this.handleError(error))
   }
 
-  handleError(error: {}) {
+  private handleError(error: {}) {
     const firstError: string = Object.values(error)[0][0]
     return this.popToast(firstError)
   }

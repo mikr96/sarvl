@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button menu="volunteer"></ion-menu-button>
     </ion-buttons>
-    <ion-title>Homepage</ion-title>
+    <ion-title>Home</ion-title>
     <ion-icon name="search" slot="end" margin></ion-icon>
   </ion-toolbar>
 </ion-header>
@@ -16,11 +16,24 @@
     </ion-row>
   </ion-grid>
   <ion-grid>
-    <ion-row>
-        <ion-button (click)="changeCategory('latest')">Latest</ion-button>
-        <ion-button (click)="changeCategory('popular')">Popular</ion-button>
-        <ion-button (click)="changeCategory('ending_soon')">Ending Soon</ion-button>
+    <ion-row ion-justify-content-centre no-padding no-margin>
+      <ion-col size="3" no-padding>
+        <ion-button color="secondary" (click)="changeCategory('latest')">Latest</ion-button>
+      </ion-col>
+      <ion-col size="4" no-padding>
+        <ion-button color="secondary" (click)="changeCategory('popular')">Popular</ion-button>
+      </ion-col>
+      <ion-col size="5" no-padding>
+        <ion-button color="secondary" (click)="changeCategory('ending_soon')">Ending Soon</ion-button>
+      </ion-col>
     </ion-row>
+  </ion-grid>
+  <ion-grid>
+    <ion-col style="position: absolute; bottom: 10px;">
+        <ion-button color="secondary" class="m-10" routerLink="/pages/create-event">
+          <img styclass="sticky" src="../../../assets/plus.png" />
+        </ion-button>
+    </ion-col>
   </ion-grid>
     <ion-grid>
       <ion-col *ngFor="let item of events.data">

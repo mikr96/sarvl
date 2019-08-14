@@ -1,5 +1,7 @@
 {
   "name": "sarvl",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

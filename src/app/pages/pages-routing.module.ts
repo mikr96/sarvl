@@ -23,6 +23,14 @@ const routes: Routes = [
         path: 'create-event',
         loadChildren:'./create-event/create-event.module#CreateEventPageModule'
       },
+      { 
+        path: 'my-event', 
+        loadChildren: './my-event/my-event.module#MyEventPageModule' 
+      },
+      { 
+        path: 'category', 
+        loadChildren: './category/category.module#CategoryPageModule' 
+      },
       {
         path: '',
         redirectTo: '/pages/home',
@@ -34,7 +42,7 @@ const routes: Routes = [
     path: '',
     redirectTo: '/pages/home',
     pathMatch: 'full'
-  }
+  },
 ];
 
 @NgModule({

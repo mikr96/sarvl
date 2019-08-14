@@ -8,5 +8,62 @@
 </ion-header>
 
 <ion-content>
-
-</ion-content>
+    <ion-grid>
+      <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="8">
+            <ion-list class="ion-no-margin ion-no-padding">
+                <ion-item>
+                  <ion-label position="floating">Title</ion-label>
+                  <ion-input autocomplete="off" formControlName="title" required>
+                  </ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">Start Date</ion-label>
+                  <ion-datetime
+                  display-format="DD MMM YYYY"
+                  picker-format="DD MMM YYYY"
+                  [min]=""
+                  [max]=""
+                  required
+                  formControlName= "start_date"
+                ></ion-datetime>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">End Date</ion-label>
+                  <ion-datetime
+                  display-format="DD MMM YYYY"
+                  picker-format="DD MMM YYYY"
+                  [min]=""
+                  [max]=""
+                  formControlName= "end_date"
+                  required
+                ></ion-datetime>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">Location</ion-label>
+                  <ion-input padding-start="2" autocomplete="off" type="text" formControlName="location" required>
+                  </ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="floating">Goal (RM)</ion-label>
+                    <ion-input padding-start="2" autocomplete="off" type="text" formControlName="goal" required>
+                    </ion-input>
+                  </ion-item>
+                <ion-item>
+                  <ion-label position="floating">Whatsapp Link</ion-label>
+                  <ion-input padding-start="2" autocomplete="off"  formControlName="whatsapp_link" type="text">
+                  </ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="floating">Description</ion-label>
+                    <ion-textarea autocomplete="off"  formControlName="description">
+                    </ion-textarea>
+                  </ion-item>
+              </ion-list>
+            <ion-button color="secondary" type="submit" expand="block" [disabled]="!eventForm.valid" margin-vertical>SIGN IN</ion-button>
+          </ion-col>
+        </ion-row>
+      </form>
+    </ion-grid>
+  </ion-content>

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/services/auth.service';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -69,7 +69,7 @@ export class RegisterPage implements OnInit {
               return this.popToast('Something went wrong...')
             }
             this.registerForm.reset()
-            this.router.navigate(['/auth'])
+            this.router.navigateByUrl('/auth')
           }, ({ error }) => {
             const firstError: string = Object.values(error)[0][0]
             loadingEl.dismiss()

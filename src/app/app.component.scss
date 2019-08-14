@@ -13,3 +13,7 @@ ion-item {
   --inner-border-width: 0;
   --border-width: var(--border-top-width) var(--border-end-width) var(--border-bottom-width) var(--border-start-width);
 }
+
+.sub-item {
+  padding-left: 20px;
+}

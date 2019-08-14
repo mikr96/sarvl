@@ -12,6 +12,30 @@ import { Router } from '@angular/router';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
+  open = false;
+  submenu = [
+    {
+      title: 'Heart',
+      category: '(Programs)'
+    },
+    {
+      title: 'Collab',
+      category: '(Events)'
+    },
+    {
+      title: 'Touch',
+      category: '(Donations)'
+    },
+    {
+      title: 'Cradle',
+      category: '(Workshops)'
+    },
+    {
+      title: 'Belief',
+      category: '(Causes)'
+    },
+  ];
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -27,6 +51,11 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+  }
+
+  goToCategory(event){
+    //plugin.storage
+    this.router.navigateByUrl('/pages/category');
   }
 
   onLogout() {
