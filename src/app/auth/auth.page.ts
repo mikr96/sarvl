@@ -21,45 +21,45 @@ export class AuthPage implements OnInit {
   ngOnInit() {
     this.form = new FormGroup({
       username: new FormControl(null, {
-        updateOn: 'blur',
+        updateOn: 'change',
         validators: [Validators.required]
       }),
       password: new FormControl(null, {
-        updateOn: 'blur',
+        updateOn: 'change',
         validators: [Validators.required]
       })
     });
   }
 
   onSubmit() {
-    if(!this.form.valid) {
+    if (!this.form.valid) {
       return;
     }
     this.loadingCtrl
-    .create({
-      keyboardClose: true,
-      message: 'Logging in...'
-    })
-    .then(loadingEl => {
-      loadingEl.present();
-      let auth : Observable<AuthResponseData>;
-      auth = this.authService.login(this.form.value);
-      auth.subscribe(
-        res => {
-          console.log(res)
-          this.form.reset();
-          loadingEl.dismiss();
-          this.router.navigateByUrl('/pages');
-        },
-        err => {
-          console.log(err);
-          this.form.reset();
-          loadingEl.dismiss();
-          let message = 'Could not log in, please try again.';
-          this.showAlert(message);
-        }
+      .create({
+        keyboardClose: true,
+        message: 'Logging in...'
+      })
+      .then(loadingEl => {
+        loadingEl.present();
+        let auth: Observable<AuthResponseData>;
+        auth = this.authService.login(this.form.value);
+        auth.subscribe(
+          res => {
+            console.log(res)
+            this.form.reset();
+            loadingEl.dismiss();
+            this.router.navigateByUrl('/pages');
+          },
+          err => {
+            console.log(err);
+            this.form.reset();
+            loadingEl.dismiss();
+            let message = 'Could not log in, please try again.';
+            this.showAlert(message);
+          }
         );
-    });
+      });
   }
 
   private showAlert(message: string) {
