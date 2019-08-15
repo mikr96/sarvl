@@ -10,22 +10,6 @@ ion-item {
   background: transparent;
 }
 
-.positioning {
-  position: absolute;
-  z-index: 1;
-  bottom: 0px;
-  right: 1px;
-}
-
-img.sticky {
-  position: -webkit-sticky;
-  position: sticky;
-  bottom: 0;
-  border-radius: 1000px;
-  width: 30px; 
-  height: 30px;
-}
-
 ion-button {
   font-size: 12px;
   float: right;
@@ -50,8 +34,4 @@ h1 {
 .item-details {
   display: flex;
   align-items: center;
-
-  .space-left {
-    margin-left: 5px;
-  }
 }

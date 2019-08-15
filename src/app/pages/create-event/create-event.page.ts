@@ -34,6 +34,10 @@ export class CreateEventPage implements OnInit {
         updateOn: 'blur',
         validators: [Validators.required]
       }),
+      campaign: new FormControl(null, {
+        updateOn: 'blur',
+        validators: [Validators.required]
+      }),
       goal: new FormControl(null, {
         updateOn: 'blur',
         validators: [Validators.required]
@@ -55,6 +59,8 @@ export class CreateEventPage implements OnInit {
       return;
     }
     
+    console.log(this.eventForm.value);
+
     this.loadingCtrl
       .create({
         message: 'Creating...'
@@ -66,6 +72,7 @@ export class CreateEventPage implements OnInit {
           new Date(this.eventForm.value.start_date),
           new Date(this.eventForm.value.end_date),
           this.eventForm.value.location,
+          this.eventForm.value.campaign,
           this.eventForm.value.goal,
           this.eventForm.value.whatsapp_link,
           this.eventForm.value.description

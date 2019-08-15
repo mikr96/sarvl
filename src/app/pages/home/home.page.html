@@ -9,7 +9,7 @@
 </ion-header>
 <ion-content>
   <ion-grid *ngIf="loading">
-    <ion-row align-items-center justify-content-center>
+    <ion-row ion-align-items-center ion-justify-content-center>
       <div *ngIf="isLoading" text-center>
         <ion-spinner name="crescent" color="primary"></ion-spinner>
       </div>
@@ -28,26 +28,28 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-  <ion-grid no-padding>
-    <ion-col style="position: absolute; bottom: 10px;">
-        <ion-button color="secondary" class="m-10" routerLink="/pages/create-event">
-          <img class="sticky" src="../../../assets/plus.png" />
-        </ion-button>
-    </ion-col>
-  </ion-grid>
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button color="secondary" routerLink="/pages/create-event">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
     <ion-grid no-padding no-margin>
-      <ion-row>
+      <ion-row ion-align-items-center ion-justify-content-center>
         <ion-col size="12">
           <ion-list *ngIf="!Loading">
               <ion-item-sliding *ngFor="let item of events.data" #slidingItem>
-              <ion-item class="card">
-                <ion-thumbnail slot="start">
-                  <img src="../../../assets/img/epal.jpg"/>
+              <ion-item class="card" no-padding>
+                <ion-thumbnail no-margin slot="start" style="    padding-top: 10px;
+                ">
+                  <div style="display: flex; justify-content: center; align-content: center;">
+                    {{ statusImage(item.src) }}
+                    <img *ngIf="img" style="width:70%; height: auto;" src="../../../assets/logo.png"/>
+                  </div>
                 </ion-thumbnail>
                 <ion-label>
                   <h1>{{ item.title }}</h1>
                   <div class="item-details">
-                    <ion-text color="primary">{{ item.description }}</ion-text>
+                    <ion-text color="primary">{{ truncate(item.description, 2, ' ...') }}</ion-text>
                   </div>
                 </ion-label>
                 <ion-button color="secondary" (click)="goToDetails(item)">Read More</ion-button>

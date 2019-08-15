@@ -1,0 +1,32 @@
+.img-card {
+  width: 60%;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 10px;
+}
+
+.button-card-processing {
+  text-align: center;
+  padding: 10px;
+  border: 2px solid var(--ion-color-secondary);
+  border-radius: 5px;
+  color: var(--ion-color-secondary);
+}
+
+.button-card-approved {
+  text-align: center;
+  padding: 10px;
+  border: 2px solid var(--ion-color-success);
+  border-radius: 5px;
+  color: var(--ion-color-success);
+}
+
+.offer-details {
+  display: flex;
+  align-items: center;
+
+  .space-left {
+    margin-left: 5px;
+  }
+}

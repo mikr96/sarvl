@@ -1,0 +1,19 @@
+.img-card {
+  width: 60%;
+  height: auto;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 10px;
+}
+.offer-details {
+  display: flex;
+  align-items: center;
+
+  .space-left {
+    margin-left: 5px;
+  }
+}
+
+.item .item-inner {
+  padding-right: 0px;
+}

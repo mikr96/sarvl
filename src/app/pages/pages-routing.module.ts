@@ -28,8 +28,12 @@ const routes: Routes = [
         loadChildren: './my-event/my-event.module#MyEventPageModule' 
       },
       { 
-        path: 'category', 
+        path: 'category/:id', 
         loadChildren: './category/category.module#CategoryPageModule' 
+      },
+      { 
+        path: 'faq', 
+        loadChildren: './faq/faq.module#FaqPageModule' 
       },
       {
         path: '',

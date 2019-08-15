@@ -53,11 +53,11 @@ export class AppComponent {
     });
   }
 
-  goToCategory(category){
+  goToCategory(category: string){
     //plugin.storage
-    localStorage.removeItem('category')
     localStorage.setItem('category', category)
-    this.router.navigateByUrl('/pages/category');
+    this.open = false;
+    this.router.navigate(['/', 'pages', 'category', category])
   }
 
   onLogout() {
