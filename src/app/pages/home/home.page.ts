@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, PipeTransform } from '@angular/core';
 import { EventService } from '../../services/event/event.service'
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
@@ -16,6 +16,7 @@ export class HomePage implements OnInit {
     total: 0
   }
   loading: boolean = true
+  img: boolean = true
   errors: any
   currentCategory: string = 'latest'
 
@@ -54,6 +55,34 @@ export class HomePage implements OnInit {
   goToDetails(item) {
     localStorage.setItem('item', JSON.stringify(item));
     this.router.navigateByUrl('/pages/detail-event')
+  }
+
+  truncate (elem, limit, after) {
+
+    // Make sure an element and number of items to truncate is provided
+    if (!elem || !limit) return;
+  
+    // Get the inner content of the element
+    var content = elem;
+  
+    // Convert the content into an array of words
+    // Remove any words above the limit
+    content = content.split(' ').slice(0, limit);
+  
+    // Convert the array of words back into a string
+    // If there's content to add after it, add it
+    content = content.join(' ') + (after ? after : '');
+    // Inject the content back into the DOM
+    return content;
+  
+  };
+
+  statusImage(val) {
+    if (val == null){
+      this.img = true;
+    } else {
+      this.img = false;
+    }
   }
 
   private handleError(error: {}) {

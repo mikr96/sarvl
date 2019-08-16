@@ -10,27 +10,24 @@ ion-item {
   background: transparent;
 }
 
-.positioning {
-  position: absolute;
-  z-index: 1;
-  bottom: 0px;
-  right: 1px;
-}
-
-img.sticky {
-  position: -webkit-sticky;
-  position: sticky;
-  bottom: 0;
-  right: 10px;
-  width: 30px; 
-  height: 30px;
-}
-
 ion-button {
   font-size: 12px;
   float: right;
 }
 
-.m-10 {
-  margin: 10px;
+h1 {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.card {
+  border: 1px solid var(--ion-color-secondary);
+  border-radius: 5px;
+  color: var(--ion-color-primary);
+  margin-bottom: 10px;
+}
+
+.item-details {
+  display: flex;
+  align-items: center;
 }

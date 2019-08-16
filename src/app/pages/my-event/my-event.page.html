@@ -8,6 +8,33 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-<h1>Coming Soon ...</h1>
+<ion-content fullscreen>
+  <ion-grid>
+    <ion-row *ngFor="let item of data.events">
+        <ion-card>
+          <img class="img-card" src="../../../assets/logo.png" />
+          <ion-card-header>
+            <ion-card-subtitle>{{item.campaign}}</ion-card-subtitle>
+            <ion-card-title>{{item.title}}</ion-card-title>
+            <div class="offer-details">
+              <ion-icon name="calendar" color="primary"></ion-icon>
+              <ion-text color="tertiary" class="space-left">{{item.start_date}}</ion-text>
+              <span class="space-left">to</span>
+              <ion-icon name="calendar" class="space-left" color="primary"></ion-icon>
+              <ion-text color="tertiary" class="space-left">{{item.end_date}}</ion-text>
+            </div>
+          </ion-card-header>
+          <ion-card-content>
+            {{item.description}}
+            <div *ngIf="item.status==0" expand="block" class="button-card-processing">
+              <h3>PROCESSING</h3>
+            </div>
+            <div *ngIf="item.status==1" expand="block" class="button-card-approved">
+              <h3>APPROVED</h3>
+            </div>
+            <ion-button *ngIf="item.status==2" expand="block" color="danger">RESUBMIT</ion-button>
+          </ion-card-content>
+        </ion-card>
+    </ion-row>
+  </ion-grid>
 </ion-content>

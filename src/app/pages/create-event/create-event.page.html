@@ -46,6 +46,16 @@
                   </ion-input>
                 </ion-item>
                 <ion-item>
+                    <ion-label position="floating">Campaign</ion-label>
+                    <ion-select formControlName="campaign">
+                      <ion-select-option>Heart (Programs)</ion-select-option>
+                      <ion-select-option>Collab (Events)</ion-select-option>
+                      <ion-select-option>Touch (Donations)</ion-select-option>
+                      <ion-select-option>Cradle (Workshops)</ion-select-option>
+                      <ion-select-option>Belief (Causes)</ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                <ion-item>
                     <ion-label position="floating">Goal (RM)</ion-label>
                     <ion-input padding-start="2" autocomplete="off" type="text" formControlName="goal" required>
                     </ion-input>
@@ -61,7 +71,7 @@
                     </ion-textarea>
                   </ion-item>
               </ion-list>
-            <ion-button color="secondary" type="submit" expand="block" [disabled]="!eventForm.valid" margin-vertical>SIGN IN</ion-button>
+            <ion-button color="secondary" type="submit" expand="block" [disabled]="!eventForm.valid" margin-vertical>CREATE EVENT</ion-button>
           </ion-col>
         </ion-row>
       </form>

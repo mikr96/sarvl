@@ -12,6 +12,7 @@ export interface EventData {
   start_date: any,
   end_date: any,
   location: string,
+  campaign: string,
   goal: string,
   whatsapp_link: string,
   description: string
@@ -44,11 +45,30 @@ export class EventService {
     return this.http.get(`${URL}events/by_category/${category}?page=${page}`)
   }
 
+  public getEventByCategory(id: string) {
+    return this.http.get(`${URL}events/by_campaign/${id}`)
+  }
+
+  public getCreatedEvents() {
+    return this.authService.token.pipe(
+      take(1),
+      switchMap(token => {
+        return this.http.get(URL + 'created_events', 
+        { 
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        });
+      })
+    );
+  }
+
   public createEvent(              
     title: string,
     start_date: Date,
     end_date: Date,
     location: string,
+    campaign: string,
     goal: string,
     whatsapp_link: string,
     description: string
@@ -61,12 +81,13 @@ export class EventService {
     return this.authService.token.pipe(
       take(1),
       switchMap(token => {
-        console.log(token)
+        let newCampaign = campaign.split(" ")
         newEvent = new Event(
           title,
           newStart,
           newEnd,
           location,
+          newCampaign[0],
           goal,
           whatsapp_link,
           description
