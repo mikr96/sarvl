@@ -35,15 +35,25 @@ export class AppComponent {
       category: '(Causes)'
     },
   ];
+  isAdmin: boolean = false
+  fullname: string = ''
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
   ) {
     this.initializeApp();
+  }
+
+  ngOnInit() {
+    this.authService.isAdmin.subscribe(isAdmin => this.isAdmin = isAdmin)
+    this.authService.user.subscribe(o => {
+      if (o && o.fullname)
+        this.fullname = o.fullname
+    })
   }
 
   initializeApp() {
@@ -53,7 +63,7 @@ export class AppComponent {
     });
   }
 
-  goToCategory(category){
+  goToCategory(category) {
     //plugin.storage
     localStorage.removeItem('category')
     localStorage.setItem('category', category)

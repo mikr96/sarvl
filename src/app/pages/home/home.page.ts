@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EventService } from '../../services/event/event.service'
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -18,7 +19,7 @@ export class HomePage implements OnInit {
   errors: any
   currentCategory: string = 'latest'
 
-  constructor(private eventService: EventService, private toastController: ToastController, private router: Router) { }
+  constructor(private eventService: EventService, private toastController: ToastController, private router: Router, private authService: AuthService) { }
 
   async popToast(message: string) {
     const toast = await this.toastController.create({
@@ -33,7 +34,7 @@ export class HomePage implements OnInit {
   ngOnInit() {
     this.loading = true
     this.eventService.get(this.currentPage)
-    .subscribe((data: any) => {
+      .subscribe((data: any) => {
         this.loading = false
         this.events = data.events
       }, ({ error }) => this.handleError(error))

@@ -9,27 +9,27 @@ const routes: Routes = [
     children: [
       {
         path: 'home',
-        loadChildren:'./home/home.module#HomePageModule'
+        loadChildren: './home/home.module#HomePageModule'
       },
       {
         path: 'profile',
-        loadChildren:'./profile/profile.module#ProfilePageModule'
+        loadChildren: './profile/profile.module#ProfilePageModule'
       },
       {
         path: 'detail-event',
-        loadChildren:'./detail-event/detail-event.module#DetailEventPageModule'
+        loadChildren: './detail-event/detail-event.module#DetailEventPageModule'
       },
       {
         path: 'create-event',
-        loadChildren:'./create-event/create-event.module#CreateEventPageModule'
+        loadChildren: './create-event/create-event.module#CreateEventPageModule'
       },
-      { 
-        path: 'my-event', 
-        loadChildren: './my-event/my-event.module#MyEventPageModule' 
+      {
+        path: 'my-event',
+        loadChildren: './my-event/my-event.module#MyEventPageModule'
       },
-      { 
-        path: 'category', 
-        loadChildren: './category/category.module#CategoryPageModule' 
+      {
+        path: 'category',
+        loadChildren: './category/category.module#CategoryPageModule'
       },
       {
         path: '',

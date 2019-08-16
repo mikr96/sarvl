@@ -15,7 +15,7 @@
                 <ion-row no-padding>
                   <ion-col size="12" class="ion-align-items-center" no-padding>
                     <div class="ion-text-center">
-                      <h5 no-margin>Hi, Megan Fox</h5>
+                      <h5 no-margin>Hi, {{fullname}}</h5>
                     </div>
                   </ion-col>
                 </ion-row>
@@ -24,12 +24,61 @@
           </ion-grid>
         </ion-toolbar>
       </ion-header>
-      <ion-content>
+      <ion-content *ngIf="!isAdmin">
         <ion-list>
           <ion-menu-toggle>
             <ion-item lines="none" routerLink="/pages/home" button>
               <ion-icon name="home" slot="start"></ion-icon>
               <ion-label>Home</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-item lines="none" button (click)="open = !open" [class.parent-active]="open" detail="false">
+            <ion-icon slot="start" name="megaphone" *ngIf="!open"></ion-icon>
+            <ion-icon slot="start" name="megaphone" *ngIf="open"></ion-icon>
+            <ion-label>Campaign</ion-label>
+          </ion-item>
+          <!--SUB MENU-->
+          <ion-list *ngIf="open">
+            <ion-menu-toggle>
+              <ion-item *ngFor="let sub of submenu" (click)='goToCategory(sub.title)' button>
+                <ion-label class="sub-item">
+                  {{ sub.title }} <span style="font-size: 10px;">{{ sub.category }}</span>
+                </ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </ion-list>
+          <ion-menu-toggle>
+            <ion-item lines="none" routerLink="/pages/my-event" button>
+              <ion-icon name="book" slot="start"></ion-icon>
+              <ion-label>My Event</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle>
+            <ion-item lines="none" routerLink="/pages/profile" button>
+              <ion-icon name="contact" slot="start"></ion-icon>
+              <ion-label>Profile</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle>
+            <ion-item lines="none" (click)="onLogout()" button>
+              <ion-icon name="help" slot="start"></ion-icon>
+              <ion-label>FAQ</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle>
+            <ion-item lines="none" (click)="onLogout()" button>
+              <ion-icon name="exit" slot="start"></ion-icon>
+              <ion-label>Logout</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
+      <ion-content *ngIf="isAdmin">
+        <ion-list>
+          <ion-menu-toggle>
+            <ion-item lines="none" routerLink="/admin/dashboard" button>
+              <ion-icon name="home" slot="start"></ion-icon>
+              <ion-label>Dashboard</ion-label>
             </ion-item>
           </ion-menu-toggle>
           <ion-item lines="none" button (click)="open = !open" [class.parent-active]="open" detail="false">

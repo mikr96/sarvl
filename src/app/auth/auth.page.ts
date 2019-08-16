@@ -2,8 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { AuthService, AuthResponseData } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
 import { LoadingController, AlertController } from '@ionic/angular';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: "app-auth",
@@ -46,10 +46,12 @@ export class AuthPage implements OnInit {
         auth = this.authService.login(this.form.value);
         auth.subscribe(
           res => {
-            console.log(res)
             this.form.reset();
             loadingEl.dismiss();
-            this.router.navigateByUrl('/pages');
+            if (!res.isAdmin)
+              this.router.navigateByUrl('/pages');
+            else
+              this.router.navigateByUrl('/admin')
           },
           err => {
             console.log(err);

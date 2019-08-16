@@ -8,8 +8,13 @@ import { URL } from '../constants';
 import { User } from "../models/user.model"
 
 export interface AuthResponseData {
-  token: string;
+  token: string
+  isAdmin: boolean
+  user_id: string,
+  user: any
 }
+
+const { Storage } = Plugins
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +35,25 @@ export class AuthService {
     );
   }
 
+  get user() {
+    return this._user.asObservable().pipe(
+      map(user => {
+        if (!user)
+          return null
+        return user.getUser
+      })
+    )
+  }
+
+  get isAdmin() {
+    return this._user.asObservable().pipe(
+      map(user => {
+        if (user) return user.isAdmin
+        else return null
+      })
+    );
+  }
+
   get token() {
     return this._user.asObservable().pipe(
       map(user => {
@@ -42,7 +66,7 @@ export class AuthService {
     );
   }
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   login(profile: Profile) {
     return this.http.post<AuthResponseData>(URL + 'login', profile).pipe(
@@ -55,24 +79,24 @@ export class AuthService {
 
   logout() {
     this._user.next(null);
-    //localStorage.clear();
-    Plugins.Storage.remove({ key: 'authData' });
+    Storage.clear();
   }
 
   private setToken(userData: AuthResponseData) {
     const user = new User(
       "volunteer",
-      userData.token
-    );
-    this._user.next(user);
+      userData.token,
+      userData.isAdmin,
+      userData.user_id
+    )
+
+    user.user = userData.user
+
+    this._user.next(user)
     this.storeToken(userData.token);
   }
 
   private storeToken(token: string) {
-    const data = JSON.stringify({
-      token: token
-    });
-    localStorage.setItem("authData", data)
-    Plugins.Storage.set({ key: 'authData', value: data });
+    Storage.set({ key: 'token', value: token })
   }
 }
