@@ -9,10 +9,42 @@
 
 <ion-content>
 <ion-grid>
-  <ion-row>
-    <ion-col size="9">
+  <ion-row class="ion-justify-content-center ion-align-items-center">
+    <ion-col size="11">
       <ion-card>
-        <h1>Coming Soon</h1>
+        <form [formGroup]="editForm" (ngSubmit)="onEdit()">
+          <ion-card-header>
+            <div align="center">
+              <ion-avatar>
+                <img src="{{ myphoto }}" (click)="getImage()" class="profilePic" alt="Registration Image">
+              </ion-avatar>
+              <ion-button icon-left (click)="presentActionSheet()">
+                <ion-icon name="camera"></ion-icon>Select Image
+              </ion-button>
+            </div>
+          </ion-card-header>
+          <div style="padding-right:16px">
+            <ion-item lines="none">
+              <ion-icon name="person" slot="start"></ion-icon>
+              <ion-input (ionChange)="changes=true" placeholder="{{name}}" formControlName="fullname"></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-icon name="mail" slot="start"></ion-icon>
+              <ion-input (ionChange)="changes=true" placeholder="{{username}}" formControlName="username"></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-icon name="call" slot="start"></ion-icon>
+              <ion-input (ionChange)="changes=true" placeholder="{{telefon}}" formControlName="ic"></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-icon name="pin" slot="start"></ion-icon>
+              <ion-input (ionChange)="changes=true" placeholder="{{location}}"></ion-input>
+            </ion-item>
+          </div>
+          <ion-card-content>
+            <ion-button type="submit" expand="block" [disabled]="changes===false">Confirm Edit</ion-button>
+          </ion-card-content>
+        </form>
       </ion-card>
     </ion-col>
   </ion-row>

@@ -66,6 +66,18 @@ export class AuthService {
     );
   }
 
+  get userId() {
+    return this._user.asObservable().pipe(
+      map(user => {
+        if (user) {
+          return user.id;
+        } else {
+          return null;
+        }
+      })
+    );
+  }
+
   constructor(private http: HttpClient) { }
 
   login(profile: Profile) {

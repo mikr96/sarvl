@@ -9,11 +9,9 @@
 <ion-content>
   <ion-grid>
     <ion-row class="ion-justify-content-center ion-margin-top">
-        <ion-col size="8">
-          <div>
-            <img src="../assets/logo.png" />
-          </div>
-        </ion-col>
+      <div style="display: flex; justify-content: center;">
+        <img style="width: 50%; height: auto;" src="../assets/logo.png" />
+      </div>
     </ion-row>
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
       <ion-row class="ion-justify-content-center">

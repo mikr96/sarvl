@@ -10,6 +10,9 @@
 
 <ion-content fullscreen>
   <ion-grid>
+    <ion-row *ngIf="noEvent">
+      <ion-text>You have not create any event.</ion-text>
+    </ion-row>
     <ion-row *ngFor="let item of data.events">
         <ion-card>
           <img class="img-card" src="../../../assets/logo.png" />

@@ -13,6 +13,7 @@ export class MyEventPage implements OnInit {
   approved: boolean = false
   rejected: boolean = false
   processing: boolean = false
+  noEvent: boolean
 
   constructor(private eventService: EventService) { }
 
@@ -20,6 +21,12 @@ export class MyEventPage implements OnInit {
     this.eventService.getCreatedEvents().subscribe(resEvent => {
       console.log(resEvent)
       this.data = resEvent
+      console.log(this.data.events)
+      this.noEvent = false;
+      if (this.data.events === undefined || this.data.events.length == 0) {
+        // array empty or does not exist
+        this.noEvent = true;
+      }
     })
   }
 
