@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FaqPage implements OnInit {
 
+  open: boolean = false
+  open1: boolean = false
+
   constructor() { }
 
   ngOnInit() {
