@@ -76,23 +76,23 @@ export class ProfilePage implements OnInit, OnDestroy {
 
   onImagePicked(imageData: string | File) {
     let imageFile
-    if(typeof imageData == 'string') {
+    if (typeof imageData == 'string') {
       try {
-        imageFile = base64toBlob(
-          imageData.replace('data:image/jpeg;base64,', ''),
-          'image/jpeg'
-        );
-        // imageFile = imageData
+        // imageFile = base64toBlob(
+        //   imageData.replace('data:image/jpeg;base64,', ''),
+        //   'image/jpeg'
+        // );
+        imageFile = imageData
       } catch (err) {
         console.log(err)
         return;
       }
     } else {
       imageFile = imageData
-    } 
-      this.editForm.patchValue({ dp:JSON.stringify(imageFile) })
-      console.log(imageFile)
-      //this.changes = true
+    }
+    this.editForm.patchValue({ dp: imageFile })
+    console.log(imageFile)
+    //this.changes = true
   }
 
   onEdit() {
@@ -101,24 +101,26 @@ export class ProfilePage implements OnInit, OnDestroy {
     }
     console.log(this.editForm.value)
     this.loadingCtrl
-    .create({
-      message: 'Processing...'
-    })
-    .then(loadingEl => {
-      loadingEl.present();
-      this.profileService
-        .editProfile(this.editForm.value)
-        .subscribe(res => {
-          loadingEl.dismiss()
-          if (!res) {
-            return this.popToast('Something went wrong...')
-          }
-        }, ({ error }) => {
-          const firstError: string = Object.values(error)[0][0]
-          loadingEl.dismiss()
-          return this.popToast(firstError)
-        })
-    });
+      .create({
+        message: 'Processing...'
+      })
+      .then(loadingEl => {
+        loadingEl.present();
+        this.profileService
+          .editProfile(this.editForm.value)
+          .subscribe(res => {
+            loadingEl.dismiss()
+            console.log('res', res)
+            if (!res) {
+              return this.popToast('Something went wrong...')
+            }
+          }, ({ error }) => {
+            console.error(error)
+            const firstError: string = Object.values(error)[0][0]
+            loadingEl.dismiss()
+            return this.popToast(firstError)
+          })
+      });
   }
 
   async popToast(message: string) {
