@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Plugins } from '@capacitor/core';
+import { Router } from '@angular/router';
+const { Storage } = Plugins
 
 @Component({
   selector: 'app-search',
@@ -6,33 +9,30 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./search.page.scss'],
 })
 export class SearchPage implements OnInit {
-
-  items: any
+  events: any
+  items: any  
+  titles: any
   isItemAvailable : boolean = false; // initialize the items with false
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
-    this.items = ["Ram","gopi", "dravid"];
+    this.getObject()
+  }
+
+  async getObject() {
+    const ret = await Storage.get({ key: 'items' });
+    this.events = JSON.parse(ret.value);
+    this.items = this.events.data
     this.isItemAvailable = true;
   }
 
-  // handleInput(event) {
-  //   const query = event.target.value.toLowerCase();
-  //   requestAnimationFrame(() => {
-  //     this.items.forEach(item => {
-  //       const shouldShow = item.textContent.toLowerCase().indexOf(query) > -1;
-  //       item.style.display = shouldShow ? 'block' : 'none';
-  //     });
-  //   });
-  // }
-
+  
   initializeItems() { 
-    this.items = ["Ram","gopi", "dravid"]; 
-    //this.isItemAvailable = true;
+    this.items = this.events.data; 
   }
 
-
+  
   getItems(ev: any) {
     // Reset items back to all of the items
     this.initializeItems();
@@ -44,9 +44,14 @@ export class SearchPage implements OnInit {
     if (val && val.trim() != '') {
       this.isItemAvailable = true;
       this.items = this.items.filter((item) => {
-        return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        return (item.title.toLowerCase().indexOf(val.toLowerCase()) > -1);
       })
     }
   }
 
+  goToDetails(item) {
+    Storage.set({ key: 'items', value: JSON.stringify(item) })
+    this.router.navigateByUrl('/pages/detail-event')
+  }
+  
 }

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, LoadingController, NavController } from '@ionic/angular';
+import { AlertController, LoadingController, NavController, ToastController } from '@ionic/angular';
 import { Router, ActivatedRoute } from '@angular/router';
-import { EventService } from 'src/app/services/event/event.service';
+import { EventService } from '../../services/event/event.service';
+import { Plugins } from '@capacitor/core';
+const { Storage } = Plugins
 
 @Component({
   selector: 'app-category',
@@ -9,9 +11,10 @@ import { EventService } from 'src/app/services/event/event.service';
   styleUrls: ['./category.page.scss'],
 })
 export class CategoryPage implements OnInit {
-
+  currentPage: number = 1
+  currentCategory: string = 'latest'
+  currentCampaign: string
   category: string = ''
-  id: string
   isLoading = false
   dataEvent: any = {
     data: [],
@@ -26,39 +29,27 @@ export class CategoryPage implements OnInit {
     private navCtrl: NavController,
     private router: Router,
     private loadingCtrl: LoadingController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private toastCtrl: ToastController
   ) { }
 
   ngOnInit() {
-    // this.category = localStorage.getItem('category');
+    this.isLoading = true;
     this.route.paramMap.subscribe(paramMap => {
       if (!paramMap.has('id')) {
         this.navCtrl.navigateBack('/pages/home');
         return;
       }
-      this.id = paramMap.get('id');
-      this.isLoading = true;
+      this.currentCampaign = paramMap.get('id');
       this.eventService
-      .getEventByCategory(this.id)
+      .getEventByCampaign(this.currentCampaign)
       .subscribe(
         (event: any) => {
           this.isLoading = false;
           this.dataEvent = event.events;
         },
         error => {
-          this.alertCtrl
-            .create({
-              header: 'An error occurred!',
-              message: 'Event could not be fetched. Please try again later.',
-              buttons: [
-                {
-                  text: 'Okay'
-                }
-              ]
-            })
-            .then(alertEl => {
-              alertEl.present();
-            });
+          this.handleError(error)
         }
       );
     })
@@ -84,18 +75,35 @@ export class CategoryPage implements OnInit {
   
   };
 
-  statusImage(val) {
-    if (val == null){
-      this.img = true;
-    } else {
-      this.img = false;
-    }
+  changeCategory(category: string) {
+    this.isLoading = true
+    this.currentCategory = category
+    this.currentPage = 1
+    this.eventService.getEventByCampaignWithCategory(this.currentPage, this.currentCampaign, this.currentCategory)
+      .subscribe((data: any) => {
+        this.isLoading = false
+        this.dataEvent = data.events
+      }, ({ error }) => this.handleError(error))
   }
 
-  changeCategory(value) {
-    this.eventService.getEventByCampaign(value).subscribe(res => {
-      console.log(res)
+  goToDetails(item) {
+    Storage.set({ key: 'item', value: JSON.stringify(item) })
+    this.router.navigateByUrl('/pages/detail-event')
+  }
+
+  private handleError(error: {}) {
+    const firstError: string = Object.values(error)[0][0]
+    return this.popToast(firstError)
+  }
+
+  async popToast(message: string) {
+    const toast = await this.toastCtrl.create({
+      message,
+      duration: 2000,
+      position: 'top',
+      color: 'danger',
     })
+    toast.present()
   }
 
 }

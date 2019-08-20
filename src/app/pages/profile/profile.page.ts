@@ -51,6 +51,7 @@ export class ProfilePage implements OnInit, OnDestroy {
     this.isLoading = true;
     this.profileSub = this.profileService.getProfile().subscribe(res => {
       this.profile = res
+      console.log(this.profile)
       this.editForm = new FormGroup({
         username: new FormControl(this.profile.user.fullname, {
           updateOn: 'blur',
@@ -68,7 +69,7 @@ export class ProfilePage implements OnInit, OnDestroy {
           updateOn: 'blur',
           validators: [Validators.required]
         }),
-        dp: new FormControl(null)
+        dp: new FormControl(this.profile.user.dp)
       });
       this.isLoading = false;
     })
@@ -89,16 +90,8 @@ export class ProfilePage implements OnInit, OnDestroy {
       }
     } else {
       imageFile = imageData
-<<<<<<< HEAD
     } 
       this.editForm.patchValue({ dp:imageFile })
-      console.log(imageFile)
-=======
-    }
-    this.editForm.patchValue({ dp: imageFile })
-    console.log(imageFile)
-    //this.changes = true
->>>>>>> 5b0147493a4b9ab5791d15ac20e85f17f08b0520
   }
 
   onEdit() {

@@ -89,7 +89,7 @@
           <!--SUB MENU-->
           <ion-list *ngIf="open">
             <ion-menu-toggle>
-              <ion-item *ngFor="let sub of submenu" (click)='goToCategory(sub.title)' button>
+              <ion-item *ngFor="let sub of submenu" (click)='goToCampaign(sub.title)' button>
                 <ion-label class="sub-item">
                   {{ sub.title }} <span style="font-size: 10px;">{{ sub.category }}</span>
                 </ion-label>
@@ -97,19 +97,13 @@
             </ion-menu-toggle>
           </ion-list>
           <ion-menu-toggle>
-            <ion-item lines="none" routerLink="/pages/my-event" button>
-              <ion-icon name="book" slot="start"></ion-icon>
-              <ion-label>My Event</ion-label>
+            <ion-item lines="none" routerLink="/admin/user-management" button>
+              <ion-icon name="people" slot="start"></ion-icon>
+              <ion-label>User Management</ion-label>
             </ion-item>
           </ion-menu-toggle>
           <ion-menu-toggle>
-            <ion-item lines="none" routerLink="/pages/profile" button>
-              <ion-icon name="contact" slot="start"></ion-icon>
-              <ion-label>Profile</ion-label>
-            </ion-item>
-          </ion-menu-toggle>
-          <ion-menu-toggle>
-            <ion-item lines="none" (click)="onLogout()" button>
+            <ion-item lines="none" routerLink="/admin/faq-admin" button>
               <ion-icon name="help" slot="start"></ion-icon>
               <ion-label>FAQ</ion-label>
             </ion-item>

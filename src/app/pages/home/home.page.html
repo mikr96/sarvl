@@ -46,8 +46,8 @@
                 <ion-thumbnail no-margin slot="start" style="    padding-top: 10px;
                 ">
                   <div style="display: flex; justify-content: center; align-content: center;">
-                    {{ statusImage(item.src) }}
-                    <img *ngIf="img" style="width:70%; height: auto;" src="../../../assets/logo.png"/>
+                    <img *ngIf="item.image==null" style="width:70%; height: auto;" src="../../../assets/logo.png"/>
+                    <ion-img *ngIf="item.image!=null" [src]="item.image" style="width:70%; height: auto;"></ion-img>
                   </div>
                 </ion-thumbnail>
                 <ion-label>

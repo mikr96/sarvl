@@ -70,6 +70,12 @@ export class AppComponent implements OnInit, OnDestroy{
     this.router.navigate(['/', 'pages', 'category', category])
   }
 
+  goToCampaign(campaign: string) {
+    localStorage.setItem('campaign', campaign)
+    this.open = false;
+    this.router.navigate(['/', 'admin', 'campaign', campaign])
+  }
+
   onLogout() {
     this.authService.logout();
     this.router.navigateByUrl('/auth');

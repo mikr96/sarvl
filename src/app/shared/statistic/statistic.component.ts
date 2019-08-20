@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AdminEventService } from 'src/app/services/event/admin-event.service';
+import { AdminEventService } from '../../services/event/admin-event.service';
 import { ToastController } from '@ionic/angular';
 import { Chart } from 'chart.js'
 
@@ -10,11 +10,12 @@ interface EventResponseI {
 }
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'],
+  selector: 'app-statistic',
+  templateUrl: './statistic.component.html',
+  styleUrls: ['./statistic.component.scss'],
 })
-export class DashboardComponent implements OnInit {
+
+export class StatisticComponent implements OnInit {
   events: Array<{ campaign: string, value: number }>
   heartCanvas: any
   constructor(private eventService: AdminEventService, private toastCtrl: ToastController) { }

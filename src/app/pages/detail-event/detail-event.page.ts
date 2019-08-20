@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { EventService } from '../../services/event/event.service';
+import { Plugins } from '@capacitor/core';
+const { Storage } = Plugins
 
 @Component({
   selector: 'app-detail-event',
@@ -14,7 +16,12 @@ export class DetailEventPage implements OnInit {
   constructor(private alertCtrl: AlertController, private eventService: EventService) {}
 
   ngOnInit() {
-    this.item = JSON.parse(localStorage.getItem('item'));
+    this.getObject()
+  }
+
+  async getObject() {
+    const ret = await Storage.get({ key: 'item' });
+    this.item = JSON.parse(ret.value);
     this.eventService.viewCount(this.item.id).subscribe()
   }
 

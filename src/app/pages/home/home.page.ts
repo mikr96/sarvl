@@ -3,11 +3,17 @@ import { EventService } from '../../services/event/event.service'
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+
+import { Plugins } from '@capacitor/core';
+const { Storage } = Plugins
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
 })
+
+
 export class HomePage implements OnInit {
   currentPage: number = 1
   events: any = {
@@ -38,6 +44,7 @@ export class HomePage implements OnInit {
       .subscribe((data: any) => {
         this.loading = false
         this.events = data.events
+        Storage.set({ key: 'items', value: JSON.stringify(this.events) })
       }, ({ error }) => this.handleError(error))
   }
 
@@ -49,11 +56,12 @@ export class HomePage implements OnInit {
       .subscribe((data: any) => {
         this.loading = false
         this.events = data.events
+        console.log(this.events)
       }, ({ error }) => this.handleError(error))
   }
 
   goToDetails(item) {
-    localStorage.setItem('item', JSON.stringify(item));
+    Storage.set({ key: 'item', value: JSON.stringify(item) })
     this.router.navigateByUrl('/pages/detail-event')
   }
 
@@ -76,14 +84,6 @@ export class HomePage implements OnInit {
     return content;
   
   };
-
-  statusImage(val) {
-    if (val == null){
-      this.img = true;
-    } else {
-      this.img = false;
-    }
-  }
 
   private handleError(error: {}) {
     const firstError: string = Object.values(error)[0][0]
