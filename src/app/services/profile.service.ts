@@ -27,10 +27,35 @@ export class ProfileService {
     return this.authService.userId.pipe(
       take(1),
       switchMap(id => {
-        return this.http.put(
-          `${URL}users/${id}`, profile
-        );
+        return this.authService.token.pipe(
+          take(1),
+          switchMap(token => {
+            return this.http.put(
+              `${URL}users/${id}`, profile, { 
+                headers: {
+                  Authorization: 'Bearer ' + token
+                }
+              }
+            );
+          })
+        )
       })
     )
   }
+
+  // uploadImage(image: File) {
+  //   const uploadData = new FormData();
+  //   uploadData.append('image', image);
+
+  //   return this.authService.token.pipe(
+  //     take(1),
+  //     switchMap(token => {
+  //       return this.http.post<{ imageUrl: string; imagePath: string }>(
+  //         'https://us-central1-ionic-angular-course.cloudfunctions.net/storeImage',
+  //         uploadData,
+  //         { headers: { Authorization: 'Bearer ' + token } }
+  //       );
+  //     })
+  //   );
+  // }
 }

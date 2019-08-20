@@ -1,14 +1,36 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ProfileService } from '../../services/profile.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoadingController, ToastController } from '@ionic/angular';
+import { Subscription } from 'rxjs';
+
+function base64toBlob(base64Data, contentType) {
+  contentType = contentType || '';
+  const sliceSize = 1024;
+  const byteCharacters = window.atob(base64Data);
+  const bytesLength = byteCharacters.length;
+  const slicesCount = Math.ceil(bytesLength / sliceSize);
+  const byteArrays = new Array(slicesCount);
+
+  for (let sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
+    const begin = sliceIndex * sliceSize;
+    const end = Math.min(begin + sliceSize, bytesLength);
+
+    const bytes = new Array(end - begin);
+    for (let offset = begin, i = 0; offset < end; ++i, ++offset) {
+      bytes[i] = byteCharacters[offset].charCodeAt(0);
+    }
+    byteArrays[sliceIndex] = new Uint8Array(bytes);
+  }
+  return new Blob(byteArrays, { type: contentType });
+}
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
 })
-export class ProfilePage implements OnInit {
+export class ProfilePage implements OnInit, OnDestroy {
 
   myphoto: string = "https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"
   changes: boolean = false;
@@ -20,38 +42,64 @@ export class ProfilePage implements OnInit {
     user: []
   }
   editForm: FormGroup
+  private profileSub: Subscription;
+  isLoading = false;
 
   constructor(private profileService: ProfileService, private loadingCtrl: LoadingController, private toastController: ToastController) { }
 
   ngOnInit() {
-    this.editForm = new FormGroup({
-      username: new FormControl(null, {
-        updateOn: 'blur',
-        validators: [Validators.required]
-      }),
-      fullname: new FormControl(null, {
-        updateOn: 'blur',
-        validators: [Validators.required]
-      }),
-      ic: new FormControl(null, {
-        updateOn: 'blur',
-        validators: [Validators.required]
-      })
-    });
-
-    this.profileService.getProfile().subscribe(res => {
+    this.isLoading = true;
+    this.profileSub = this.profileService.getProfile().subscribe(res => {
       this.profile = res
-      this.name = this.profile.user.fullname
-      this.username = this.profile.user.username
-      this.telefon = this.profile.user.ic
-      this.location = "Kuching, Sarawak"
+      this.editForm = new FormGroup({
+        username: new FormControl(this.profile.user.fullname, {
+          updateOn: 'blur',
+          validators: [Validators.required]
+        }),
+        fullname: new FormControl(this.profile.user.username, {
+          updateOn: 'blur',
+          validators: [Validators.required]
+        }),
+        telNo: new FormControl(this.profile.user.telNo, {
+          updateOn: 'blur',
+          validators: [Validators.required]
+        }),
+        location: new FormControl(this.profile.user.location, {
+          updateOn: 'blur',
+          validators: [Validators.required]
+        }),
+        dp: new FormControl(null)
+      });
+      this.isLoading = false;
     })
   }
 
+  onImagePicked(imageData: string | File) {
+    let imageFile
+    if(typeof imageData == 'string') {
+      try {
+        imageFile = base64toBlob(
+          imageData.replace('data:image/jpeg;base64,', ''),
+          'image/jpeg'
+        );
+        // imageFile = imageData
+      } catch (err) {
+        console.log(err)
+        return;
+      }
+    } else {
+      imageFile = imageData
+    } 
+      this.editForm.patchValue({ dp:JSON.stringify(imageFile) })
+      console.log(imageFile)
+      //this.changes = true
+  }
+
   onEdit() {
-    if (!this.editForm.valid) {
+    if (!this.editForm.valid || !this.editForm.get('dp').value) {
       return;
     }
+    console.log(this.editForm.value)
     this.loadingCtrl
     .create({
       message: 'Processing...'
@@ -81,6 +129,12 @@ export class ProfilePage implements OnInit {
       color: 'danger',
     })
     toast.present()
+  }
+
+  ngOnDestroy() {
+    if (this.profileSub) {
+      this.profileSub.unsubscribe();
+    }
   }
 
 

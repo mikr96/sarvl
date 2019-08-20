@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EventService } from '../../services/event/event.service';
 
 @Component({
   selector: 'app-faq',
@@ -7,12 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FaqPage implements OnInit {
 
-  open: boolean = false
-  open1: boolean = false
+  organizer: boolean = false
+  volunteer: boolean = false
 
-  constructor() { }
+  constructor(private eventService: EventService) { }
 
   ngOnInit() {
+    this.eventService.getFaq().subscribe(res => {
+      console.log(res)
+    })
   }
 
 }

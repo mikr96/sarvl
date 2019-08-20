@@ -35,6 +35,10 @@ const routes: Routes = [
         path: 'faq', 
         loadChildren: './faq/faq.module#FaqPageModule' 
       },
+      { 
+        path: 'search', 
+        loadChildren: './search/search.module#SearchPageModule' 
+      },
       {
         path: '',
         redirectTo: '/pages/home',
@@ -46,7 +50,7 @@ const routes: Routes = [
     path: '',
     redirectTo: '/pages/home',
     pathMatch: 'full'
-  },
+  }
 ];
 
 @NgModule({

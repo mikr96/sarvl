@@ -10,18 +10,22 @@
 <ion-content>
 <ion-grid>
   <ion-row class="ion-justify-content-center ion-align-items-center">
+    <div *ngIf="isLoading" text-center>
+      <ion-spinner color="primary"></ion-spinner>
+    </div>
     <ion-col size="11">
       <ion-card>
-        <form [formGroup]="editForm" (ngSubmit)="onEdit()">
+        <form [formGroup]="editForm" *ngIf="!isLoading">
           <ion-card-header>
-            <div align="center">
+            <!-- <div align="center">
               <ion-avatar>
                 <img src="{{ myphoto }}" (click)="getImage()" class="profilePic" alt="Registration Image">
-              </ion-avatar>
-              <ion-button icon-left (click)="presentActionSheet()">
+              </ion-avatar> -->
+              <!-- <ion-button icon-left (click)="presentActionSheet()">
                 <ion-icon name="camera"></ion-icon>Select Image
-              </ion-button>
-            </div>
+              </ion-button> -->
+              <app-image-picker [showPreview]="editForm.get('dp').value" (imagePicker)="onImagePicked($event)"></app-image-picker>
+            <!-- </div> -->
           </ion-card-header>
           <div style="padding-right:16px">
             <ion-item lines="none">
@@ -34,15 +38,15 @@
             </ion-item>
             <ion-item lines="none">
               <ion-icon name="call" slot="start"></ion-icon>
-              <ion-input (ionChange)="changes=true" placeholder="{{telefon}}" formControlName="ic"></ion-input>
+              <ion-input (ionChange)="changes=true" placeholder="{{telefon}}" formControlName="telNo"></ion-input>
             </ion-item>
             <ion-item lines="none">
               <ion-icon name="pin" slot="start"></ion-icon>
-              <ion-input (ionChange)="changes=true" placeholder="{{location}}"></ion-input>
+              <ion-input (ionChange)="changes=true" placeholder="{{location}}" formControlName="location"></ion-input>
             </ion-item>
           </div>
           <ion-card-content>
-            <ion-button type="submit" expand="block" [disabled]="changes===false">Confirm Edit</ion-button>
+            <ion-button expand="block" [disabled]="!editForm?.valid" (click)="onEdit()">Confirm Edit</ion-button>
           </ion-card-content>
         </form>
       </ion-card>

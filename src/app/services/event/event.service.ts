@@ -105,4 +105,8 @@ export class EventService {
       })
     )
   }
+
+  public getFaq() {
+    return this.http.get(URL + 'faqs')
+  }
 }

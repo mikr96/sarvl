@@ -13,14 +13,14 @@
     <h1>Frequently Asked Questions</h1>
   </div>
   <ion-list>
-    <ion-item lines="none" button (click)="open1 = !open1" [class.parent-active]="open1" detail="false">
+    <ion-item lines="none" button (click)="volunteer = !volunteer" [class.parent-active]="volunteer" detail="false">
       <ion-icon slot="start" name="bicycle"></ion-icon>
-      <ion-icon slot="end" name="arrow-dropright" *ngIf="!open1"></ion-icon>
-      <ion-icon slot="end" name="arrow-dropdown" *ngIf="open1"></ion-icon>
+      <ion-icon slot="end" name="arrow-dropright" *ngIf="!volunteer"></ion-icon>
+      <ion-icon slot="end" name="arrow-dropdown" *ngIf="volunteer"></ion-icon>
       <ion-label>Volunteer</ion-label>
     </ion-item>
     <!--SUB MENU-->
-    <ion-list *ngIf="open1">
+    <ion-list *ngIf="volunteer">
         <ion-item button>
           <ion-label class="sub-item">
             How do you apply ? <span style="font-size: 10px;">Just click join now!</span>
@@ -29,14 +29,14 @@
     </ion-list>
   </ion-list>
   <ion-list>
-    <ion-item lines="none" button (click)="open = !open" [class.parent-active]="open" detail="false">
+    <ion-item lines="none" button (click)="organizer = !organizer" [class.parent-active]="organizer" detail="false">
       <ion-icon slot="start" name="briefcase"></ion-icon>
-      <ion-icon slot="end" name="arrow-dropright" *ngIf="!open"></ion-icon>
-      <ion-icon slot="end" name="arrow-dropdown" *ngIf="open"></ion-icon>
+      <ion-icon slot="end" name="arrow-dropright" *ngIf="!organizer"></ion-icon>
+      <ion-icon slot="end" name="arrow-dropdown" *ngIf="organizer"></ion-icon>
       <ion-label>Organizer</ion-label>
     </ion-item>
     <!--SUB MENU-->
-    <ion-list *ngIf="open">
+    <ion-list *ngIf="organizer">
         <ion-item button>
           <ion-label class="sub-item">
             How to get event approved ? <span style="font-size: 10px;">Put a logic value</span>

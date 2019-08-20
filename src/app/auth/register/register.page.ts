@@ -25,7 +25,7 @@ export class RegisterPage implements OnInit {
         updateOn: 'blur',
         validators: [Validators.required]
       }),
-      confirmPassword: new FormControl(null, {
+      password_confirmation: new FormControl(null, {
         updateOn: 'blur',
         validators: [Validators.required]
       }),
@@ -34,6 +34,14 @@ export class RegisterPage implements OnInit {
         validators: [Validators.required]
       }),
       ic: new FormControl(null, {
+        updateOn: 'blur',
+        validators: [Validators.required]
+      }),
+      telNo: new FormControl(null, {
+        updateOn: 'blur',
+        validators: [Validators.required]
+      }),
+      location: new FormControl(null, {
         updateOn: 'blur',
         validators: [Validators.required]
       })
