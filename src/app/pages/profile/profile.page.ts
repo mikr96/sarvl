@@ -76,7 +76,7 @@ export class ProfilePage implements OnInit, OnDestroy {
 
   onImagePicked(imageData: string | File) {
     let imageFile
-    if(typeof imageData == 'string') {
+    if (typeof imageData == 'string') {
       try {
         // imageFile = base64toBlob(
         //   imageData.replace('data:image/jpeg;base64,', ''),
@@ -89,9 +89,16 @@ export class ProfilePage implements OnInit, OnDestroy {
       }
     } else {
       imageFile = imageData
+<<<<<<< HEAD
     } 
       this.editForm.patchValue({ dp:imageFile })
       console.log(imageFile)
+=======
+    }
+    this.editForm.patchValue({ dp: imageFile })
+    console.log(imageFile)
+    //this.changes = true
+>>>>>>> 5b0147493a4b9ab5791d15ac20e85f17f08b0520
   }
 
   onEdit() {
@@ -100,24 +107,26 @@ export class ProfilePage implements OnInit, OnDestroy {
     }
     //console.log(this.editForm.value)
     this.loadingCtrl
-    .create({
-      message: 'Processing...'
-    })
-    .then(loadingEl => {
-      loadingEl.present();
-      this.profileService
-        .editProfile(this.editForm.value)
-        .subscribe(res => {
-          loadingEl.dismiss()
-          if (!res) {
-            return this.popToast('Something went wrong...')
-          }
-        }, ({ error }) => {
-          const firstError: string = Object.values(error)[0][0]
-          loadingEl.dismiss()
-          return this.popToast(firstError)
-        })
-    });
+      .create({
+        message: 'Processing...'
+      })
+      .then(loadingEl => {
+        loadingEl.present();
+        this.profileService
+          .editProfile(this.editForm.value)
+          .subscribe(res => {
+            loadingEl.dismiss()
+            console.log('res', res)
+            if (!res) {
+              return this.popToast('Something went wrong...')
+            }
+          }, ({ error }) => {
+            console.error(error)
+            const firstError: string = Object.values(error)[0][0]
+            loadingEl.dismiss()
+            return this.popToast(firstError)
+          })
+      });
   }
 
   async popToast(message: string) {
