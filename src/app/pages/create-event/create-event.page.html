@@ -11,7 +11,8 @@
     <ion-grid>
       <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
         <ion-row class="ion-justify-content-center">
-          <ion-col size="8">
+          <ion-col size="10">
+            <app-image-picker [showPreview]="eventForm.get('dp').value" (imagePicker)="onImagePicked($event)"></app-image-picker>
             <ion-list class="ion-no-margin ion-no-padding">
                 <ion-item>
                   <ion-label position="floating">Title</ion-label>

@@ -78,11 +78,11 @@ export class ProfilePage implements OnInit, OnDestroy {
     let imageFile
     if(typeof imageData == 'string') {
       try {
-        imageFile = base64toBlob(
-          imageData.replace('data:image/jpeg;base64,', ''),
-          'image/jpeg'
-        );
-        // imageFile = imageData
+        // imageFile = base64toBlob(
+        //   imageData.replace('data:image/jpeg;base64,', ''),
+        //   'image/jpeg'
+        // );
+        imageFile = imageData
       } catch (err) {
         console.log(err)
         return;
@@ -90,16 +90,15 @@ export class ProfilePage implements OnInit, OnDestroy {
     } else {
       imageFile = imageData
     } 
-      this.editForm.patchValue({ dp:JSON.stringify(imageFile) })
+      this.editForm.patchValue({ dp:imageFile })
       console.log(imageFile)
-      //this.changes = true
   }
 
   onEdit() {
     if (!this.editForm.valid || !this.editForm.get('dp').value) {
       return;
     }
-    console.log(this.editForm.value)
+    //console.log(this.editForm.value)
     this.loadingCtrl
     .create({
       message: 'Processing...'

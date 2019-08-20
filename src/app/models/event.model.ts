@@ -7,6 +7,7 @@ export class Event {
     public campaign: string,
     public goal: string,
     public whatsapp_link: string,
-    public description: string
+    public description: string,
+    public dp: any
   ) {}
 }

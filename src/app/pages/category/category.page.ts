@@ -92,4 +92,10 @@ export class CategoryPage implements OnInit {
     }
   }
 
+  changeCategory(value) {
+    this.eventService.getEventByCampaign(value).subscribe(res => {
+      console.log(res)
+    })
+  }
+
 }

@@ -49,8 +49,25 @@ export class CreateEventPage implements OnInit {
       description: new FormControl(null, {
         updateOn: 'blur',
         validators: [Validators.required]
-      })
+      }),
+      dp: new FormControl(null),
     });
+  }
+
+  onImagePicked(imageData: string | File) {
+    let imageFile
+    if(typeof imageData == 'string') {
+      try {
+        imageFile = imageData
+      } catch (err) {
+        console.log(err)
+        return;
+      }
+    } else {
+      imageFile = imageData
+    } 
+      this.eventForm.patchValue({ dp:imageFile })
+      console.log(imageFile)
   }
 
   
@@ -75,7 +92,8 @@ export class CreateEventPage implements OnInit {
           this.eventForm.value.campaign,
           this.eventForm.value.goal,
           this.eventForm.value.whatsapp_link,
-          this.eventForm.value.description
+          this.eventForm.value.description,
+          this.eventForm.value.dp
         )
         .subscribe(
           res => {

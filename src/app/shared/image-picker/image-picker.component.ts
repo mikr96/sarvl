@@ -53,7 +53,6 @@ export class ImagePickerComponent implements OnInit {
   }
 
   onFileChosen(event: Event) {
-    console.log(event)
     const pickedFile = (event.target as HTMLInputElement).files[0];
     if (!pickedFile) {
       return;
@@ -62,7 +61,7 @@ export class ImagePickerComponent implements OnInit {
     fr.onload = () => {
       const dataUrl = fr.result.toString();
       this.selectedImage = dataUrl;
-      this.imagePicker.emit(pickedFile);
+      this.imagePicker.emit(dataUrl);
     };
     fr.readAsDataURL(pickedFile);
   }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
+import { EventService } from '../../services/event/event.service';
 
 @Component({
   selector: 'app-detail-event',
@@ -10,10 +11,11 @@ export class DetailEventPage implements OnInit {
   item: any = []
   message: string;
   method: string;
-  constructor(private alertCtrl: AlertController) { }
+  constructor(private alertCtrl: AlertController, private eventService: EventService) {}
 
   ngOnInit() {
-    this.item= JSON.parse(localStorage.getItem('item'));
+    this.item = JSON.parse(localStorage.getItem('item'));
+    this.eventService.viewCount(this.item.id).subscribe()
   }
 
   join() {

@@ -71,7 +71,8 @@ export class EventService {
     campaign: string,
     goal: string,
     whatsapp_link: string,
-    description: string
+    description: string,
+    dp: any
   ) {
     let newEvent: Event;
     var start = moment(start_date);
@@ -90,7 +91,8 @@ export class EventService {
           newCampaign[0],
           goal,
           whatsapp_link,
-          description
+          description,
+          dp
         );
         return this.http.post(URL + 'events', { ...newEvent }, 
         { 
@@ -105,6 +107,25 @@ export class EventService {
       })
     )
   }
+
+  public viewCount(event_id : any) {
+    return this.authService.token.pipe(
+      take(1),
+      switchMap(token => {
+        return this.http.put(URL + `events/update_count/${event_id}`, {} , {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        }
+      )
+      })
+    )
+  }
+
+  public getEventByCampaign(id: string) {
+    return this.http.get(`${URL}events/by_campaign/HEART`)
+  }
+
 
   public getFaq() {
     return this.http.get(URL + 'faqs')
