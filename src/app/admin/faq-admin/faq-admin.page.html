@@ -8,10 +8,56 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-fab horizontal="end" vertical="center" slot="fixed">
-    <ion-fab-button color="secondary">
+<ion-content fullscreen class="ion-padding">
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button color="secondary" routerLink="/admin/faq-admin/create">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+  <ion-grid>
+    <ion-row>
+      <ion-list style="width:100%">
+        <ion-item lines="none" button (click)="volunteer = !volunteer" [class.parent-active]="volunteer" detail="false">
+          <ion-icon slot="start" name="bicycle"></ion-icon>
+          <ion-icon slot="end" name="arrow-dropright" *ngIf="!volunteer"></ion-icon>
+          <ion-icon slot="end" name="arrow-dropdown" *ngIf="volunteer"></ion-icon>
+          <ion-label>Volunteer</ion-label>
+        </ion-item>
+        <!--SUB MENU-->
+        <ion-list *ngIf="volunteer">
+          <ion-row *ngFor="let item of volunteerFaqs" no-margin no-padding>
+            <ion-card style="width:100%">
+                <ion-card-header>
+                  <ion-card-title>{{ item.questions.question }}</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                    {{ item.questions.answer }}
+                </ion-card-content>
+              </ion-card>
+          </ion-row>
+        </ion-list>
+      </ion-list>
+      <ion-list style="width:100%">
+        <ion-item lines="none" button (click)="organizer = !organizer" [class.parent-active]="organizer" detail="false">
+          <ion-icon slot="start" name="briefcase"></ion-icon>
+          <ion-icon slot="end" name="arrow-dropright" *ngIf="!organizer"></ion-icon>
+          <ion-icon slot="end" name="arrow-dropdown" *ngIf="organizer"></ion-icon>
+          <ion-label>Organizer</ion-label>
+        </ion-item>
+        <!--SUB MENU-->
+        <ion-list *ngIf="organizer" >
+          <ion-row *ngFor="let item of organizerFaqs" no-margin no-padding>
+            <ion-card style="width:100%">
+                <ion-card-header>
+                  <ion-card-title>{{ item.questions.question }}</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                    {{ item.questions.answer }}
+                </ion-card-content>
+              </ion-card>
+          </ion-row>
+        </ion-list>
+      </ion-list>
+    </ion-row>
+  </ion-grid>
 </ion-content>

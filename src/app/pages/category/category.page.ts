@@ -42,7 +42,7 @@ export class CategoryPage implements OnInit {
       }
       this.currentCampaign = paramMap.get('id');
       this.eventService
-      .getEventByCampaign(this.currentCampaign)
+      .getEventByCampaign(this.currentCampaign, this.currentPage)
       .subscribe(
         (event: any) => {
           this.isLoading = false;

@@ -45,8 +45,8 @@ export class EventService {
     return this.http.get(`${URL}events/by_category/${category}?page=${page}`)
   }
 
-  public getEventByCampaign(campaign: string) {
-    return this.http.get(`${URL}events/by_campaign/${campaign}`)
+  public getEventByCampaign(campaign: string, page: number = 1) {
+    return this.http.get(`${URL}events/by_campaign/${campaign}?page=${page}`)
   }
 
   public getCreatedEvents() {
@@ -123,11 +123,11 @@ export class EventService {
   }
 
   public getEventByCampaignWithCategory(page: number = 1, campaign: string, category: string = 'latest') {
-    return this.http.get(`${URL}events/by_campaign/${campaign}?category=${category}?page=${page}`)
+    return this.http.get(`${URL}events/by_campaign_category?category=${category}&campaign=${campaign}&page=${page}`)
   }
 
 
-  public getFaq() {
+  public getFAQ() {
     return this.http.get(URL + 'faqs')
   }
 }

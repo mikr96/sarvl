@@ -21,7 +21,17 @@ const routes: Routes = [
       },
       { 
         path: 'faq-admin', 
-        loadChildren: './faq-admin/faq-admin.module#FaqAdminPageModule' 
+        children: [
+          {
+            path: '',
+            loadChildren: './faq-admin/faq-admin.module#FaqAdminPageModule'
+          },
+          {
+            path: 'create',
+            loadChildren: './faq-admin/create/create.module#CreatePageModule'
+
+          }
+        ] 
       },
       {
         path: '',
