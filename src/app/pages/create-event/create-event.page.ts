@@ -51,12 +51,16 @@ export class CreateEventPage implements OnInit {
         validators: [Validators.required]
       }),
       dp: new FormControl(null),
+      noVolunteers: new FormControl(null, {
+        updateOn: 'blur',
+        validators: [Validators.required]
+      }),
     });
   }
 
   onImagePicked(imageData: string | File) {
     let imageFile
-    if(typeof imageData == 'string') {
+    if (typeof imageData == 'string') {
       try {
         imageFile = imageData
       } catch (err) {
@@ -65,17 +69,17 @@ export class CreateEventPage implements OnInit {
       }
     } else {
       imageFile = imageData
-    } 
-      this.eventForm.patchValue({ dp:imageFile })
-      console.log(imageFile)
+    }
+    this.eventForm.patchValue({ dp: imageFile })
+    console.log(imageFile)
   }
 
-  
+
   onSubmit() {
     if (!this.eventForm.valid) {
       return;
     }
-    
+
     console.log(this.eventForm.value);
 
     this.loadingCtrl
@@ -93,24 +97,25 @@ export class CreateEventPage implements OnInit {
           this.eventForm.value.goal,
           this.eventForm.value.whatsapp_link,
           this.eventForm.value.description,
-          this.eventForm.value.dp
+          this.eventForm.value.dp,
+          this.eventForm.value.noVolunteers
         )
-        .subscribe(
-          res => {
-          console.log(res)
-          loadingEl.dismiss()
-          this.eventForm.reset()
-          this.router.navigate(['/pages/home'])
-        }, 
-        err => {
-          console.log(err)
-          const firstError: string = Object.values(err)[0][0]
-          loadingEl.dismiss()
-          this.popToast(firstError)
-      })
-    });
+          .subscribe(
+            res => {
+              console.log(res)
+              loadingEl.dismiss()
+              this.eventForm.reset()
+              this.router.navigate(['/pages/home'])
+            },
+            err => {
+              console.log(err)
+              const firstError: string = Object.values(err)[0][0]
+              loadingEl.dismiss()
+              this.popToast(firstError)
+            })
+      });
   }
-  
+
   async popToast(message: string) {
     const toast = await this.toastController.create({
       message,
