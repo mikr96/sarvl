@@ -53,12 +53,12 @@ export class EventService {
     return this.authService.token.pipe(
       take(1),
       switchMap(token => {
-        return this.http.get(URL + 'created_events', 
-        { 
-          headers: {
-            Authorization: 'Bearer ' + token
-          }
-        });
+        return this.http.get(URL + 'created_events',
+          {
+            headers: {
+              Authorization: 'Bearer ' + token
+            }
+          });
       })
     );
   }
@@ -90,8 +90,8 @@ export class EventService {
       })
     );
   }
-
-  public createEvent(              
+            
+  public createEvent(
     title: string,
     start_date: Date,
     end_date: Date,
@@ -100,13 +100,14 @@ export class EventService {
     goal: string,
     whatsapp_link: string,
     description: string,
-    dp: any
+    dp: any,
+    noVolunteers: string
   ) {
     let newEvent: Event;
     var start = moment(start_date);
-    var newStart = start.format("YYYY-MM-DD HH:mm:ss"); 
+    var newStart = start.format("YYYY-MM-DD HH:mm:ss");
     var end = moment(end_date);
-    var newEnd = end.format("YYYY-MM-DD HH:mm:ss"); 
+    var newEnd = end.format("YYYY-MM-DD HH:mm:ss");
     return this.authService.token.pipe(
       take(1),
       switchMap(token => {
@@ -120,14 +121,15 @@ export class EventService {
           goal,
           whatsapp_link,
           description,
-          dp
+          dp,
+          noVolunteers
         );
-        return this.http.post(URL + 'events', { ...newEvent }, 
-        { 
-          headers: {
-            Authorization: 'Bearer ' + token
-          }
-        });
+        return this.http.post(URL + 'events', { ...newEvent },
+          {
+            headers: {
+              Authorization: 'Bearer ' + token
+            }
+          });
       }),
       take(1),
       tap(events => {
@@ -136,16 +138,16 @@ export class EventService {
     )
   }
 
-  public viewCount(event_id : any) {
+  public viewCount(event_id: any) {
     return this.authService.token.pipe(
       take(1),
       switchMap(token => {
-        return this.http.put(URL + `events/update_count/${event_id}`, {} , {
+        return this.http.put(URL + `events/update_count/${event_id}`, {}, {
           headers: {
             Authorization: 'Bearer ' + token
           }
         }
-      )
+        )
       })
     )
   }
