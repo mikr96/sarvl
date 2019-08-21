@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { NavController, ToastController } from '@ionic/angular';
 import { AdminEventService } from 'src/app/services/event/admin-event.service';
+import { EventService } from '../../services/event/event.service';
 
 @Component({
   selector: 'app-campaign',
@@ -16,8 +17,9 @@ export class CampaignPage implements OnInit {
   activeApproved: boolean = false
   activeDeclined: boolean = false
   activeRequested: boolean = false
+  dataEvent: any
 
-  constructor(private router: Router, private route: ActivatedRoute, private navCtrl: NavController, private adminService: AdminEventService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private navCtrl: NavController, private adminService: AdminEventService, private eventService: EventService, private toastCtrl: ToastController) { }
 
   ngOnInit() {
     this.isLoading = true;
@@ -27,22 +29,22 @@ export class CampaignPage implements OnInit {
         return;
       }
       this.currentCampaign = paramMap.get('id');
-      // this.adminService
-      // .getEventByCampaign(this.currentCampaign)
-      // .subscribe(
-      //   (event: any) => {
-      //     this.isLoading = false;
-      //     this.dataEvent = event.events;
-      //   },
-      //   error => {
-      //     this.handleError(error)
-      //   }
-      // );
+      this.eventService
+      .getEventByCampaign(this.currentCampaign)
+      .subscribe(
+        (event: any) => {
+          this.isLoading = false;
+          this.dataEvent = event.events;
+          console.log(this.dataEvent)
+        },
+        error => {
+          this.handleError(error)
+        }
+      );
     })
   }
 
   changeCategory(currentCategory) {
-    //console.log(currentCategory)
     if(currentCategory === "all") {
       this.activeAll = true
       this.activeApproved = false
@@ -64,6 +66,21 @@ export class CampaignPage implements OnInit {
       this.activeDeclined = false
       this.activeRequested = true
     }
+  }
+
+  private handleError(error: {}) {
+    const firstError: string = Object.values(error)[0][0]
+    return this.popToast(firstError)
+  }
+
+  async popToast(message: string) {
+    const toast = await this.toastCtrl.create({
+      message,
+      duration: 2000,
+      position: 'top',
+      color: 'danger',
+    })
+    toast.present()
   }
 
 }
