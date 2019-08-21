@@ -18,34 +18,44 @@
           <ion-card-title>{{item.title}}</ion-card-title>
           <div class="offer-details">
             <ion-icon name="calendar" color="primary"></ion-icon>
-            <ion-text color="tertiary" class="space-left">{{item.start_date}}</ion-text>
+            <ion-text color="tertiary" class="space-left">{{date(item.start_date)}}</ion-text>
             <span class="space-left">to</span>
             <ion-icon name="calendar" class="space-left" color="primary"></ion-icon>
-            <ion-text color="tertiary" class="space-left">{{item.end_date}}</ion-text>
+            <ion-text color="tertiary" class="space-left">{{date(item.end_date)}}</ion-text>
           </div>
+          <ion-icon name="pin" color="primary"></ion-icon>
+          <ion-note color="primary">{{location}}</ion-note>
         </ion-card-header>
         <ion-card-content>
           {{item.description}}
           <ion-list>
             <ion-progress-bar color="secondary" value="0.5"></ion-progress-bar>
             <ion-label>Raised</ion-label>
-            <ion-note style="float:right;" color="primary">RM50 / RM100</ion-note>
+            <ion-note style="float:right;" color="primary">RM50 / RM{{item.goal}}</ion-note>
             <ion-item lines="none" no-padding>
               <ion-icon name="people" color="primary"></ion-icon>
               <ion-text>Registered</ion-text>
-              <ion-note slot="end" color="success">25/50</ion-note>
+              <ion-note slot="end" color="primary">{{len(item.volunteered)}}/{{item.noVolunteers}}</ion-note>
             </ion-item>
             <ion-item lines="none" no-padding>
               <ion-icon name="calendar" color="primary"></ion-icon>
               <ion-text>Days Left</ion-text>
-              <ion-note slot="end" color="success">11</ion-note>
+              <ion-note slot="end" color="primary">{{daysLeft(item.start_date)}}</ion-note>
             </ion-item>
-            <ion-item lines="full" no-padding>
+            <ion-item lines="full" no-padding button (click)="comments = !comments" [class.parent-active]="comments" detail="false">
               <ion-label>Comments</ion-label>
-              <ion-badge color="medium" slot="end">0</ion-badge>
+              <ion-badge color="medium" slot="end">{{len(item.comments)}}</ion-badge>
             </ion-item>
+            <!--SUB MENU-->
+            <ion-list *ngIf="comments">
+              <ion-row class="no-margin no-padding" *ngFor="let item of item.comments">
+                <ion-text>{{item.comment}}</ion-text>
+              </ion-row>
+              <ion-textarea [(ngModel)]="comment" placeholder="Insert comment"></ion-textarea>
+              <ion-button color="medium" expand="block" (click)="postComment(item.id)">Comment</ion-button>
             </ion-list>
-            <ion-button color="secondary" fill="clear" (click)="join()" expand="block" margin-vertical>JOIN NOW</ion-button>
+            </ion-list>
+            <ion-button color="secondary" fill="clear" (click)="join(item.id)" expand="block" margin-vertical>JOIN NOW</ion-button>
             <ion-button color="secondary" expand="block" (click)="donate()">DONATE NOW</ion-button>
           </ion-card-content>
         </ion-card>

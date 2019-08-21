@@ -44,7 +44,8 @@ const routes: Routes = [
     path: '',
     redirectTo: '/admin/dashboard',
     pathMatch: 'full'
-  }
+  },
+  { path: 'modal', loadChildren: './campaign/modal/modal.module#ModalPageModule' }
 ];
 
 

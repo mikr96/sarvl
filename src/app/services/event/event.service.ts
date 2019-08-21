@@ -63,6 +63,34 @@ export class EventService {
     );
   }
 
+  public postComment(comment:string, id:string) {
+    return this.authService.token.pipe(
+      take(1),
+      switchMap(token => {
+        return this.http.post(URL + `comments/${id}`, {comment} , 
+        { 
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        });
+      })
+    );
+  }
+
+  public joinEvent(id:string) {
+    return this.authService.token.pipe(
+      take(1),
+      switchMap(token => {
+        return this.http.put(URL + `join_event/${id}` , 
+        { 
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        });
+      })
+    );
+  }
+
   public createEvent(              
     title: string,
     start_date: Date,

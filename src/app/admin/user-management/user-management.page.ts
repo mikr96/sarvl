@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AdminEventService } from 'src/app/services/event/admin-event.service';
 
 @Component({
   selector: 'app-user-management',
@@ -6,10 +7,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user-management.page.scss'],
 })
 export class UserManagementPage implements OnInit {
-
-  constructor() { }
+  dataUser: any = {
+    data: [],
+    next_page_url: null,
+    total: 0
+  }
+  constructor(private adminEventService: AdminEventService) { }
 
   ngOnInit() {
+    this.adminEventService.getUsers().subscribe((res:any) => {
+      console.log(res)
+      this.dataUser = res.users
+    })
   }
 
 }

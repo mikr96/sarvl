@@ -1,0 +1,58 @@
+<ion-header translucent>
+    <ion-toolbar>
+      <ion-title>Event Details</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="dismissModal()">Close</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content fullscreen>
+      <ion-grid>
+          <ion-row>
+            <ion-card>
+              <img *ngIf="image==null" class="img-card" src="../../../assets/logo.png"/>
+              <ion-img *ngIf="image!=null" class="img-card" [src]="image"></ion-img>
+              <ion-card-header>
+                <ion-card-subtitle>{{campaign}}</ion-card-subtitle>
+                <ion-card-title>{{title}}</ion-card-title>
+                <div class="offer-details">
+                  <ion-icon name="calendar" color="primary"></ion-icon>
+                  <ion-text color="tertiary" class="space-left">{{start_date}} </ion-text>
+                  <span class="space-left"> to </span>
+                  <ion-icon name="calendar" class="space-left" color="primary"></ion-icon>
+                  <ion-text color="tertiary" class="space-left"> {{end_date}}</ion-text>
+                </div>
+              </ion-card-header>
+              <ion-card-content>
+                {{description}}
+                <ion-list>
+                  <ion-item lines="none" no-padding>
+                    <ion-icon name="star-outline"></ion-icon>
+                    <ion-text>Goal</ion-text>
+                    <ion-note slot="end" color="primary">RM {{goal}}</ion-note>
+                  </ion-item>
+                  <ion-item lines="none" no-padding>
+                      <ion-icon name="pin" color="primary"></ion-icon>
+                      <ion-text>Location</ion-text>
+                      <ion-note slot="end" color="primary">{{location}}</ion-note>
+                  </ion-item>
+                  <ion-item lines="none" no-padding>
+                    <ion-icon name="people" color="primary"></ion-icon>
+                    <ion-text>Registered</ion-text>
+                    <ion-note slot="end" color="primary">{{volunteered.length}}/{{noVolunteers}}</ion-note>
+                  </ion-item>
+                  <ion-item lines="none" no-padding>
+                    <ion-icon name="eye" color="primary"></ion-icon>
+                    <ion-text>View Count</ion-text>
+                    <ion-note slot="end" color="primary">{{view_count}}</ion-note>
+                  </ion-item>
+                  <ion-item lines="none" no-padding>
+                    <ion-label>Comments</ion-label>
+                    <ion-badge color="primary" slot="end">{{comments.length}}</ion-badge>
+                  </ion-item>
+                  </ion-list>
+                </ion-card-content>
+              </ion-card>
+          </ion-row>
+        </ion-grid>
+  </ion-content>

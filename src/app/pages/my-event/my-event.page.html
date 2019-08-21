@@ -36,7 +36,7 @@
               <h3>APPROVED</h3>
             </div>
             <ion-button *ngIf="item.status==2" expand="block" color="primary">READ COMMENTS</ion-button>
-            <ion-button *ngIf="item.status==2" expand="block" color="danger">RESUBMIT</ion-button>
+            <ion-button *ngIf="item.status==2" expand="block" color="danger" (click)="resubmit()">RESUBMIT</ion-button>
           </ion-card-content>
         </ion-card>
     </ion-row>

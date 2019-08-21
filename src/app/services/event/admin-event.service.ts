@@ -52,6 +52,66 @@ export class AdminEventService {
     )
   }
 
+  public getByStatus(currentPage, currentCampaign, currentCategory) {
+    console.log("campaign: ", currentCampaign)
+    console.log("category: ", currentCategory)
+    return this.authService.token.pipe(
+      take(1),
+      switchMap(token => {
+        return this.http.get(URL + `admin/events_by_status/${currentCampaign}?status=${currentCategory}&page=${currentPage}`, {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        })
+      })
+    )
+  }
+
+  public getAll(currentPage, currentCampaign, currentCategory) {
+    return this.authService.token.pipe(
+      take(1),
+      switchMap(token => {
+        return this.http.get(URL + `admin/events_by_status/${currentCampaign}?page=${currentPage}`, {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        })
+      })
+    )
+  }
+
+  public getUsers() {
+    return this.http.get(URL + 'users')
+  }
+
+  public approveEvent(id : string) {
+    let status = 1
+    return this.authService.token.pipe(
+      take(1),
+      switchMap(token => {
+        return this.http.put(URL + `/events/${id}/change_status`, { status }, {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        })
+      })
+    )
+  }
+
+  public declineEvent(id : string) {
+    let status = 2
+    return this.authService.token.pipe(
+      take(1),
+      switchMap(token => {
+        return this.http.put(URL + `/events/${id}/change_status`, { status }, {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        })
+      })
+    )
+  }
+
   public getFAQ() {
     return this.http.get(URL + 'faqs')
   }

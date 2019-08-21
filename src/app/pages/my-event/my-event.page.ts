@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from '../../services/event/event.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-my-event',
@@ -15,7 +16,7 @@ export class MyEventPage implements OnInit {
   processing: boolean = false
   noEvent: boolean
 
-  constructor(private eventService: EventService) { }
+  constructor(private eventService: EventService, private router: Router) { }
 
   ngOnInit() {
     this.eventService.getCreatedEvents().subscribe(resEvent => {
@@ -28,6 +29,10 @@ export class MyEventPage implements OnInit {
         this.noEvent = true;
       }
     })
+  }
+
+  resubmit() {
+    this.router.navigateByUrl("/pages/create-event")
   }
 
   // statusCard(status) {

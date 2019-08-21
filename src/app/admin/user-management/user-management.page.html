@@ -4,9 +4,21 @@
       <ion-menu-button menu="volunteer"></ion-menu-button>
     </ion-buttons>
     <ion-title>User Management</ion-title>
-    <ion-icon name="search" slot="end" margin></ion-icon>
   </ion-toolbar>
 </ion-header>
 <ion-content>
-
+  <ion-grid>
+    <ion-row>
+      <ion-col size="3"><b>Username</b></ion-col>
+      <ion-col size="3"><b>Fullname</b></ion-col>
+      <ion-col size="3"><b>IC</b></ion-col>
+      <ion-col size="3"><b>Location</b></ion-col>
+    </ion-row>
+    <ion-row *ngFor="let item of dataUser.data">
+        <ion-col size="3">{{item.username}}</ion-col>
+        <ion-col size="3">{{item.fullname}}</ion-col>
+        <ion-col size="3">{{item.ic}}</ion-col>
+        <ion-col size="3">{{item.location}}</ion-col>
+      </ion-row>
+  </ion-grid>
 </ion-content>
