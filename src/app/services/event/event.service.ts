@@ -46,8 +46,7 @@ export class EventService {
   }
 
   public getEventByCampaign(campaign: string) {
-    console.log(campaign)
-    return this.http.get(`${URL}events/by_campaign/HEART`)
+    return this.http.get(`${URL}events/by_campaign/${campaign}`)
   }
 
   public getCreatedEvents() {

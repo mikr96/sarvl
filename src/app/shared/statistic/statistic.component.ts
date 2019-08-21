@@ -18,21 +18,36 @@ interface EventResponseI {
 export class StatisticComponent implements OnInit {
   events: Array<{ campaign: string, value: number }>
   heartCanvas: any
+  chartInit: boolean = false
+
   constructor(private eventService: AdminEventService, private toastCtrl: ToastController) { }
 
   ngOnInit() {
     this.eventService
       .get('all')
       .subscribe(
-        (res: EventResponseI) => this.events = res.events,
+        (res: EventResponseI) => {
+          this.events = res.events
+        },
         err => this.popToast(
           'Something went wrong in getting list of events'
         )
       )
   }
 
-  ionViewDidEnter() {
+  ngAfterContentChecked() {
+    if (!this.chartInit) {
+      const canvas: NodeList = document.querySelectorAll('canvas')
+      if (canvas.length) {
+        this.initChart()
+        this.chartInit = true
+      }
+    }
+  }
+
+  initChart() {
     document.querySelectorAll('canvas').forEach((canvas: HTMLCanvasElement) => {
+      console.log(canvas)
       this.heartCanvas = new Chart(canvas, {
         type: 'bar',
         data: {

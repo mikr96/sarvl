@@ -8,31 +8,5 @@
     </ion-toolbar>
   </ion-header>
 <ion-content>
-    <ion-grid>
-        <ion-row ion-justify-content-centre no-padding no-margin>
-          <ion-col size="3" no-padding>
-            <ion-button color="secondary" expand="block">All</ion-button>
-          </ion-col>
-          <ion-col size="4" no-padding>
-            <ion-button color="secondary" expand="block">Incoming</ion-button>
-          </ion-col>
-          <ion-col size="5" no-padding>
-            <ion-button color="secondary" expand="block">Ended</ion-button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-      <ion-grid>
-        <ion-row *ngFor="let event of events">
-          <ion-col size="3">
-            {{event.campaign}} {{event.value}}
-          </ion-col>
-          <ion-col>
-            <canvas *ngIf='event.campaign=="HEART"' #heartCanvas></canvas>
-            <canvas *ngIf='event.campaign=="COLLAB"' #collabCanvas></canvas>
-            <canvas *ngIf='event.campaign=="CRADLE"' #cradleCanvas></canvas>
-            <canvas *ngIf='event.campaign=="TOUCH"' #touchCanvas></canvas>
-            <canvas *ngIf='event.campaign=="BELIEF"' #beliefCanvas></canvas>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+    <app-statistic></app-statistic>
 </ion-content>
