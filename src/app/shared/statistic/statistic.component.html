@@ -12,12 +12,25 @@
   </ion-row>
 </ion-grid>
 <ion-grid>
-  <ion-row *ngFor="let event of events">
-    <ion-col size="3">
-      {{event.campaign}} {{event.value}}
-    </ion-col>
+  <ion-row>
     <ion-col>
-      <canvas id="{{event.campaign | lowercase}}Canvas"></canvas>
+      <div class="canvasContainer">
+        <canvas id="lineChart"></canvas>
+      </div>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <div class="canvasContainer">
+        <canvas id="barChart"></canvas>
+      </div>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <div class="canvasContainer">
+        <canvas id="classChart"></canvas>
+      </div>
     </ion-col>
   </ion-row>
 </ion-grid>

@@ -42,7 +42,6 @@ export class CampaignPage implements OnInit {
         (event: any) => {
           this.isLoading = false;
           this.dataEvent = event.events;
-          console.log(this.dataEvent)
         },
         error => {
           this.handleError(error)
@@ -84,7 +83,6 @@ export class CampaignPage implements OnInit {
         .subscribe((data: any) => {
           this.isLoading = false
           this.dataEvent = data.events
-          console.log(this.dataEvent)
         }, ({ error }) => this.handleError(error))
     } else {
       this.adminEventService
