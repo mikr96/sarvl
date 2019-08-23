@@ -4,6 +4,7 @@ import { NavController, ToastController, LoadingController, ModalController } fr
 import { AdminEventService } from 'src/app/services/event/admin-event.service';
 import { EventService } from '../../services/event/event.service';
 import { ModalComponent } from './modal/modal.component';
+import { CommentComponent } from './comment/comment.component';
 
 @Component({
   selector: 'app-campaign',
@@ -36,8 +37,9 @@ export class CampaignPage implements OnInit {
         return;
       }
       this.currentCampaign = paramMap.get('id');
-      this.eventService
-      .getEventByCampaign(this.currentCampaign, this.currentPage)
+      this.currentCategory = 3
+      this.adminEventService
+      .getAll(this.currentPage, this.currentCampaign, this.currentCategory)
       .subscribe(
         (event: any) => {
           this.isLoading = false;
@@ -114,9 +116,6 @@ export class CampaignPage implements OnInit {
           res => {
           console.log(res)
           loadingEl.dismiss()
-          this.zone.run(() => {
-            console.log('force update the screen');
-          });
         }, 
         err => {
           console.log(err)
@@ -127,33 +126,34 @@ export class CampaignPage implements OnInit {
     });
   }
 
-  declineEvent(id) {
-    this.loadingCtrl
-      .create({
-        message: 'Processing...'
-      })
-      .then(loadingEl => {
-        loadingEl.present();
-        this.adminEventService.declineEvent(id)
-        .subscribe(
-          res => {
-          console.log(res)
-          loadingEl.dismiss()
-          this.zone.run(() => {
-            console.log('force update the screen');
-          });
-        }, 
-        err => {
-          console.log(err)
-          const firstError: string = Object.values(err)[0][0]
-          loadingEl.dismiss()
-          this.popToast(firstError)
-      })
+  declineEvent(item: any) {
+    this.postComment(item)
+  }
+
+  async postComment(item) {
+    const modal = await this.modalCtrl.create({
+      component: CommentComponent,
+      componentProps: {
+        id: item.id,
+        image: item.image,
+        title: item.title,
+        description: item.description,
+        start_date: item.start_date,
+        end_date: item.end_date,
+        goal: item.goal,
+        comments: item.comments,
+        location: item.location,
+        view_count: item.view_count,
+        noVolunteers: item.noVolunteers,
+        volunteered: item.volunteered,
+        whatsapp_link: item.whatsapp_link,
+        campaign: item.campaign
+      }
     });
+    return await modal.present();
   }
 
   async viewDetail(item) {
-    console.log(item)
     const modal = await this.modalCtrl.create({
       component: ModalComponent,
       componentProps: {
@@ -196,7 +196,6 @@ export class CampaignPage implements OnInit {
   };
 
   checkStatus(val) {
-    console.log(val)
     if (val == "0") {
       return "Waiting"
     } else if (val == "1") {

@@ -16,7 +16,7 @@ export class DetailEventPage implements OnInit {
   message: string;
   method: string;
   comment: string
-  constructor(private alertCtrl: AlertController, private eventService: EventService, private zone: NgZone, private loadingCtrl: LoadingController, private router: Router, private toastController: ToastController) {}
+  constructor(private alertCtrl: AlertController, private eventService: EventService, private loadingCtrl: LoadingController, private router: Router, private toastController: ToastController) {}
 
   ngOnInit() {
     this.getObject()

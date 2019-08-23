@@ -25,7 +25,16 @@ const routes: Routes = [
       },
       {
         path: 'my-event',
-        loadChildren: './my-event/my-event.module#MyEventPageModule'
+        children: [
+          {
+            path: '',
+            loadChildren: './my-event/my-event.module#MyEventPageModule'
+          },
+          {
+            path: 'edit-event',
+            loadChildren: './my-event/edit-event/edit-event.module#EditEventPageModule' 
+          }
+        ],
       },
       { 
         path: 'category/:id', 

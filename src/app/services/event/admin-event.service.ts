@@ -84,12 +84,43 @@ export class AdminEventService {
     return this.http.get(URL + 'users')
   }
 
+  public postComment(id, comment) {
+    let remark = {
+      status: 2,
+      remark: comment
+    }
+    return this.authService.token.pipe(
+      take(1),
+      switchMap(token => {
+        return this.http.put(URL + `events/${id}/change_status`, {...remark}, {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        })
+      })
+    )
+  }
+
+  public processingEvent(id : string) {
+    let status = 0
+    return this.authService.token.pipe(
+      take(1),
+      switchMap(token => {
+        return this.http.put(URL + `events/${id}/change_status`, { status }, {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        })
+      })
+    )
+  }
+
   public approveEvent(id : string) {
     let status = 1
     return this.authService.token.pipe(
       take(1),
       switchMap(token => {
-        return this.http.put(URL + `/events/${id}/change_status`, { status }, {
+        return this.http.put(URL + `events/${id}/change_status`, { status }, {
           headers: {
             Authorization: 'Bearer ' + token
           }
@@ -103,7 +134,7 @@ export class AdminEventService {
     return this.authService.token.pipe(
       take(1),
       switchMap(token => {
-        return this.http.put(URL + `/events/${id}/change_status`, { status }, {
+        return this.http.put(URL + `events/${id}/change_status`, { status }, {
           headers: {
             Authorization: 'Bearer ' + token
           }
@@ -111,6 +142,7 @@ export class AdminEventService {
       })
     )
   }
+
 
   public getFAQ() {
     return this.http.get(URL + 'faqs')

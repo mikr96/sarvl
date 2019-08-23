@@ -2,14 +2,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
+
 import { IonicModule } from '@ionic/angular';
-import { MyEventPage } from './my-event.page';
-import { CommentComponentModule } from './comment/comment.module';
+
+import { EditEventPage } from './edit-event.page';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 const routes: Routes = [
   {
     path: '',
-    component: MyEventPage
+    component: EditEventPage
   }
 ];
 
@@ -19,8 +21,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    CommentComponentModule
+    SharedModule
   ],
-  declarations: [MyEventPage]
+  declarations: [EditEventPage]
 })
-export class MyEventPageModule {}
+export class EditEventPageModule {}

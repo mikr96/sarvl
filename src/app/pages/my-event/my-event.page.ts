@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from '../../services/event/event.service';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
+import { CommentComponent } from '../my-event/comment/comment.component'
+import { ModalController } from '@ionic/angular';
+import { Plugins } from '@capacitor/core';
+const { Storage } = Plugins
 
 @Component({
   selector: 'app-my-event',
@@ -16,7 +20,7 @@ export class MyEventPage implements OnInit {
   processing: boolean = false
   noEvent: boolean
 
-  constructor(private eventService: EventService, private router: Router) { }
+  constructor(private eventService: EventService, private router: Router, private modalCtrl: ModalController) { }
 
   ngOnInit() {
     this.eventService.getCreatedEvents().subscribe(resEvent => {
@@ -31,16 +35,32 @@ export class MyEventPage implements OnInit {
     })
   }
 
-  resubmit() {
-    this.router.navigateByUrl("/pages/create-event")
+  resubmit(item:any) {
+    let navigationExtras: NavigationExtras = {
+      state: {
+        item: JSON.stringify(item)
+      }
+    };
+    //this.router.navigate(['details'], navigationExtras);
+    this.router.navigate(['/', 'pages', 'my-event', 'edit-event', navigationExtras])
   }
 
-  // statusCard(status) {
-  //   if (status == "1") {
-  //     this.approved = true;
-  //   } else if (status == "2") {
-  //     this.
-  //   }
-  // }
+  async viewComment(remark) {
+    const modal = await this.modalCtrl.create({
+      component: CommentComponent,
+      componentProps: {
+        remark: remark
+      }
+    });
+    return await modal.present();
+  }
+
+  date(date:string) {
+    if(date == null || date == undefined){
+      return 0
+    }
+    let temp = date.split(" ")
+    return temp[0]
+  }
 
 }

@@ -1,0 +1,88 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button defaultHref="/pages/home"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Create Event</ion-title>
+      </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div *ngIf="isLoading" text-center>
+      <ion-spinner color="primary"></ion-spinner>
+    </div>
+    <form [formGroup]="editEventForm">
+    <ion-grid>
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="10">
+            <!-- <app-image-picker [showPreview]="editEventForm.get('image').value" (imagePicker)="onImagePicked($event)"></app-image-picker> -->
+            <ion-list class="ion-no-margin ion-no-padding">
+                <ion-item>
+                  <ion-label position="floating">Title</ion-label>
+                  <ion-input autocomplete="off" formControlName="title" required>
+                  </ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">Start Date</ion-label>
+                  <ion-datetime
+                  display-format="DD MMM YYYY"
+                  picker-format="DD MMM YYYY"
+                  [min]=""
+                  [max]=""
+                  required
+                  formControlName= "start_date"
+                ></ion-datetime>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">End Date</ion-label>
+                  <ion-datetime
+                  display-format="DD MMM YYYY"
+                  picker-format="DD MMM YYYY"
+                  [min]=""
+                  [max]=""
+                  formControlName= "end_date"
+                  required
+                ></ion-datetime>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">Location</ion-label>
+                  <ion-input padding-start="2" autocomplete="off" type="text" formControlName="location" required>
+                  </ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="floating">Campaign</ion-label>
+                    <ion-select formControlName="campaign">
+                      <ion-select-option>Heart (Programs)</ion-select-option>
+                      <ion-select-option>Collab (Events)</ion-select-option>
+                      <ion-select-option>Touch (Donations)</ion-select-option>
+                      <ion-select-option>Cradle (Workshops)</ion-select-option>
+                      <ion-select-option>Belief (Causes)</ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                <ion-item>
+                    <ion-label position="floating">Goal (RM)</ion-label>
+                    <ion-input padding-start="2" autocomplete="off" type="text" formControlName="goal" required>
+                    </ion-input>
+                  </ion-item>
+                <ion-item>
+                  <ion-label position="floating">Whatsapp Link</ion-label>
+                  <ion-input padding-start="2" autocomplete="off"  formControlName="whatsapp_link" type="text">
+                  </ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">Description</ion-label>
+                  <ion-textarea autocomplete="off"  formControlName="description">
+                  </ion-textarea>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">No of Volunteers</ion-label>
+                  <ion-input padding-start="2" autocomplete="off"  formControlName="noVolunteers" type="number">
+                  </ion-input>
+                </ion-item>
+              </ion-list>
+            <ion-button color="secondary" (click)="onSubmit()" expand="block" [disabled]="!editEventForm?.valid" margin-vertical>EDIT EVENT</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+  </ion-content>

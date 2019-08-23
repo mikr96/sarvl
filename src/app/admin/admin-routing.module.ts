@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, PreloadAllModules, Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { AdminPage } from './admin.page';
 
 const routes: Routes = [
@@ -44,8 +44,7 @@ const routes: Routes = [
     path: '',
     redirectTo: '/admin/dashboard',
     pathMatch: 'full'
-  },
-  { path: 'modal', loadChildren: './campaign/modal/modal.module#ModalPageModule' }
+  }
 ];
 
 
