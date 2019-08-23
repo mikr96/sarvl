@@ -6,7 +6,6 @@ export class User {
     dp: '',
     created_at: ''
   }
-
   constructor(
     public role: string,
     private _token: string,

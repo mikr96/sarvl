@@ -35,7 +35,8 @@ export class EventService {
    * getEvents
    */
   public get(page: number = 1) {
-    return this.http.get(`${URL}events?page=${page}`)
+    // return this.http.get(`${URL}events?page=${page}`)
+    return this.http.get(`${URL}events/by_category/latest?page=${page}`)
   }
 
   /**
@@ -81,7 +82,7 @@ export class EventService {
     return this.authService.token.pipe(
       take(1),
       switchMap(token => {
-        return this.http.put(URL + `join_event/${id}` , 
+        return this.http.put(URL + `join_event/${id}` , {} , 
         { 
           headers: {
             Authorization: 'Bearer ' + token
@@ -138,6 +139,55 @@ export class EventService {
     )
   }
 
+  public editEvent(
+    title: string,
+    start_date: Date,
+    end_date: Date,
+    location: string,
+    campaign: string,
+    goal: string,
+    whatsapp_link: string,
+    description: string,
+    dp: any,
+    noVolunteers: string,
+    id: any
+  ) {
+    let newEvent: Event;
+    var start = moment(start_date);
+    var newStart = start.format("YYYY-MM-DD HH:mm:ss");
+    var end = moment(end_date);
+    var newEnd = end.format("YYYY-MM-DD HH:mm:ss");
+    return this.authService.token.pipe(
+      take(1),
+      switchMap(token => {
+        let newCampaign = campaign.split(" ")
+        newEvent = new Event(
+          title,
+          newStart,
+          newEnd,
+          location,
+          newCampaign[0],
+          goal,
+          whatsapp_link,
+          description,
+          dp,
+          noVolunteers
+        );
+        return this.http.post(URL + `events/${id}`, { ...newEvent },
+          {
+            headers: {
+              Authorization: 'Bearer ' + token
+            }
+          });
+      }),
+      take(1),
+      tap(events => {
+        // this._events.next(events.next(newEvent));
+      })
+    )
+  }
+  
+
   public viewCount(event_id: any) {
     return this.authService.token.pipe(
       take(1),
@@ -154,6 +204,19 @@ export class EventService {
 
   public getEventByCampaignWithCategory(page: number = 1, campaign: string, category: string = 'latest') {
     return this.http.get(`${URL}events/by_campaign_category?category=${category}&campaign=${campaign}&page=${page}`)
+  }
+
+  public getComment(id) {
+    return this.authService.token.pipe(
+      take(1),
+      switchMap(token => {
+        return this.http.get(URL + `comments/${id}`, {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        })
+      })
+    )
   }
 
 

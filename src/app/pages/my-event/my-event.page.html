@@ -4,7 +4,6 @@
       <ion-menu-button menu="volunteer"></ion-menu-button>
     </ion-buttons>
     <ion-title>My Event</ion-title>
-    <ion-icon name="search" slot="end" margin></ion-icon>
   </ion-toolbar>
 </ion-header>
 
@@ -15,16 +14,17 @@
     </ion-row>
     <ion-row *ngFor="let item of data.events">
         <ion-card>
-          <img class="img-card" src="../../../assets/logo.png" />
+            <img *ngIf="item.image==null" class="img-card" src="../../../assets/logo.png"/>
+            <ion-img *ngIf="item.image!=null" class="img-card" [src]="item.image"></ion-img>
           <ion-card-header>
             <ion-card-subtitle>{{item.campaign}}</ion-card-subtitle>
             <ion-card-title>{{item.title}}</ion-card-title>
             <div class="offer-details">
               <ion-icon name="calendar" color="primary"></ion-icon>
-              <ion-text color="tertiary" class="space-left">{{item.start_date}}</ion-text>
+              <ion-text color="tertiary" class="space-left">{{date(item.start_date)}}</ion-text>
               <span class="space-left">to</span>
               <ion-icon name="calendar" class="space-left" color="primary"></ion-icon>
-              <ion-text color="tertiary" class="space-left">{{item.end_date}}</ion-text>
+              <ion-text color="tertiary" class="space-left">{{date(item.end_date)}}</ion-text>
             </div>
           </ion-card-header>
           <ion-card-content>
@@ -35,8 +35,8 @@
             <div *ngIf="item.status==1" expand="block" class="button-card-approved">
               <h3>APPROVED</h3>
             </div>
-            <ion-button *ngIf="item.status==2" expand="block" color="primary">READ COMMENTS</ion-button>
-            <ion-button *ngIf="item.status==2" expand="block" color="danger" (click)="resubmit()">RESUBMIT</ion-button>
+            <ion-button *ngIf="item.status==2" expand="block" color="primary" (click)="viewComment(item.remark)">READ COMMENTS</ion-button>
+            <ion-button *ngIf="item.status==2" expand="block" color="danger" (click)="resubmit(item)">RESUBMIT</ion-button>
           </ion-card-content>
         </ion-card>
     </ion-row>

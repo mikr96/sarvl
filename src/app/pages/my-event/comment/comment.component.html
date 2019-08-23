@@ -1,0 +1,25 @@
+<ion-header translucent>
+    <ion-toolbar>
+      <ion-title>Comments</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="dismissModal()">Close</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content fullscreen padding> 
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-subtitle>Please resubmit your proposal based on the comments made</ion-card-subtitle>
+            <ion-card-title><b>Comments</b></ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            {{remark}}
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

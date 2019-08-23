@@ -51,7 +51,6 @@ export class ProfilePage implements OnInit, OnDestroy {
     this.isLoading = true;
     this.profileSub = this.profileService.getProfile().subscribe(res => {
       this.profile = res
-      console.log(this.profile)
       this.editForm = new FormGroup({
         username: new FormControl(this.profile.user.fullname, {
           updateOn: 'blur',
