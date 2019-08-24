@@ -17,7 +17,7 @@ export class AdminEventService {
   }
 
   get(params: string) {
-    return this.http.get(`${URL}admin/events?params=${params}`, {
+    return this.http.get(`${URL}admin/events`, {
       headers: {
         Authorization: `bearer ${this.token}`
       }
