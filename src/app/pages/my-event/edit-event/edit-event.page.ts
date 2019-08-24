@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef, Input  } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoadingController, ToastController, NavController } from '@ionic/angular';
 import { Router, ActivatedRoute } from '@angular/router';
 import { EventService } from 'src/app/services/event/event.service';
+import { Capacitor, Plugins, CameraSource, CameraResultType } from '@capacitor/core';
+import { Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-edit-event',
@@ -10,79 +12,121 @@ import { EventService } from 'src/app/services/event/event.service';
   styleUrls: ['./edit-event.page.scss'],
 })
 export class EditEventPage implements OnInit {
+  @ViewChild('filePicker', { static: false }) filePickerRef: ElementRef<HTMLInputElement>;
+  imagePicker: any
   item: any
   formInit: boolean = false
   isLoading: boolean = false;
-  constructor(private eventService: EventService, private loadingCtrl: LoadingController, private router: Router, private toastController: ToastController, private route: ActivatedRoute, private navCtrl: NavController) { 
-
+  image: any
+  selectedImage: string
+  usePicker = false;
+  constructor(private eventService: EventService, private loadingCtrl: LoadingController, private router: Router, private toastController: ToastController, private route: ActivatedRoute, private navCtrl: NavController, private platform: Platform) { 
+    this.item = this.router.getCurrentNavigation().extras.state.item
   }
   editEventForm: FormGroup
 
   ngOnInit() {    
-    this.route.queryParams.subscribe(params => {
-      if (this.router.getCurrentNavigation().extras.state) {
-        this.item = this.router.getCurrentNavigation().extras.state.item;
-      }
-    });
-      this.item = JSON.parse(this.item)
-      console.log(this.item)
+    this.item = JSON.parse(this.item)
+    this.selectedImage = this.item.image
       this.editEventForm = new FormGroup({
-        image: new FormControl(null),
-        title: new FormControl(null, {
+        image: new FormControl(this.item.image),
+        title: new FormControl(this.item.title, {
           updateOn: 'blur',
           validators: [Validators.required]
         }),
-        start_date: new FormControl(null, {
+        start_date: new FormControl(this.item.start_date, {
           updateOn: 'blur',
           validators: [Validators.required]
         }),
-        end_date: new FormControl(null, {
+        end_date: new FormControl(this.item.end_date, {
           updateOn: 'blur',
           validators: [Validators.required]
         }),
-        location: new FormControl(null, {
+        location: new FormControl(this.item.location, {
           updateOn: 'blur',
           validators: [Validators.required]
         }),
-        campaign: new FormControl(null, {
+        campaign: new FormControl(this.item.campaign, {
           updateOn: 'blur',
           validators: [Validators.required]
         }),
-        goal: new FormControl(null, {
+        goal: new FormControl(this.item.goal, {
           updateOn: 'blur',
           validators: [Validators.required]
         }),
-        whatsapp_link: new FormControl(null, {
+        whatsapp_link: new FormControl(this.item.whatsapp_link, {
           updateOn: 'blur',
           validators: [Validators.required]
         }),
-        description: new FormControl(null, {
+        description: new FormControl(this.item.description, {
           updateOn: 'blur',
           validators: [Validators.required]
         }),
-        noVolunteers: new FormControl(null, {
+        noVolunteers: new FormControl(this.item.noVolunteers, {
           updateOn: 'blur',
           validators: [Validators.required]
         }),
       });
-      this.isLoading = true;
-  }
-
-  onImagePicked(imageData: string | File) {
-    let imageFile
-    if (typeof imageData == 'string') {
-      try {
-        imageFile = imageData
-      } catch (err) {
-        console.log(err)
-        return;
+      this.isLoading = false;
+      if (this.platform.is('mobile') && !this.platform.is('hybrid') || this.platform.is('desktop')) {
+        this.usePicker = true;
       }
-    } else {
-      imageFile = imageData
-    }
-    this.editEventForm.patchValue({ dp: imageFile })
   }
 
+  onPickImage() {
+    if (!Capacitor.isPluginAvailable('camera')) {
+      this.filePickerRef.nativeElement.click()
+      return;
+    }
+
+    Plugins.Camera.getPhoto({
+      quality: 50,
+      source: CameraSource.Prompt,
+      correctOrientation: true,
+      height: 320,
+      width: 200,
+      resultType: CameraResultType.Base64
+    }).then(image => {
+      this.selectedImage = image.base64String
+      this.imagePicker = image.base64String
+      this.editEventForm.patchValue({ dp: this.imagePicker })
+    }).catch(err => {
+      if (this.usePicker) {
+        this.filePickerRef.nativeElement.click();
+      }
+      return false;
+    })
+  }
+
+  onFileChosen(event: Event) {
+    const pickedFile = (event.target as HTMLInputElement).files[0];
+    if (!pickedFile) {
+      return;
+    }
+    const fr = new FileReader();
+    fr.onload = () => {
+      const dataUrl = fr.result.toString();
+      this.selectedImage = dataUrl;
+      this.imagePicker = dataUrl;
+      this.editEventForm.patchValue({ dp: this.imagePicker })
+    };
+    fr.readAsDataURL(pickedFile);
+  }
+
+  // onImagePicked(imageData: string | File) {
+  //   let imageFile
+  //   if (typeof imageData == 'string') {
+  //     try {
+  //       imageFile = imageData
+  //     } catch (err) {
+  //       console.log(err)
+  //       return;
+  //     }
+  //   } else {
+  //     imageFile = imageData
+  //   }
+  //   this.editEventForm.patchValue({ dp: imageFile })
+  // }
 
   onSubmit() {
     if (!this.editEventForm.valid) {

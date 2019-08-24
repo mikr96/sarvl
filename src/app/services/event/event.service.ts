@@ -173,7 +173,7 @@ export class EventService {
           dp,
           noVolunteers
         );
-        return this.http.post(URL + `events/${id}`, { ...newEvent },
+        return this.http.put(URL + `events/${id}`, { ...newEvent },
           {
             headers: {
               Authorization: 'Bearer ' + token

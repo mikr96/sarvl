@@ -41,7 +41,6 @@ export class ImagePickerComponent implements OnInit {
       resultType: CameraResultType.Base64
     }).then(image => {
       this.selectedImage = image.base64String
-      console.log(this.selectedImage)
       this.imagePicker.emit(image.base64String)
     }).catch(err => {
       console.log(err);

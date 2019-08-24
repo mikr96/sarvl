@@ -42,7 +42,8 @@ export class MyEventPage implements OnInit {
       }
     };
     //this.router.navigate(['details'], navigationExtras);
-    this.router.navigate(['/', 'pages', 'my-event', 'edit-event', navigationExtras])
+    this.router.navigate(['/', 'pages', 'my-event', 'edit-event'], {state: {item: JSON.stringify(item)}})
+    // this.router.navigate(['/', 'pages', 'my-event', 'edit-event', navigationExtras])
   }
 
   async viewComment(remark) {
