@@ -1,1 +1,7 @@
-{}
+{
+  "appId": "com.cyrix.sarvl",
+  "appName": "Sarawak Volunteer",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www"
+}

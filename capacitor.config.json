@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "sarvl",
+  "appId": "com.cyrix.sarvl",
+  "appName": "Sarawak Volunteer",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www"

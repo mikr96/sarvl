@@ -5,6 +5,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { MyEventPage } from './my-event.page';
 import { CommentComponentModule } from './comment/comment.module';
+import { ReplyCommentModule } from './reply-comment/reply-comment.module';
+import { ShowCommentModule } from './show-comment/show-comment.module';
 
 const routes: Routes = [
   {
@@ -19,7 +21,9 @@ const routes: Routes = [
     ReactiveFormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    CommentComponentModule
+    CommentComponentModule,
+    ReplyCommentModule,
+    ShowCommentModule
   ],
   declarations: [MyEventPage]
 })

@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content class="animated delay-1s fadeIn">
   <ion-grid>
     <ion-row class="ion-margin-top">
       <ion-col class="ion-margin-top">
@@ -13,7 +13,7 @@
         </div>
       </ion-col>
     </ion-row>
-    <form [formGroup]="form" (ngSubmit)="onSubmit(loginForm)">
+    <form [formGroup]="form">
       <ion-row class="ion-justify-content-center">
         <ion-col size="8">
           <ion-list class="ion-no-margin ion-no-padding">
@@ -45,7 +45,7 @@
       </ion-row>
       <ion-row class="ion-justify-content-center">
         <ion-col size="8" no-padding>
-          <ion-button [disabled]="!form.valid" type="submit" color="primary" expand="block">SIGN IN
+          <ion-button [disabled]="!form.valid" (click)="onSubmit()" type="submit" color="primary" expand="block">SIGN IN
           </ion-button>
         </ion-col>
       </ion-row>

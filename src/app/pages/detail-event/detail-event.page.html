@@ -24,7 +24,7 @@
             <ion-text color="tertiary" class="space-left">{{date(item.end_date)}}</ion-text>
           </div>
           <ion-icon name="pin" color="primary"></ion-icon>
-          <ion-note color="primary">{{location}}</ion-note>
+          <ion-note color="primary">{{item.location}}</ion-note>
         </ion-card-header>
         <ion-card-content fullscreen>
           <div class="description">
@@ -34,7 +34,7 @@
             <ion-item lines="none" no-padding no-margin>
               <ion-progress-bar color="secondary" [value]="item.raise/100" style="position: absolute; top:0px; width:95%;"></ion-progress-bar>
               <ion-text>Raised</ion-text>
-              <ion-note slot="end" color="primary">RM50 / RM{{item.goal}}</ion-note>
+              <ion-note slot="end" color="primary">RM{{item.raise == null ? 0 : item.raise}} / RM{{item.goal}}</ion-note>
             </ion-item>
             <ion-item lines="none" no-padding>
               <ion-icon name="people" color="primary"></ion-icon>
@@ -46,16 +46,16 @@
               <ion-text>Days Left</ion-text>
               <ion-note slot="end" color="primary">{{daysLeft(item.start_date)}}</ion-note>
             </ion-item>
-            <ion-item lines="full" no-padding button (click)="comments = !comments" [class.parent-active]="comments" detail="false">
+            <ion-item lines="full" no-padding button (click)="commentsDiv = !commentsDiv" [class.parent-active]="commentsDiv" detail="false">
               <ion-label>Comments</ion-label>
               <ion-badge color="medium" slot="end">{{len(item.comments)}}</ion-badge>
             </ion-item>
             <!--SUB MENU-->
-            <ion-list *ngIf="comments">
+            <ion-list *ngIf="commentsDiv">
               <ion-row class="no-margin no-padding" *ngFor="let item of item.comments">
                 <div class="card">
-                  <ion-text style="display: block">Volunteer: {{item.comments}}</ion-text>
-                  <ion-text style="display: block">Organizer: Hi hi, nice to meet you</ion-text>
+                  <ion-text style="display: block">Volunteer: {{item.comment}}</ion-text>
+                  <ion-text *ngIf="reply(item.replies)" style="display: block">Organizer: {{item.replies.comment}}</ion-text>
                 </div>
               </ion-row>
               <div class="comment-box">

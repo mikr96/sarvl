@@ -83,6 +83,11 @@ ion-menu{
   animation-name: fadeIn;
 }
 
+.animated.fast {
+  -webkit-animation-duration: 800ms;
+  animation-duration: 800ms;
+}
+
 .spinner svg {
   stroke: skyblue;
   fill: skyblue;

@@ -1,0 +1,13 @@
+.fixme {
+  -webkit-flex: 0 0 200px;
+  -ms-flex: 0 0 200px;
+  flex: 0 0 200px !important;
+  width: 200px !important;
+  min-width: 200px !important;
+  max-width: 200px !important;
+}
+
+.reply {
+  padding-bottom: 5px;
+  border-bottom: 0.5px solid grey !important;
+}

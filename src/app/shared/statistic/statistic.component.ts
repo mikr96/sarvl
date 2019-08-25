@@ -51,6 +51,23 @@ export class StatisticComponent implements OnInit {
       )
   }
 
+  doRefresh(events) {
+    setTimeout(()=> {
+      this.eventService
+      .get('all')
+      .subscribe(
+        (res: EventResponseI) => {
+          this.data = res
+          console.log(res)
+          events.target.complete()
+        },
+        err => this.popToast(
+          'Something went wrong in getting list of events'
+        )
+      )
+    }, 2000)
+  }
+
   ngAfterContentChecked() {
     if (!this.chartInit) {
       const { events, eventByCategory, eventByClass } = this.data

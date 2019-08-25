@@ -16,6 +16,7 @@ export class DetailEventPage implements OnInit {
   message: string;
   method: string;
   comment: string
+  commentsDiv: boolean = false
   constructor(private alertCtrl: AlertController, private eventService: EventService, private loadingCtrl: LoadingController, private router: Router, private toastController: ToastController) {}
 
   ngOnInit() {
@@ -104,6 +105,13 @@ export class DetailEventPage implements OnInit {
     }
     let temp = date.split(" ")
     return temp[0]
+  }
+
+  reply(data) {
+    if(data.length == 0) {
+      return false
+    }
+    return true
   }
 
   async popToast(message: string) {

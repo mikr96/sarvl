@@ -1,5 +1,5 @@
 .img-card {
-  width: 60%;
+  width: 100%;
   height: auto;
   margin-left: auto;
   margin-right: auto;
@@ -12,6 +12,7 @@
   border: 2px solid var(--ion-color-secondary);
   border-radius: 5px;
   color: var(--ion-color-secondary);
+  margin-top: 10px;
 }
 
 .button-card-approved {
@@ -20,13 +21,15 @@
   border: 2px solid var(--ion-color-success);
   border-radius: 5px;
   color: var(--ion-color-success);
+  margin-top: 10px;
 }
 
 .offer-details {
   display: flex;
   align-items: center;
-
+  
   .space-left {
     margin-left: 5px;
+    color: #262626;
   }
 }

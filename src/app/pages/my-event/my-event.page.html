@@ -32,11 +32,17 @@
           </ion-card-header>
           <ion-card-content>
             {{item.description}}
-            <div *ngIf="item.status==0" expand="block" class="button-card-processing">
+            <div *ngIf="item.status==0" expand="block" class="button-card-processing margin-vertical">
               <h3>PROCESSING</h3>
             </div>
-            <div *ngIf="item.status==1" expand="block" class="button-card-approved">
-              <h3>APPROVED</h3>
+            <div *ngIf="item.status==1">
+              <div expand="block" class="button-card-approved margin-vertical">
+                <h3>APPROVED</h3>
+              </div>
+              <div *ngIf="checkComment(item.comments)" style="margin-top: 10px;">
+                <ion-button *ngIf="commentStatus" expand="block" color="primary" (click)="replyComment(item.comments)">YOU HAVE {{unread}} UNREAD COMMENT</ion-button>
+                <ion-button *ngIf="!commentStatus" expand="block" color="primary" (click)="showComment(item.comments)">SHOW ALL COMMENTS</ion-button>
+              </div>
             </div>
             <ion-button *ngIf="item.status==2" expand="block" color="primary" (click)="viewComment(item.remark)">READ COMMENTS</ion-button>
             <ion-button *ngIf="item.status==2" expand="block" color="danger" (click)="resubmit(item)">RESUBMIT</ion-button>

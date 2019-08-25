@@ -1,0 +1,26 @@
+<ion-header translucent>
+    <ion-toolbar>
+      <ion-title>Comments</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="dismissModal()">Close</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content fullscreen padding> 
+  <ion-grid>
+    <ion-row *ngFor="let item of comments">
+      <ion-col size="12">
+        <ion-item lines="full">
+          <ion-avatar slot="start">
+            <ion-img [src]="item.user.dp"></ion-img>
+          </ion-avatar>
+          <ion-label>
+            <h2>{{item.user.fullname}}</h2>
+            <h3>{{item.comment}}</h3>
+            <p>{{item.replies.comment}}</p>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,5 +1,4 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-
 import { Platform } from '@ionic/angular';
 import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';

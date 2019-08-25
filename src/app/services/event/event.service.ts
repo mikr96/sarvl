@@ -78,6 +78,20 @@ export class EventService {
     );
   }
 
+  public replyComment(id, body) {
+    return this.authService.token.pipe(
+      take(1),
+      switchMap(token => {
+        return this.http.put(URL + `comments/${id}/reply`, {...body} , 
+        { 
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        });
+      })
+    );
+  }
+
   public joinEvent(id:string) {
     return this.authService.token.pipe(
       take(1),
