@@ -55,6 +55,31 @@ export class CategoryPage implements OnInit {
     })
   }
 
+  doRefresh(event) {
+    setTimeout(()=> {
+      this.isLoading = true;
+      this.route.paramMap.subscribe(paramMap => {
+        if (!paramMap.has('id')) {
+          this.navCtrl.navigateBack('/pages/home');
+          return;
+        }
+        this.currentCampaign = paramMap.get('id');
+        this.eventService
+        .getEventByCampaign(this.currentCampaign, this.currentPage)
+        .subscribe(
+          (event: any) => {
+            this.isLoading = false;
+            this.dataEvent = event.events;
+          },
+          error => {
+            this.handleError(error)
+          }
+          );
+          event.target.complete()
+      })
+    }, 2000)
+  }
+
   truncate (elem, limit, after) {
 
     // Make sure an element and number of items to truncate is provided

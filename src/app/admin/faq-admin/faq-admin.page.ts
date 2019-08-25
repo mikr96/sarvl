@@ -22,4 +22,15 @@ export class FaqAdminPage implements OnInit {
     })
   }
 
+  doRefresh(event) {
+    setTimeout(()=> {
+      this.adminEventService.getFAQ().subscribe(res => {
+        this.faq = res
+        this.volunteerFaqs = this.faq.faqs.filter(data => { return data.category === "VOLUNTEER" })
+        this.organizerFaqs = this.faq.faqs.filter(data => { return data.category === "ORGANIZER" })
+        event.target.complete()
+      })
+    }, 2000)
+  }
+
 }

@@ -90,4 +90,17 @@ export class HomePage implements OnInit {
     return this.popToast(firstError)
   }
 
+  doRefresh(event) {
+    setTimeout(()=> {
+      // this.loading = true
+      this.eventService.get(this.currentPage)
+        .subscribe((data: any) => {
+          this.loading = false
+          this.events = data.events
+          Storage.set({ key: 'items', value: JSON.stringify(this.events) })
+          event.target.complete()
+        }, ({ error }) => this.handleError(error))
+    }, 2000)
+  }
+
 }

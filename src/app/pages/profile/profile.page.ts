@@ -39,11 +39,11 @@ export class ProfilePage implements OnInit, OnDestroy {
       this.selectedImage = this.profile.user.dp
       this.id = this.profile.user.id
       this.editForm = new FormGroup({
-        username: new FormControl(this.profile.user.fullname, {
+        username: new FormControl(this.profile.user.username, {
           updateOn: 'blur',
           validators: [Validators.required]
         }),
-        fullname: new FormControl(this.profile.user.username, {
+        fullname: new FormControl(this.profile.user.fullname, {
           updateOn: 'blur',
           validators: [Validators.required]
         }),
@@ -60,6 +60,28 @@ export class ProfilePage implements OnInit, OnDestroy {
       this.isLoading = false;
     })
   }
+
+  doRefresh(event) {
+    setTimeout(()=> {
+      this.isLoading = true;
+      this.profileSub = this.profileService.getProfile().subscribe(res => {
+        this.profile = res
+        this.selectedImage = this.profile.user.dp
+        this.id = this.profile.user.id
+
+        this.editForm.patchValue({ 
+          dp: this.profile.user.dp,
+          username: this.profile.user.username, 
+          fullname: this.profile.user.fullname,
+          telNo: this.profile.user.telNo,
+          location: this.profile.user.location
+        })
+        this.isLoading = false
+      })
+        event.target.complete()
+    }, 2000)
+  }
+  
 
   onPickImage() {
     if (!Capacitor.isPluginAvailable('camera')) {

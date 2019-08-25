@@ -8,6 +8,9 @@
 </ion-header>
 
 <ion-content fullscreen class="ion-padding">
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content refreshingSpinner="circles" refreshingText="Refreshing..."></ion-refresher-content>
+      </ion-refresher>
   <ion-fab horizontal="end" vertical="bottom" slot="fixed">
     <ion-fab-button color="secondary" routerLink="/admin/faq-admin/create">
       <ion-icon name="add"></ion-icon>

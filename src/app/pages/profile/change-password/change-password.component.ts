@@ -15,15 +15,15 @@ export class ChangePasswordComponent implements OnInit {
 
   ngOnInit() {
     this.form = new FormGroup({
-      currentPassword: new FormControl(null, {
+      current_password: new FormControl(null, {
         updateOn: 'blur',
         validators: [Validators.required]
       }),
-      newPassword: new FormControl(null, {
+      new_password: new FormControl(null, {
         updateOn: 'blur',
         validators: [Validators.required]
       }),
-      newPasswordConfirmation: new FormControl(null, {
+      new_password_confirmation: new FormControl(null, {
         updateOn: 'blur',
         validators: [Validators.required]
       })

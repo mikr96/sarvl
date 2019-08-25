@@ -35,12 +35,23 @@ export class MyEventPage implements OnInit {
     })
   }
 
+  doRefresh(event) {
+    setTimeout(()=> {
+      this.eventService.getCreatedEvents().subscribe(resEvent => {
+        console.log(resEvent)
+        this.data = resEvent
+        console.log(this.data.events)
+        this.noEvent = false;
+        if (this.data.events === undefined || this.data.events.length == 0) {
+          // array empty or does not exist
+          this.noEvent = true;
+        }
+        event.target.complete()
+      })
+    }, 2000)
+  }
+
   resubmit(item:any) {
-    let navigationExtras: NavigationExtras = {
-      state: {
-        item: JSON.stringify(item)
-      }
-    };
     //this.router.navigate(['details'], navigationExtras);
     this.router.navigate(['/', 'pages', 'my-event', 'edit-event'], {state: {item: JSON.stringify(item)}})
     // this.router.navigate(['/', 'pages', 'my-event', 'edit-event', navigationExtras])

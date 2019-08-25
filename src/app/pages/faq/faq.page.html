@@ -8,6 +8,9 @@
 </ion-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content refreshingSpinner="circles" refreshingText="Refreshing..."></ion-refresher-content>
+  </ion-refresher>
   <div style="padding-left: 16px;">
     <h1>Frequently Asked Questions</h1>
   </div>

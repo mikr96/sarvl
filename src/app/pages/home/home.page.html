@@ -12,6 +12,9 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content refreshingSpinner="circles" refreshingText="Refreshing..."></ion-refresher-content>
+  </ion-refresher>
   <ion-grid *ngIf="loading">
     <ion-row ion-align-items-center ion-justify-content-center>
       <div *ngIf="isLoading" text-center>
@@ -37,7 +40,7 @@
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-    <ion-grid no-padding no-margin>
+    <ion-grid no-padding no-margin class="animated delay-1s fadeIn">
       <ion-row ion-align-items-center ion-justify-content-center>
         <ion-col size="12">
           <ion-list *ngIf="!Loading">

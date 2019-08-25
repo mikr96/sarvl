@@ -145,12 +145,12 @@ export class AdminEventService {
 
   public updateRaised(id : string, raised : string) {
     let data = {
-      raised: raised
+      raise: raised
     }
     return this.authService.token.pipe(
       take(1),
       switchMap(token => {
-        return this.http.put(URL + `/updateRaised${id}`, {...data}, {
+        return this.http.put(URL + `admin/events/${id}/change_raise`, {...data}, {
           headers: {
             Authorization: 'Bearer ' + token
           }

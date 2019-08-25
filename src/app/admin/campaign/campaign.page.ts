@@ -55,6 +55,33 @@ export class CampaignPage implements OnInit {
     })
   }
 
+  doRefresh(events) {
+    setTimeout(()=> {
+      this.route.paramMap.subscribe(paramMap => {
+        if (!paramMap.has('id')) {
+          this.navCtrl.navigateBack('/pages/home');
+          return;
+        }
+        this.currentCampaign = paramMap.get('id');
+        this.currentCategory = 3
+        this.adminEventService
+        .getAll(this.currentPage, this.currentCampaign, this.currentCategory)
+        .subscribe(
+          (event: any) => {
+            this.isLoading = false;
+            this.dataEvent = event.events;
+            console.log(this.dataEvent.data.length)
+            this.dataEvent.data.length < 1 ? this.empty = false : this.empty = true
+            events.target.complete()
+          },
+          error => {
+            this.handleError(error)
+          }
+        );
+      })
+    }, 2000)
+  }
+
   changeCategory(currentCategory) {
     this.isLoading = true
     if(currentCategory === "all") {
@@ -172,7 +199,8 @@ export class CampaignPage implements OnInit {
         noVolunteers: item.noVolunteers,
         volunteered: item.volunteered,
         whatsapp_link: item.whatsapp_link,
-        campaign: item.campaign
+        campaign: item.campaign,
+        id: item.id
       }
     });
     return await modal.present();

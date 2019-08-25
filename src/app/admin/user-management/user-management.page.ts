@@ -21,4 +21,14 @@ export class UserManagementPage implements OnInit {
     })
   }
 
+  doRefresh(event) {
+    setTimeout(()=> {
+      this.adminEventService.getUsers().subscribe((res:any) => {
+        console.log(res)
+        this.dataUser = res.users
+        event.target.complete()
+      })
+    }, 2000)
+  }
+
 }

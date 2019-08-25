@@ -24,7 +24,8 @@ export class ModalComponent implements OnInit {
   raised: any
   update: boolean = false
   percent: any
-  lastRaised : string = "50"
+  lastRaised : string
+  id: any
   constructor(private navParams: NavParams, private modalCtrl: ModalController, private adminEventService: AdminEventService, private loadingCtrl: LoadingController, private toastCtrl: ToastController) { }
 
   ngOnInit() {
@@ -45,6 +46,9 @@ export class ModalComponent implements OnInit {
     this.volunteered = this.navParams.get('volunteered')
     this.whatsapp_link = this.navParams.get('whatsapp_link')
     this.campaign = this.navParams.get('campaign')
+    this.id = this.navParams.get('id')
+    this.lastRaised = this.navParams.get('raised')
+    this.raised = this.lastRaised
   }
 
   dismissModal(){
@@ -61,18 +65,19 @@ export class ModalComponent implements OnInit {
     this.update = true
   }
 
-  updateRaised(id) {
+  updateRaised() {
     this.loadingCtrl
     .create({
       message: 'Processing...'
     })
     .then(loadingEl => {
       loadingEl.present();
-      this.adminEventService.updateRaised(id, this.percent.toString())
+      this.adminEventService.updateRaised(this.id, this.percent.toString())
       .subscribe(
         res => {
         console.log(res)
         loadingEl.dismiss()
+        this.update = false
       }, 
       err => {
         console.log(err)
@@ -84,7 +89,7 @@ export class ModalComponent implements OnInit {
   }
 
   calculate(val) {
-    return 60;
+    return Number(val)/10;
   }
 
   async popToast(message: string) {

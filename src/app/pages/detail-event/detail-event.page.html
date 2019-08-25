@@ -32,7 +32,7 @@
           </div>
           <ion-list style="margin-top: 15px;">
             <ion-item lines="none" no-padding no-margin>
-              <ion-progress-bar color="secondary" value="0.5" style="position: absolute; top:0px; width:95%;"></ion-progress-bar>
+              <ion-progress-bar color="secondary" [value]="item.raise/100" style="position: absolute; top:0px; width:95%;"></ion-progress-bar>
               <ion-text>Raised</ion-text>
               <ion-note slot="end" color="primary">RM50 / RM{{item.goal}}</ion-note>
             </ion-item>

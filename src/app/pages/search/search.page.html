@@ -1,5 +1,10 @@
 <ion-header translucent>
     <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-back-button
+            [defaultHref]="'/pages/home'"
+          ></ion-back-button>
+        </ion-buttons>
       <ion-searchbar (ionChange)="getItems($event)"></ion-searchbar>
     </ion-toolbar>
   </ion-header>
