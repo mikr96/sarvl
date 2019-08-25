@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { NavParams, ModalController } from '@ionic/angular';
+import { NavParams, ModalController, LoadingController, ToastController } from '@ionic/angular';
+import { AdminEventService } from 'src/app/services/event/admin-event.service';
 
 @Component({
   selector: 'app-modal',
@@ -20,7 +21,11 @@ export class ModalComponent implements OnInit {
   volunteered: any
   whatsapp_link: any
   campaign: any
-  constructor(private navParams: NavParams, private modalCtrl: ModalController) { }
+  raised: any
+  update: boolean = false
+  percent: any
+  lastRaised : string = "50"
+  constructor(private navParams: NavParams, private modalCtrl: ModalController, private adminEventService: AdminEventService, private loadingCtrl: LoadingController, private toastCtrl: ToastController) { }
 
   ngOnInit() {
     this.image = this.navParams.get('image')
@@ -46,6 +51,50 @@ export class ModalComponent implements OnInit {
     this.modalCtrl.dismiss({
       'dismissed': true
     });
+  }
+
+  changeRaised(event, goal: any)  {
+    this.percent = event.detail.value
+    let data = Number(goal)
+    data = data*this.percent/100
+    this.raised = data
+    this.update = true
+  }
+
+  updateRaised(id) {
+    this.loadingCtrl
+    .create({
+      message: 'Processing...'
+    })
+    .then(loadingEl => {
+      loadingEl.present();
+      this.adminEventService.updateRaised(id, this.percent.toString())
+      .subscribe(
+        res => {
+        console.log(res)
+        loadingEl.dismiss()
+      }, 
+      err => {
+        console.log(err)
+        const firstError: string = Object.values(err)[0][0]
+        loadingEl.dismiss()
+        this.popToast(firstError)
+    })
+  });
+  }
+
+  calculate(val) {
+    return 60;
+  }
+
+  async popToast(message: string) {
+    const toast = await this.toastCtrl.create({
+      message,
+      duration: 2000,
+      position: 'top',
+      color: 'danger',
+    })
+    toast.present()
   }
 
 }

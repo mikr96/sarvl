@@ -1,29 +1,11 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { ProfileService } from '../../services/profile.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { LoadingController, ToastController } from '@ionic/angular';
+import { LoadingController, ToastController, ModalController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
-
-function base64toBlob(base64Data, contentType) {
-  contentType = contentType || '';
-  const sliceSize = 1024;
-  const byteCharacters = window.atob(base64Data);
-  const bytesLength = byteCharacters.length;
-  const slicesCount = Math.ceil(bytesLength / sliceSize);
-  const byteArrays = new Array(slicesCount);
-
-  for (let sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
-    const begin = sliceIndex * sliceSize;
-    const end = Math.min(begin + sliceSize, bytesLength);
-
-    const bytes = new Array(end - begin);
-    for (let offset = begin, i = 0; offset < end; ++i, ++offset) {
-      bytes[i] = byteCharacters[offset].charCodeAt(0);
-    }
-    byteArrays[sliceIndex] = new Uint8Array(bytes);
-  }
-  return new Blob(byteArrays, { type: contentType });
-}
+import { Capacitor, Plugins, CameraSource, CameraResultType } from '@capacitor/core';
+import { Platform } from '@ionic/angular';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 @Component({
   selector: 'app-profile',
@@ -31,7 +13,7 @@ function base64toBlob(base64Data, contentType) {
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit, OnDestroy {
-
+  @ViewChild('filePicker', { static: false }) filePickerRef: ElementRef<HTMLInputElement>;
   myphoto: string = "https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"
   changes: boolean = false;
   name: string
@@ -44,13 +26,18 @@ export class ProfilePage implements OnInit, OnDestroy {
   editForm: FormGroup
   private profileSub: Subscription;
   isLoading = false;
-
-  constructor(private profileService: ProfileService, private loadingCtrl: LoadingController, private toastController: ToastController) { }
+  imagePicker: any
+  selectedImage: string
+  usePicker = false;
+  id: any
+  constructor(private profileService: ProfileService, private loadingCtrl: LoadingController, private toastController: ToastController, private modalCtrl: ModalController) { }
 
   ngOnInit() {
     this.isLoading = true;
     this.profileSub = this.profileService.getProfile().subscribe(res => {
       this.profile = res
+      this.selectedImage = this.profile.user.dp
+      this.id = this.profile.user.id
       this.editForm = new FormGroup({
         username: new FormControl(this.profile.user.fullname, {
           updateOn: 'blur',
@@ -74,30 +61,50 @@ export class ProfilePage implements OnInit, OnDestroy {
     })
   }
 
-  onImagePicked(imageData: string | File) {
-    let imageFile
-    if (typeof imageData == 'string') {
-      try {
-        // imageFile = base64toBlob(
-        //   imageData.replace('data:image/jpeg;base64,', ''),
-        //   'image/jpeg'
-        // );
-        imageFile = imageData
-      } catch (err) {
-        console.log(err)
-        return;
+  onPickImage() {
+    if (!Capacitor.isPluginAvailable('camera')) {
+      this.filePickerRef.nativeElement.click()
+      return;
+    }
+
+    Plugins.Camera.getPhoto({
+      quality: 50,
+      source: CameraSource.Prompt,
+      correctOrientation: true,
+      height: 320,
+      width: 200,
+      resultType: CameraResultType.Base64
+    }).then(image => {
+      this.selectedImage = image.base64String
+      this.imagePicker = image.base64String
+      this.editForm.patchValue({ dp: this.imagePicker })
+    }).catch(err => {
+      if (this.usePicker) {
+        this.filePickerRef.nativeElement.click();
       }
-    } else {
-      imageFile = imageData
-    } 
-      this.editForm.patchValue({ dp:imageFile })
+      return false;
+    })
+  }
+
+  onFileChosen(event: Event) {
+    const pickedFile = (event.target as HTMLInputElement).files[0];
+    if (!pickedFile) {
+      return;
+    }
+    const fr = new FileReader();
+    fr.onload = () => {
+      const dataUrl = fr.result.toString();
+      this.selectedImage = dataUrl;
+      this.imagePicker = dataUrl;
+      this.editForm.patchValue({ dp: this.imagePicker })
+    };
+    fr.readAsDataURL(pickedFile);
   }
 
   onEdit() {
     if (!this.editForm.valid || !this.editForm.get('dp').value) {
       return;
     }
-    //console.log(this.editForm.value)
     this.loadingCtrl
       .create({
         message: 'Processing...'
@@ -137,32 +144,14 @@ export class ProfilePage implements OnInit, OnDestroy {
     }
   }
 
-
-
-  // public presentActionSheet() {
-  //   let actionSheet = this.actionSheetCtrl.create({
-  //   title: 'Select Image Source',
-  //   buttons: [
-  //    {
-  //      text: 'Load from Library',
-  //      handler: () => {
-  //        this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
-  //      }
-  //    },
-  //    {
-  //      text: 'Use Camera',
-  //      handler: () => {
-  //        this.takePicture(this.camera.PictureSourceType.CAMERA);
-  //      }
-  //    },
-  //    {
-  //      text: 'Cancel',
-  //      role: 'cancel'
-  //    }
-  //   ]
-  //  });
-  //   actionSheet.present();
-  //  }
-  // }
+  async changePass() {
+    const modal = await this.modalCtrl.create({
+      component: ChangePasswordComponent,
+      componentProps: {
+        id: this.id
+      }
+    });
+    return await modal.present();
+  }
 
 }

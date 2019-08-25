@@ -40,8 +40,11 @@
     </ion-row>
     <ion-row>
       <ion-col size="12">
-        <ion-list *ngIf="!Loading">
+        <ion-list>
           <ion-row *ngFor="let item of dataEvent.data">
+            <ion-row *ngIf="!empty">
+              <ion-text>There are no event created</ion-text>
+            </ion-row>
             <ion-item class="card pb-5" lines="full">
               <ion-col size="5">
                 <div>

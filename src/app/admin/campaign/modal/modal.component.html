@@ -26,10 +26,19 @@
               <ion-card-content>
                 {{description}}
                 <ion-list>
-                  <ion-item lines="none" no-padding>
+                  <ion-item lines="none" no-padding style="height:125px;">
                     <ion-icon name="star-outline"></ion-icon>
                     <ion-text>Goal</ion-text>
-                    <ion-note slot="end" color="primary">RM {{goal}}</ion-note>
+                    <ion-note slot="end" color="primary">RM {{raised}} / RM {{goal}}</ion-note>
+                    <div class="raised">
+                      <ion-range min="0" max="100" step="10" pin color="secondary" style="padding: 0px;" [value]="lastRaised" (ionChange)="changeRaised($event, goal)">
+                        <ion-icon slot="start" size="small" name="star-outline"></ion-icon>
+                        <ion-icon slot="end" name="star-outline"></ion-icon>
+                      </ion-range>
+                    </div>
+                    <div class="btn-positioning">
+                      <ion-button color="secondary" [disabled]="!update" (click)="update(id)" slot="end">Update</ion-button>
+                    </div>
                   </ion-item>
                   <ion-item lines="none" no-padding>
                       <ion-icon name="pin" color="primary"></ion-icon>

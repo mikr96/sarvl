@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { ProfilePage } from './profile.page';
 import { SharedModule } from '../../shared/shared.module';
+import { ChangePasswordModule } from './change-password/change-password.module';
 
 const routes: Routes = [
   {
@@ -21,7 +22,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    SharedModule
+    ChangePasswordModule
   ],
   declarations: [ProfilePage]
 })

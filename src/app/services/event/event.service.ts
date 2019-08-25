@@ -186,6 +186,19 @@ export class EventService {
       })
     )
   }
+
+  public updatePassword(id, data) {
+    return this.authService.token.pipe(
+      take(1),
+      switchMap(token => {
+        return this.http.put(URL + `users/${id}/change_password`, {...data}, {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        })
+      })
+    )
+  }
   
 
   public viewCount(event_id: any) {

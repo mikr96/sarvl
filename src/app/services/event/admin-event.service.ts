@@ -143,6 +143,22 @@ export class AdminEventService {
     )
   }
 
+  public updateRaised(id : string, raised : string) {
+    let data = {
+      raised: raised
+    }
+    return this.authService.token.pipe(
+      take(1),
+      switchMap(token => {
+        return this.http.put(URL + `/updateRaised${id}`, {...data}, {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        })
+      })
+    )
+  }
+
 
   public getFAQ() {
     return this.http.get(URL + 'faqs')

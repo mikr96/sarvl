@@ -26,12 +26,16 @@
           <ion-icon name="pin" color="primary"></ion-icon>
           <ion-note color="primary">{{location}}</ion-note>
         </ion-card-header>
-        <ion-card-content>
-          {{item.description}}
-          <ion-list>
-            <ion-progress-bar color="secondary" value="0.5"></ion-progress-bar>
-            <ion-label>Raised</ion-label>
-            <ion-note style="float:right;" color="primary">RM50 / RM{{item.goal}}</ion-note>
+        <ion-card-content fullscreen>
+          <div class="description">
+            {{item.description}}
+          </div>
+          <ion-list style="margin-top: 15px;">
+            <ion-item lines="none" no-padding no-margin>
+              <ion-progress-bar color="secondary" value="0.5" style="position: absolute; top:0px; width:95%;"></ion-progress-bar>
+              <ion-text>Raised</ion-text>
+              <ion-note slot="end" color="primary">RM50 / RM{{item.goal}}</ion-note>
+            </ion-item>
             <ion-item lines="none" no-padding>
               <ion-icon name="people" color="primary"></ion-icon>
               <ion-text>Registered</ion-text>
@@ -49,13 +53,18 @@
             <!--SUB MENU-->
             <ion-list *ngIf="comments">
               <ion-row class="no-margin no-padding" *ngFor="let item of item.comments">
-                <ion-text>{{item.comment}}</ion-text>
+                <div class="card">
+                  <ion-text style="display: block">Volunteer: {{item.comments}}</ion-text>
+                  <ion-text style="display: block">Organizer: Hi hi, nice to meet you</ion-text>
+                </div>
               </ion-row>
-              <ion-textarea [(ngModel)]="comment" placeholder="Insert comment"></ion-textarea>
-              <ion-button color="medium" expand="block" (click)="postComment(item.id)">Comment</ion-button>
+              <div class="comment-box">
+                <ion-textarea [(ngModel)]="comment" placeholder="Insert comment"></ion-textarea>
+                <ion-button color="medium" expand="block" (click)="postComment(item.id)">Comment</ion-button>
+              </div>
             </ion-list>
             </ion-list>
-            <ion-button color="secondary" fill="clear" (click)="join(item.id)" expand="block" margin-vertical>JOIN NOW</ion-button>
+            <ion-button color="secondary" fill="outline" (click)="join(item.id)" expand="block" style="margin-bottom: 5px;">JOIN NOW</ion-button>
             <ion-button color="secondary" expand="block" (click)="donate()">DONATE NOW</ion-button>
           </ion-card-content>
         </ion-card>

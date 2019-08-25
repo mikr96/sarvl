@@ -26,6 +26,7 @@ export class CampaignPage implements OnInit {
     next_page_url: null,
     total: 0
   }
+  empty: boolean = false
 
   constructor(private router: Router, private route: ActivatedRoute, private navCtrl: NavController, private adminEventService: AdminEventService, private eventService: EventService, private toastCtrl: ToastController, private loadingCtrl: LoadingController, private zone: NgZone, private modalCtrl: ModalController) { }
 
@@ -44,6 +45,8 @@ export class CampaignPage implements OnInit {
         (event: any) => {
           this.isLoading = false;
           this.dataEvent = event.events;
+          console.log(this.dataEvent.data.length)
+          this.dataEvent.data.length < 1 ? this.empty = false : this.empty = true
         },
         error => {
           this.handleError(error)
@@ -85,6 +88,7 @@ export class CampaignPage implements OnInit {
         .subscribe((data: any) => {
           this.isLoading = false
           this.dataEvent = data.events
+          this.dataEvent.data.length < 1 ? this.empty = false : this.empty = true
         }, ({ error }) => this.handleError(error))
     } else {
       this.adminEventService
@@ -93,7 +97,7 @@ export class CampaignPage implements OnInit {
         (event: any) => {
           this.isLoading = false;
           this.dataEvent = event.events;
-          console.log(this.dataEvent)
+          this.dataEvent.data.length < 1 ? this.empty = false : this.empty = true
         },
         error => {
           this.handleError(error)
@@ -114,6 +118,7 @@ export class CampaignPage implements OnInit {
           res => {
           console.log(res)
           loadingEl.dismiss()
+          location.reload()
         }, 
         err => {
           console.log(err)

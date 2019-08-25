@@ -13,11 +13,11 @@ import { Platform } from '@ionic/angular';
 })
 export class EditEventPage implements OnInit {
   @ViewChild('filePicker', { static: false }) filePickerRef: ElementRef<HTMLInputElement>;
-  imagePicker: any
   item: any
   formInit: boolean = false
   isLoading: boolean = false;
   image: any
+  imagePicker: any
   selectedImage: string
   usePicker = false;
   constructor(private eventService: EventService, private loadingCtrl: LoadingController, private router: Router, private toastController: ToastController, private route: ActivatedRoute, private navCtrl: NavController, private platform: Platform) { 
@@ -89,7 +89,7 @@ export class EditEventPage implements OnInit {
     }).then(image => {
       this.selectedImage = image.base64String
       this.imagePicker = image.base64String
-      this.editEventForm.patchValue({ dp: this.imagePicker })
+      this.editEventForm.patchValue({ image: this.imagePicker })
     }).catch(err => {
       if (this.usePicker) {
         this.filePickerRef.nativeElement.click();
@@ -108,32 +108,15 @@ export class EditEventPage implements OnInit {
       const dataUrl = fr.result.toString();
       this.selectedImage = dataUrl;
       this.imagePicker = dataUrl;
-      this.editEventForm.patchValue({ dp: this.imagePicker })
+      this.editEventForm.patchValue({ image: this.imagePicker })
     };
     fr.readAsDataURL(pickedFile);
   }
-
-  // onImagePicked(imageData: string | File) {
-  //   let imageFile
-  //   if (typeof imageData == 'string') {
-  //     try {
-  //       imageFile = imageData
-  //     } catch (err) {
-  //       console.log(err)
-  //       return;
-  //     }
-  //   } else {
-  //     imageFile = imageData
-  //   }
-  //   this.editEventForm.patchValue({ dp: imageFile })
-  // }
 
   onSubmit() {
     if (!this.editEventForm.valid) {
       return;
     }
-
-    console.log(this.editEventForm.value);
 
     this.loadingCtrl
       .create({
@@ -150,7 +133,7 @@ export class EditEventPage implements OnInit {
           this.editEventForm.value.goal,
           this.editEventForm.value.whatsapp_link,
           this.editEventForm.value.description,
-          this.editEventForm.value.dp,
+          this.editEventForm.value.image,
           this.editEventForm.value.noVolunteers,
           this.item.id
         )
