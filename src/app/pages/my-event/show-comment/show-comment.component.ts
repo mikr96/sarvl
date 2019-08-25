@@ -15,6 +15,7 @@ export class ShowCommentComponent implements OnInit {
   ngOnInit() {
     this.comments = this.navParams.get('comments')
     this.comments = JSON.parse(this.comments)
+    console.log(this.comments)
   }
 
   dismissModal(){

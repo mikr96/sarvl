@@ -12,12 +12,14 @@
       <ion-col size="12">
         <ion-item lines="full">
           <ion-avatar slot="start">
-            <ion-img [src]="item.user.dp"></ion-img>
+              <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"/>
           </ion-avatar>
           <ion-label>
             <h2>{{item.user.fullname}}</h2>
             <h3>{{item.comment}}</h3>
-            <p>{{item.replies.comment}}</p>
+            <div *ngFor="let data of item.replies">
+              <p>{{data.comment}}</p>
+            </div>
           </ion-label>
         </ion-item>
       </ion-col>

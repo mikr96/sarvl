@@ -1,36 +1,34 @@
 <ion-header translucent>
     <ion-toolbar>
-      <ion-title>Comments</ion-title>
       <ion-buttons slot="end">
         <ion-button (click)="dismissModal()">Close</ion-button>
       </ion-buttons>
     </ion-toolbar>
 </ion-header>
-<ion-content fullscreen padding> 
+<ion-content fullscreen> 
   <ion-grid>
     <ion-row>
       <ion-col size="12">
         <ion-list color="primary" style="width: 100%">
           <ion-list-header>
-            <ion-label><h1>Unread Comments</h1></ion-label>
+            <ion-label *ngIf="bakiComment"><h1>Unread Comments</h1></ion-label>
+            <ion-label *ngIf="!bakiComment"><h1>Thank you, you have replied all comments.</h1></ion-label>
           </ion-list-header>
           <div *ngFor="let item of comments" style="width: 100%">
             <ion-item lines="none" style="width: 100%">
               <ion-avatar slot="start">
-                <ion-img [src]="item.user.dp"></ion-img>
+                <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"/>
               </ion-avatar>
               <ion-label>
                 <h3>: {{item.comment}}</h3>
               </ion-label>
             </ion-item>
             <ion-item lines="none" style="width: 100%">
-              <ion-text slot="start">Me: </ion-text>
-              <ion-textarea [(ngModel)]="comment" placeholder="Insert comment" style="border: 1px solid gray; border-radius: 10px;"></ion-textarea>
+              <ion-text slot="start" style="margin-bottom: 40px;">Me: </ion-text>
+              <ion-textarea [(ngModel)]="comment" placeholder="Insert comment" style="border: 1px solid gray; border-radius: 10px;padding:10px;"></ion-textarea>
             </ion-item>
             <div class="reply">
-              <ion-buttons color="medium"  slot="end">
-                <ion-button (click)="replyComment(item.id,item.user.role)">Reply</ion-button>
-              </ion-buttons>
+              <ion-button color="medium" (click)="replyComment(item.id,item.user.role)" style="float:right;margin-top:10px;">Reply</ion-button>
             </div>
           </div>
         </ion-list>

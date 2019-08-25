@@ -10,11 +10,13 @@ import { EventService } from 'src/app/services/event/event.service';
 export class ReplyCommentComponent implements OnInit {
   comments: any
   comment: string
+  bakiComment: boolean
   constructor(private modalCtrl: ModalController, private navParams: NavParams, private eventService: EventService, private loadingCtrl: LoadingController, private toastCtrl: ToastController) { }
 
   ngOnInit() {
     this.comments = this.navParams.get('comments')
     this.comments = JSON.parse(this.comments)
+    this.bakiComment = true
   }
 
   dismissModal(){
@@ -37,6 +39,8 @@ export class ReplyCommentComponent implements OnInit {
       this.eventService.replyComment(id, body)
       .subscribe(
         res => {
+        this.comments = this.comments.filter(data => data.id != id)
+        this.comments.length < 1 ? this.bakiComment = false : this.bakiComment = true
         loadingEl.dismiss()
       }, 
       err => {
@@ -46,6 +50,15 @@ export class ReplyCommentComponent implements OnInit {
         this.popToast(firstError)
     })
   });
+  }
+
+  len(val) {
+    let temp = val.length
+    if (temp>0) {
+      return true
+    } else {
+      return false
+    }
   }
 
   async popToast(message: string) {

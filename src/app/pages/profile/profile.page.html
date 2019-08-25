@@ -13,9 +13,11 @@
   </ion-refresher>
 <ion-grid>
   <ion-row class="ion-justify-content-center ion-align-items-center">
-    <div *ngIf="isLoading" text-center>
-      <ion-spinner color="primary"></ion-spinner>
-    </div>
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <div *ngIf="isLoading" text-center>
+        <ion-spinner name="crescent" color="primary"></ion-spinner>
+      </div>
+    </ion-row>
     <ion-col size="11">
       <ion-card>
         <form [formGroup]="editForm" *ngIf="!isLoading">

@@ -56,13 +56,13 @@ export class MyEventPage implements OnInit {
   }
 
   checkComment(comments) {
-    let temp = comments.map(data => {
-      if (data.replies==null) {
-        return
+    let temp = 0
+    comments.forEach(data => {
+      if (data.comment && data.replies.length < 1) {
+        temp = temp + 1
       }
     })
-    this.unread = temp.length
-    if (this.unread > 0) {
+    if (temp > 0) {
       this.commentStatus = true
       return true
     } else {
@@ -88,7 +88,24 @@ export class MyEventPage implements OnInit {
         comments: JSON.stringify(comments)
       }
     });
+
+    modal.onDidDismiss().then(() => {
+      this.eventService.getCreatedEvents().subscribe(resEvent => {
+        //console.log(resEvent)
+        this.data = resEvent
+        this.noEvent = false;
+        if (this.data.events === undefined || this.data.events.length == 0) {
+          // array empty or does not exist
+          this.noEvent = true;
+        }
+      })
+    })
+
     return await modal.present();
+  }
+
+  test(){
+
   }
 
   resubmit(item:any) {
