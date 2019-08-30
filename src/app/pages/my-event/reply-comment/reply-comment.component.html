@@ -28,7 +28,7 @@
               <ion-textarea [(ngModel)]="comment" placeholder="Insert comment" style="border: 1px solid gray; border-radius: 10px;padding:10px;"></ion-textarea>
             </ion-item>
             <div class="reply">
-              <ion-button color="medium" (click)="replyComment(item.id,item.user.role)" style="float:right;margin-top:10px;">Reply</ion-button>
+              <ion-button color="medium" (click)="replyComment(item.id,'organizer')" style="float:right;margin-top:10px;">Reply</ion-button>
             </div>
           </div>
         </ion-list>
