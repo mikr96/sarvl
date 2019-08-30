@@ -8,6 +8,11 @@
   </ion-header>
 
 <ion-content fullscreen>
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button color="secondary" routerLink="/admin/create">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
     <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
         <ion-refresher-content refreshingSpinner="circles" refreshingText="Refreshing..."></ion-refresher-content>
       </ion-refresher>
@@ -17,7 +22,7 @@
         <ion-spinner name="crescent" color="primary"></ion-spinner>
       </ion-col>
     </ion-row>
-  </ion-grid>
+  </ion-grid>      
   <ion-grid>
     <ion-row class="ion-justify-content-center no-margin no-padding">
       <ion-col size="1">
@@ -41,12 +46,8 @@
         </ion-buttons>
       </ion-col>
     </ion-row>
-    <ion-fab horizontal="end" vertical="bottom" slot="fixed">
-      <ion-fab-button color="secondary" routerLink="/pages/create-event">
-        <ion-icon name="add"></ion-icon>
-      </ion-fab-button>
-    </ion-fab>
     <ion-row>
+
       <ion-col size="12">
         <ion-list>
           <ion-row *ngFor="let item of dataEvent.data">
@@ -56,8 +57,8 @@
             <ion-item class="card pb-5" lines="full">
               <ion-col size="5">
                 <div>
-                  <img *ngIf="item.image==null" style="width:100%; height: auto;" src="../../../assets/logo.png"/>
-                  <ion-img *ngIf="item.image!=null" [src]="item.image" style="width:100%; height: auto;"></ion-img>
+                  <img *ngIf="item.images==null" style="width:100%; height: auto;" src="../../../assets/logo.png"/>
+                  <ion-img *ngIf="item.images!=null" [src]="item.images" style="width:100%; height: auto;"></ion-img>
                 </div>
               </ion-col>
               <ion-col size="7" style="height: 100%">

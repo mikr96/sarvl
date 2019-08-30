@@ -44,7 +44,7 @@ export class CampaignPage implements OnInit {
           (event: any) => {
             this.isLoading = false;
             this.dataEvent = event.events;
-            console.log(this.dataEvent.data.length)
+            console.log(this.dataEvent.data)
             this.dataEvent.data.length < 1 ? this.empty = false : this.empty = true
           },
           error => {

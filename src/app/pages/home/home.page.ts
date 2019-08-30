@@ -77,6 +77,11 @@ export class HomePage implements OnInit {
       }, ({ error }) => this.handleError(error))
   }
 
+  createEvent() {
+    let from = "user"
+    this.router.navigate(['/', 'pages', 'create-event'], {state: {from: from}})
+  }
+
   goToDetails(item) {
     Storage.set({ key: 'item', value: JSON.stringify(item) })
     this.router.navigateByUrl('/pages/detail-event')

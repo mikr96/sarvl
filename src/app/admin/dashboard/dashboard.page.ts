@@ -1,13 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild, ViewChildren } from '@angular/core';
 import { AdminEventService } from '../../services/event/admin-event.service';
 import { ToastController } from '@ionic/angular';
-import { Chart } from 'chart.js'
-
-interface EventResponseI {
-  events: [
-    { campaign: string, value: number }
-  ]
-}
 
 @Component({
   selector: 'app-dashboard',

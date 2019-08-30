@@ -24,6 +24,10 @@ const routes: Routes = [
         loadChildren: './campaign/update/update.module#UpdatePageModule' 
       },
       { 
+        path: 'create', 
+        loadChildren: './campaign/create/create.module#CreatePageModule' 
+      },
+      { 
         path: 'faq-admin', 
         children: [
           {
