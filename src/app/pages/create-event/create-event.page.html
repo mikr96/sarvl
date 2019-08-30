@@ -1,10 +1,12 @@
 <ion-header>
     <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-back-button defaultHref="/pages/home"></ion-back-button>
+          <ion-button (click)="goBack()" routerDirection="backward">
+            <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
+          </ion-button>
         </ion-buttons>
-        <ion-title>Create Event</ion-title>
-      </ion-toolbar>
+      <ion-title>Create Event</ion-title>
+    </ion-toolbar>
 </ion-header>
 <ion-content class="animated fast fadeIn">
   <app-create-event></app-create-event>
