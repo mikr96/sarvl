@@ -31,4 +31,8 @@ export class UserManagementPage implements OnInit {
     }, 2000)
   }
 
+  viewMore(user) {
+    console.log(user)
+  }
+
 }
