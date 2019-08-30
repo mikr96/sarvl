@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import { AuthService, AuthResponseData } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -15,6 +15,9 @@ export class AuthPage implements OnInit {
 
   form: FormGroup;
   token: any;
+  status: boolean = true;
+  password: any
+  @ViewChild("password", { read: ElementRef, static: false } ) passwordElementRef: ElementRef;
 
   constructor(private authService: AuthService, private router: Router, private loadingCtrl: LoadingController, private alertCtrl: AlertController) { }
 
@@ -72,5 +75,15 @@ export class AuthPage implements OnInit {
         buttons: ['Okay']
       })
       .then(alertEl => alertEl.present());
+  }
+
+  public hideShow(state : string) {
+    if (state == 'hide') {
+      this.status = true
+      this.passwordElementRef.nativeElement.type = "password"
+    } else if (state == 'show') {
+      this.status = false
+      this.passwordElementRef.nativeElement.type = "text"
+    }
   }
 }

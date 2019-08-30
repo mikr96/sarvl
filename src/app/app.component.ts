@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Platform } from '@ionic/angular';
+import { Component, OnInit, OnDestroy, ViewChildren, QueryList } from '@angular/core';
+import { Platform, IonRouterOutlet, ToastController } from '@ionic/angular';
 import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
-import { Plugins, Capacitor } from '@capacitor/core';
+import { Plugins, Capacitor, DeviceInfo } from '@capacitor/core';
 import { Subscription } from 'rxjs';
+const { Device } = Plugins;
 
 @Component({
   selector: 'app-root',
@@ -11,6 +12,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy{
+  @ViewChildren(IonRouterOutlet) routerOutlets: QueryList<IonRouterOutlet>;
   private authSub: Subscription;
   open = false;
   submenu = [
@@ -37,13 +39,19 @@ export class AppComponent implements OnInit, OnDestroy{
   ];
   isAdmin: boolean = false
   fullname: string = ''
+  lastTimeBackPress = 0;
+  timePeriodToExit = 2000;
+
 
   constructor(
     private platform: Platform,
     private authService: AuthService,
     private router: Router,
+    private toastCtrl: ToastController
   ) {
     this.initializeApp();
+    // Initialize BackButton Eevent.
+    this.setAndroidBackButtonBehavior();
   }
 
   ngOnInit() {
@@ -70,7 +78,7 @@ export class AppComponent implements OnInit, OnDestroy{
   }
 
   goToCampaign(campaign: string) {
-    localStorage.setItem('campaign', campaign)
+    // localStorage.setItem('campaign', campaign)
     this.open = false;
     this.router.navigate(['/', 'admin', 'campaign', campaign])
   }
@@ -83,6 +91,17 @@ export class AppComponent implements OnInit, OnDestroy{
   ngOnDestroy() {
     if (this.authSub) {
       this.authSub.unsubscribe();
+    }
+  }
+
+  private async setAndroidBackButtonBehavior() {
+    const deviceInfo = await Device.getInfo()
+    if (deviceInfo.platform == "android") {
+      this.platform.backButton.subscribe(() => {
+        if (window.location.pathname == "/pages/home") {
+          navigator['app'].exitApp();
+        }
+      });
     }
   }
 }

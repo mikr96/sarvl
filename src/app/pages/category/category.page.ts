@@ -22,6 +22,10 @@ export class CategoryPage implements OnInit {
     total: 0
   }
   img: boolean;
+  activeLatest: boolean = true;
+  activePopular: boolean = false;
+  activeEndingSoon: boolean = false;
+  empty: boolean 
 
   constructor(
     private route: ActivatedRoute,
@@ -47,6 +51,7 @@ export class CategoryPage implements OnInit {
         (event: any) => {
           this.isLoading = false;
           this.dataEvent = event.events;
+          this.dataEvent.data.length < 1 ? this.empty = false : this.empty = true
         },
         error => {
           this.handleError(error)
@@ -102,6 +107,19 @@ export class CategoryPage implements OnInit {
 
   changeCategory(category: string) {
     this.isLoading = true
+    if(category === "latest") {
+      this.activeLatest = true
+      this.activePopular = false
+      this.activeEndingSoon = false
+    } else if (category === "popular") {
+      this.activeLatest = false
+      this.activePopular = true
+      this.activeEndingSoon = false
+    } else if (category === "ending_soon") {
+      this.activeLatest = false
+      this.activePopular = false
+      this.activeEndingSoon = true
+    }
     this.currentCategory = category
     this.currentPage = 1
     this.eventService.getEventByCampaignWithCategory(this.currentPage, this.currentCampaign, this.currentCategory)

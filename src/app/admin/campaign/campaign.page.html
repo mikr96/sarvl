@@ -41,6 +41,11 @@
         </ion-buttons>
       </ion-col>
     </ion-row>
+    <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+      <ion-fab-button color="secondary" routerLink="/pages/create-event">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
     <ion-row>
       <ion-col size="12">
         <ion-list>
@@ -73,11 +78,11 @@
                     <ion-text lines="none">Status : {{ checkStatus(item.status) }} </ion-text>
                   </ion-row>
                   <ion-row>
-                    <ion-button *ngIf="item.status ==0" color="primary" expand="block" (click)="viewDetail(item)">View</ion-button>
-                    <ion-button *ngIf="item.status !=0" color="primary" expand="block" (click)="viewDetail(item)">Update</ion-button>
+                    <ion-col size="12">
+                      <ion-button *ngIf="item.status ==0" color="primary" expand="block" (click)="viewDetail(item)">View</ion-button>
+                      <ion-button *ngIf="item.status !=0" color="primary" expand="block" (click)="viewDetail(item)">Update</ion-button>
+                    </ion-col>
                     <!-- <ion-button color="secondary" [disabled]="item.status == 0 || item.status == 2" (click)="editDetail(item)">Edit</ion-button> -->
-                    <ion-button color="success" [disabled]="item.status != 0" (click)="approveEvent(item.id)">Approve</ion-button>
-                    <ion-button color="danger" [disabled]="item.status != 0" (click)="declineEvent(item)">Decline</ion-button>
                   </ion-row>
               </ion-col>
               </ion-item>

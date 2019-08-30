@@ -1,0 +1,84 @@
+<ion-header translucent>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/admin/campaign"></ion-back-button>
+      </ion-buttons>
+      <ion-title>Event Details</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content fullscreen>
+      <ion-grid>
+          <ion-row>
+            <ion-card>
+              <img *ngIf="item.image==null" class="img-card" src="../../../assets/logo.png"/>
+              <ion-img *ngIf="item.image!=null" class="img-card" [src]="item.image"></ion-img>
+              <ion-card-header>
+                <ion-card-subtitle>{{item.campaign}}</ion-card-subtitle>
+                <ion-card-title>{{item.title}}</ion-card-title>
+                <div class="offer-details">
+                  <ion-icon name="calendar" color="primary"></ion-icon>
+                  <ion-text color="tertiary" class="space-left">{{formatDate(item.start_date)}} </ion-text>
+                  <span class="space-left"> to </span>
+                  <ion-icon name="calendar" class="space-left" color="primary"></ion-icon>
+                  <ion-text color="tertiary" class="space-left"> {{formatDate(item.end_date)}}</ion-text>
+                </div>
+              </ion-card-header>
+              <ion-card-content>
+                {{item.description}}
+                <ion-list>
+                  <ion-item lines="none" no-padding style="height:125px;">
+                    <ion-icon name="star-outline"></ion-icon>
+                    <ion-text>Goal</ion-text>
+                    <ion-note slot="end" color="primary">RM {{item.raised}} / RM {{item.goal}}</ion-note>
+                    <div class="raised">
+                      <ion-range min="0" max="100" step="10" pin color="secondary" style="padding: 0px;" [value]="raised" (ionChange)="changeRaised($event, goal)">
+                        <ion-icon slot="start" size="small" name="star-outline"></ion-icon>
+                        <ion-icon slot="end" name="star-outline"></ion-icon>
+                      </ion-range>
+                    </div>
+                    <div class="btn-positioning">
+                      <ion-button color="secondary" [disabled]="!update" (click)="updateRaised(item.id)" slot="end">Update</ion-button>
+                    </div>
+                  </ion-item>
+                  <ion-item lines="none" no-padding>
+                      <ion-icon name="pin" color="primary"></ion-icon>
+                      <ion-text>Location</ion-text>
+                      <ion-note slot="end" color="primary">{{item.location}}</ion-note>
+                  </ion-item>
+                  <ion-item lines="none" no-padding>
+                    <ion-icon name="people" color="primary"></ion-icon>
+                    <ion-text>Registered</ion-text>
+                    <ion-note slot="end" color="primary">{{item.volunteered.length}}/{{item.noVolunteers}}</ion-note>
+                  </ion-item>
+                  <ion-item lines="none" no-padding>
+                    <ion-icon name="eye" color="primary"></ion-icon>
+                    <ion-text>View Count</ion-text>
+                    <ion-note slot="end" color="primary">{{item.view_count}}</ion-note>
+                  </ion-item>
+                  <ion-item lines="none" no-padding>
+                    <ion-label>Comments</ion-label>
+                    <ion-badge color="primary" slot="end">{{item.comments.length}}</ion-badge>
+                  </ion-item>
+                  </ion-list>
+                </ion-card-content>
+              </ion-card>
+          </ion-row>
+          <ion-row justify-content-center align-items-center>
+            <ion-col size="6" style="justify-content: center;">
+                <ion-button color="success" [disabled]="item.status!= 0" expand="block" (click)="approveEvent(item.id, item.campaign)">Approve</ion-button>
+            </ion-col>
+            <ion-col size="6" style="justify-content: center;">
+              <ion-button color="danger" [disabled]="item.status!= 0" expand="block" (click)="declineEvent(item.id, item.campaign)">Decline</ion-button> 
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="decline">
+              <ion-col size="12">
+                <form [formGroup]="form">
+                  <ion-textarea 
+                  placeholder="Please state your comments before declining the event."                 
+                  required formControlName="comment"></ion-textarea>
+                </form>
+              </ion-col>
+            </ion-row>
+        </ion-grid>
+  </ion-content>

@@ -16,8 +16,12 @@ const routes: Routes = [
         loadChildren: './user-management/user-management.module#UserManagementPageModule'
       },
       { 
-        path: 'campaign/:id', 
-        loadChildren: './campaign/campaign.module#CampaignPageModule' 
+        path: 'campaign/:id',
+        loadChildren: './campaign/campaign.module#CampaignPageModule'
+      },
+      { 
+        path: 'update', 
+        loadChildren: './campaign/update/update.module#UpdatePageModule' 
       },
       { 
         path: 'faq-admin', 

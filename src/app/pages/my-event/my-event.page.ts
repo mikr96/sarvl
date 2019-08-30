@@ -104,8 +104,14 @@ export class MyEventPage implements OnInit {
     return await modal.present();
   }
 
-  test(){
-
+  checkStatus(val) {
+    if (val == "0") {
+      return "Waiting"
+    } else if (val == "1") {
+      return "Approved"
+    } else {
+      return "Declined"
+    }
   }
 
   resubmit(item:any) {

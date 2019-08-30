@@ -80,6 +80,32 @@ export class AdminEventService {
     )
   }
 
+  public getAllEvent(currentPage) {
+    return this.authService.token.pipe(
+      take(1),
+      switchMap(token => {
+        return this.http.get(URL + `events?page=${currentPage}`, {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        })
+      })
+    )
+  }
+
+  public getAllEventByStatus(currentPage, status) {
+    return this.authService.token.pipe(
+      take(1),
+      switchMap(token => {
+        return this.http.get(URL + `events/by_status/${status}?page=${currentPage}`, {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        })
+      })
+    )
+  }
+
   public getUsers() {
     return this.http.get(URL + 'users')
   }

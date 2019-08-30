@@ -15,7 +15,7 @@
     <ion-row *ngIf="noEvent">
       <ion-text>You have not create any event.</ion-text>
     </ion-row>
-    <ion-row *ngFor="let item of data.events">
+    <!-- <ion-row *ngFor="let item of data.events">
         <ion-card>
             <img *ngIf="item.image==null" class="img-card" src="../../../assets/logo.png"/>
             <ion-img *ngIf="item.image!=null" class="img-card" [src]="item.image"></ion-img>
@@ -48,6 +48,63 @@
             <ion-button *ngIf="item.status==2" expand="block" color="danger" (click)="resubmit(item)">RESUBMIT</ion-button>
           </ion-card-content>
         </ion-card>
+    </ion-row> -->
+    <ion-row *ngFor="let item of data.events">
+      <!-- <ion-row *ngIf="!empty">
+        <ion-text>There are no event created</ion-text>
+      </ion-row> -->
+      <ion-item class="card pb-5" lines="full">
+        <ion-col size="4">
+          <div>
+            <img *ngIf="item.image==null" style="width:100%; height: auto;" src="../../../assets/logo.png"/>
+            <ion-img *ngIf="item.image!=null" [src]="item.image" style="width:100%; height: auto;"></ion-img>
+          </div>
+        </ion-col>
+        <ion-col size="8" style="height: 100%" no-padding>
+            <ion-row class="no-padding no-margin">
+              <h1 style="margin:0px">{{ item.title }}</h1>
+            </ion-row>
+            <ion-row class="no-padding no-margin" lines="none">
+              <ion-icon name="calendar" slot="start"></ion-icon>
+              <ion-text lines="none">Campaign : {{ item.campaign }}</ion-text>
+            </ion-row>
+            <ion-row class="no-padding no-margin" lines="none">
+              <ion-icon name="calendar" slot="start"></ion-icon>
+              <ion-text lines="none">Date : {{ date(item.start_date) }}</ion-text>
+            </ion-row>
+            <ion-row class="no-padding no-margin" lines="none">
+              <ion-text lines="none">Goals : RM{{ item.goal }}</ion-text>
+            </ion-row>
+            <ion-row class="no-padding no-margin" lines="none">
+              <ion-text lines="none">Volunteers : {{ item.volunteered.length }}</ion-text>
+            </ion-row>
+            <ion-row class="no-padding no-margin" lines="none">
+              <ion-text lines="none">Location : {{ item.location }}</ion-text>
+            </ion-row>
+            <ion-row class="no-padding no-margin" lines="none">
+              <ion-text lines="none">Status : </ion-text>
+              <ion-button color="secondary" fill="outline" expand="block" *ngIf="item.status == 0">Processing</ion-button>
+              <ion-button color="success" fill="outline" expand="block" *ngIf="item.status == 1">Approved</ion-button>
+              <ion-button color="danger" fill="outline" expand="block" *ngIf="item.status == 2">Rejected</ion-button>
+            </ion-row>
+            <ion-row>
+              <div *ngIf="item.status==1">
+                <div *ngIf="checkComment(item.comments)" style="margin-top: 10px;">
+                  <ion-button *ngIf="!commentStatus" expand="block" color="primary" (click)="showComment(item.comments)">SHOW ALL COMMENTS</ion-button>
+                  <ion-button *ngIf="commentStatus" expand="block" color="primary" (click)="replyComment(item.comments)">YOU HAVE {{unread}} UNREAD COMMENT</ion-button>
+                </div>
+              </div>
+            </ion-row>
+            <ion-row>
+              <ion-col size="6">
+                  <ion-button *ngIf="item.status==2" expand="block" color="primary" (click)="viewComment(item.remark)">COMMENTS</ion-button>
+              </ion-col>
+              <ion-col size="6">
+                <ion-button *ngIf="item.status==2" expand="block" color="danger" (click)="resubmit(item)">RESUBMIT</ion-button>
+              </ion-col>
+            </ion-row>
+        </ion-col>
+        </ion-item>
     </ion-row>
   </ion-grid>
 </ion-content>

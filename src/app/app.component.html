@@ -81,21 +81,20 @@
               <ion-label>Dashboard</ion-label>
             </ion-item>
           </ion-menu-toggle>
-          <ion-item lines="none" button (click)="open = !open" [class.parent-active]="open" detail="false">
-            <ion-icon slot="start" name="megaphone" *ngIf="!open"></ion-icon>
-            <ion-icon slot="start" name="megaphone" *ngIf="open"></ion-icon>
-            <ion-label>Campaign</ion-label>
-          </ion-item>
-          <!--SUB MENU-->
-          <ion-list *ngIf="open">
-            <ion-menu-toggle>
-              <ion-item *ngFor="let sub of submenu" (click)='goToCampaign(sub.title)' button>
-                <ion-label class="sub-item">
-                  {{ sub.title }} <span style="font-size: 10px;">{{ sub.category }}</span>
-                </ion-label>
-              </ion-item>
-            </ion-menu-toggle>
-          </ion-list>
+          <ion-menu-toggle>
+            <ion-item lines="none" (click)='goToCampaign("All")' button>
+              <ion-icon slot="start" name="megaphone" *ngIf="!open"></ion-icon>
+              <ion-label>Campaign</ion-label>
+            </ion-item>
+            <!--SUB MENU-->
+            <ion-list>
+                <ion-item *ngFor="let sub of submenu" (click)='goToCampaign(sub.title)' button>
+                  <ion-label class="sub-item">
+                    {{ sub.title }} <span style="font-size: 10px;">{{ sub.category }}</span>
+                  </ion-label>
+                </ion-item>
+            </ion-list>
+          </ion-menu-toggle>
           <ion-menu-toggle>
             <ion-item lines="none" routerLink="/admin/user-management" button>
               <ion-icon name="people" slot="start"></ion-icon>

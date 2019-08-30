@@ -25,6 +25,9 @@ export class HomePage implements OnInit {
   img: boolean = true
   errors: any
   currentCategory: string = 'latest'
+  activeLatest : boolean = true
+  activePopular : boolean = false
+  activeEndingSoon : boolean = false
 
   constructor(private eventService: EventService, private toastController: ToastController, private router: Router, private authService: AuthService) { }
 
@@ -50,6 +53,20 @@ export class HomePage implements OnInit {
 
   changeCategory(category: string) {
     this.loading = true
+
+    if(category === "latest") {
+      this.activeLatest = true
+      this.activePopular = false
+      this.activeEndingSoon = false
+    } else if (category === "popular") {
+      this.activeLatest = false
+      this.activePopular = true
+      this.activeEndingSoon = false
+    } else if (category === "ending_soon") {
+      this.activeLatest = false
+      this.activePopular = false
+      this.activeEndingSoon = true
+    }
     this.currentCategory = category
     this.currentPage = 1
     this.eventService.getByCategory(this.currentPage, this.currentCategory)

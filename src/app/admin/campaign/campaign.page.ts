@@ -3,8 +3,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { NavController, ToastController, LoadingController, ModalController } from '@ionic/angular';
 import { AdminEventService } from 'src/app/services/event/admin-event.service';
 import { EventService } from '../../services/event/event.service';
-import { ModalComponent } from './modal/modal.component';
-import { CommentComponent } from './comment/comment.component';
 
 @Component({
   selector: 'app-campaign',
@@ -28,7 +26,7 @@ export class CampaignPage implements OnInit {
   }
   empty: boolean = false
 
-  constructor(private router: Router, private route: ActivatedRoute, private navCtrl: NavController, private adminEventService: AdminEventService, private eventService: EventService, private toastCtrl: ToastController, private loadingCtrl: LoadingController, private zone: NgZone, private modalCtrl: ModalController) { }
+  constructor(private router: Router, private route: ActivatedRoute, private navCtrl: NavController, private adminEventService: AdminEventService, private eventService: EventService, private toastCtrl: ToastController, private loadingCtrl: LoadingController, private modalCtrl: ModalController) { }
 
   ngOnInit() {
     this.isLoading = true;
@@ -38,20 +36,37 @@ export class CampaignPage implements OnInit {
         return;
       }
       this.currentCampaign = paramMap.get('id');
-      this.currentCategory = 3
-      this.adminEventService
-      .getAll(this.currentPage, this.currentCampaign, this.currentCategory)
-      .subscribe(
-        (event: any) => {
-          this.isLoading = false;
-          this.dataEvent = event.events;
-          console.log(this.dataEvent.data.length)
-          this.dataEvent.data.length < 1 ? this.empty = false : this.empty = true
-        },
-        error => {
-          this.handleError(error)
-        }
-      );
+      if(this.currentCampaign == "All") {
+        this.currentCategory = 3
+        this.adminEventService
+        .getAllEventByStatus(this.currentPage, this.currentCategory)
+        .subscribe(
+          (event: any) => {
+            this.isLoading = false;
+            this.dataEvent = event.events;
+            console.log(this.dataEvent.data.length)
+            this.dataEvent.data.length < 1 ? this.empty = false : this.empty = true
+          },
+          error => {
+            this.handleError(error)
+          }
+        );
+      } else {
+        this.currentCategory = 3
+        this.adminEventService
+        .getAll(this.currentPage, this.currentCampaign, this.currentCategory)
+        .subscribe(
+          (event: any) => {
+            this.isLoading = false;
+            this.dataEvent = event.events;
+            console.log(this.dataEvent.data.length)
+            this.dataEvent.data.length < 1 ? this.empty = false : this.empty = true
+          },
+          error => {
+            this.handleError(error)
+          }
+        );
+      }
     })
   }
 
@@ -63,21 +78,43 @@ export class CampaignPage implements OnInit {
           return;
         }
         this.currentCampaign = paramMap.get('id');
-        this.currentCategory = 3
-        this.adminEventService
-        .getAll(this.currentPage, this.currentCampaign, this.currentCategory)
-        .subscribe(
-          (event: any) => {
-            this.isLoading = false;
-            this.dataEvent = event.events;
-            console.log(this.dataEvent.data.length)
-            this.dataEvent.data.length < 1 ? this.empty = false : this.empty = true
-            events.target.complete()
-          },
-          error => {
-            this.handleError(error)
-          }
-        );
+        if(this.currentCampaign == "All") {
+          this.currentCategory = 3
+          this.adminEventService
+          .getAllEvent(this.currentPage)
+          .subscribe(
+            (event: any) => {
+              this.isLoading = false;
+              this.dataEvent = event.events;
+              console.log(this.dataEvent.data.length)
+              this.dataEvent.data.length < 1 ? this.empty = false : this.empty = true
+              events.target.complete()
+            },
+            error => {
+              this.handleError(error)
+              events.target.complete()
+
+            }
+          );
+        } else {
+          this.currentCategory = 3
+          this.adminEventService
+          .getAll(this.currentPage, this.currentCampaign, this.currentCategory)
+          .subscribe(
+            (event: any) => {
+              this.isLoading = false;
+              this.dataEvent = event.events;
+              console.log(this.dataEvent.data.length)
+              this.dataEvent.data.length < 1 ? this.empty = false : this.empty = true
+              events.target.complete()
+
+            },
+            error => {
+              this.handleError(error)
+              events.target.complete()
+            }
+          );
+        }
       })
     }, 2000)
   }
@@ -110,100 +147,40 @@ export class CampaignPage implements OnInit {
       this.currentCategory = 0
     }
     this.currentPage = 1
-    if(this.currentCategory != 3) {
-      this.adminEventService.getByStatus(this.currentPage, this.currentCampaign, this.currentCategory)
-        .subscribe((data: any) => {
-          this.isLoading = false
-          this.dataEvent = data.events
-          this.dataEvent.data.length < 1 ? this.empty = false : this.empty = true
-        }, ({ error }) => this.handleError(error))
+    if(this.currentCampaign == "All") {
+      this.adminEventService.getAllEventByStatus(this.currentPage, this.currentCategory)
+      .subscribe( (data: any) => {
+        this.isLoading = false
+        this.dataEvent = data.events
+        this.dataEvent.data.length < 1 ? this.empty = false : this.empty = true
+      })
     } else {
-      this.adminEventService
-      .getAll(this.currentPage, this.currentCampaign, this.currentCategory)
-      .subscribe(
-        (event: any) => {
-          this.isLoading = false;
-          this.dataEvent = event.events;
-          this.dataEvent.data.length < 1 ? this.empty = false : this.empty = true
-        },
-        error => {
-          this.handleError(error)
-        }
-      );
+      if(this.currentCategory != 3) {
+        this.adminEventService.getByStatus(this.currentPage, this.currentCampaign, this.currentCategory)
+          .subscribe((data: any) => {
+            this.isLoading = false
+            this.dataEvent = data.events
+            this.dataEvent.data.length < 1 ? this.empty = false : this.empty = true
+          }, ({ error }) => this.handleError(error))
+      } else {
+        this.adminEventService
+        .getAll(this.currentPage, this.currentCampaign, this.currentCategory)
+        .subscribe(
+          (event: any) => {
+            this.isLoading = false;
+            this.dataEvent = event.events;
+            this.dataEvent.data.length < 1 ? this.empty = false : this.empty = true
+          },
+          error => {
+            this.handleError(error)
+          }
+        );
+      }
     }
   }
 
-  approveEvent(id) {
-    this.loadingCtrl
-      .create({
-        message: 'Processing...'
-      })
-      .then(loadingEl => {
-        loadingEl.present();
-        this.adminEventService.approveEvent(id)
-        .subscribe(
-          res => {
-          console.log(res)
-          loadingEl.dismiss()
-          location.reload()
-        }, 
-        err => {
-          console.log(err)
-          const firstError: string = Object.values(err)[0][0]
-          loadingEl.dismiss()
-          this.popToast(firstError)
-      })
-    });
-  }
-
-  declineEvent(item: any) {
-    this.postComment(item)
-  }
-
-  async postComment(item) {
-    const modal = await this.modalCtrl.create({
-      component: CommentComponent,
-      componentProps: {
-        id: item.id,
-        image: item.image,
-        title: item.title,
-        description: item.description,
-        start_date: item.start_date,
-        end_date: item.end_date,
-        goal: item.goal,
-        comments: item.comments,
-        location: item.location,
-        view_count: item.view_count,
-        noVolunteers: item.noVolunteers,
-        volunteered: item.volunteered,
-        whatsapp_link: item.whatsapp_link,
-        campaign: item.campaign
-      }
-    });
-    return await modal.present();
-  }
-
-  async viewDetail(item) {
-    const modal = await this.modalCtrl.create({
-      component: ModalComponent,
-      componentProps: {
-        image: item.image,
-        title: item.title,
-        description: item.description,
-        start_date: item.start_date,
-        end_date: item.end_date,
-        goal: item.goal,
-        comments: item.comments,
-        location: item.location,
-        view_count: item.view_count,
-        noVolunteers: item.noVolunteers,
-        volunteered: item.volunteered,
-        whatsapp_link: item.whatsapp_link,
-        campaign: item.campaign,
-        id: item.id
-      }
-    });
-    return await modal.present();
+  viewDetail(item) {
+    this.router.navigate(['/', 'admin', 'update'], {state: {item: JSON.stringify(item)}})
   }
 
   truncate (elem, limit, after) {
