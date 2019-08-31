@@ -8,7 +8,7 @@ export class Event {
     public goal: string,
     public whatsapp_link: string,
     public description: string,
-    public image: any,
+    public images: any,
     public noVolunteers: any
   ) {}
 }

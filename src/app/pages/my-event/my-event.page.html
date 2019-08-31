@@ -15,40 +15,6 @@
     <ion-row *ngIf="noEvent">
       <ion-text>You have not create any event.</ion-text>
     </ion-row>
-    <!-- <ion-row *ngFor="let item of data.events">
-        <ion-card>
-            <img *ngIf="item.image==null" class="img-card" src="../../../assets/logo.png"/>
-            <ion-img *ngIf="item.image!=null" class="img-card" [src]="item.image"></ion-img>
-          <ion-card-header>
-            <ion-card-subtitle>{{item.campaign}}</ion-card-subtitle>
-            <ion-card-title>{{item.title}}</ion-card-title>
-            <div class="offer-details">
-              <ion-icon name="calendar" color="primary"></ion-icon>
-              <ion-text color="tertiary" class="space-left">{{date(item.start_date)}}</ion-text>
-              <span class="space-left">to</span>
-              <ion-icon name="calendar" class="space-left" color="primary"></ion-icon>
-              <ion-text color="tertiary" class="space-left">{{date(item.end_date)}}</ion-text>
-            </div>
-          </ion-card-header>
-          <ion-card-content>
-            {{item.description}}
-            <div *ngIf="item.status==0" expand="block" class="button-card-processing margin-vertical">
-              <h3>PROCESSING</h3>
-            </div>
-            <div *ngIf="item.status==1">
-              <div expand="block" class="button-card-approved margin-vertical">
-                <h3>APPROVED</h3>
-              </div>
-              <div *ngIf="checkComment(item.comments)" style="margin-top: 10px;">
-                <ion-button *ngIf="commentStatus" expand="block" color="primary" (click)="replyComment(item.comments)">YOU HAVE {{unread}} UNREAD COMMENT</ion-button>
-                <ion-button *ngIf="!commentStatus" expand="block" color="primary" (click)="showComment(item.comments)">SHOW ALL COMMENTS</ion-button>
-              </div>
-            </div>
-            <ion-button *ngIf="item.status==2" expand="block" color="primary" (click)="viewComment(item.remark)">READ COMMENTS</ion-button>
-            <ion-button *ngIf="item.status==2" expand="block" color="danger" (click)="resubmit(item)">RESUBMIT</ion-button>
-          </ion-card-content>
-        </ion-card>
-    </ion-row> -->
     <ion-row *ngFor="let item of data.events">
       <!-- <ion-row *ngIf="!empty">
         <ion-text>There are no event created</ion-text>
@@ -56,8 +22,8 @@
       <ion-item class="card pb-5" lines="full">
         <ion-col size="4">
           <div>
-            <img *ngIf="item.images==null" style="width:100%; height: auto;" src="../../../assets/logo.png"/>
-            <ion-img *ngIf="item.images!=null" [src]="item.images" style="width:100%; height: auto;"></ion-img>
+            <img *ngIf="item.images.length == 0" style="width:100%; height: auto;" src="../../../assets/logo.png"/>
+            <ion-img *ngIf="item.images.length != 0" [src]="item.images[0].image" style="width:100%; height: auto;"></ion-img>
           </div>
         </ion-col>
         <ion-col size="8" style="height: 100%" no-padding>

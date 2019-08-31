@@ -115,7 +115,7 @@ export class EventService {
     goal: string,
     whatsapp_link: string,
     description: string,
-    dp: any,
+    images: any,
     noVolunteers: string
   ) {
     let newEvent: Event;
@@ -136,7 +136,7 @@ export class EventService {
           goal,
           whatsapp_link,
           description,
-          dp,
+          images,
           noVolunteers
         );
         return this.http.post(URL + 'events', { ...newEvent },

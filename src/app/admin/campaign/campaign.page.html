@@ -57,8 +57,8 @@
             <ion-item class="card pb-5" lines="full">
               <ion-col size="5">
                 <div>
-                  <img *ngIf="item.images==null" style="width:100%; height: auto;" src="../../../assets/logo.png"/>
-                  <ion-img *ngIf="item.images!=null" [src]="item.images" style="width:100%; height: auto;"></ion-img>
+                  <img *ngIf="item.images.length == 0" style="width:100%; height: auto;" src="../../../assets/logo.png"/>
+                  <ion-img *ngIf="item.images.length != 0" [src]="item.images[0].image" style="width:100%; height: auto;"></ion-img>
                 </div>
               </ion-col>
               <ion-col size="7" style="height: 100%">

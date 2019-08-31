@@ -12,6 +12,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class RegisterPage implements OnInit {
 
   registerForm: FormGroup
+  selection : boolean = false
 
   constructor(private authService: AuthService, private loadingCtrl: LoadingController, private router: Router, private toastController: ToastController) { }
 
@@ -44,9 +45,22 @@ export class RegisterPage implements OnInit {
       location: new FormControl(null, {
         updateOn: 'blur',
         validators: [Validators.required]
-      })
+      }),
+      skillset: new FormControl(null, {
+        updateOn: 'blur',
+        validators: [Validators.required]
+      }),
     });
   }
+
+  onSelect(event){
+    if(event.detail.value.length > 2){
+      let message = "Please use the skill sets not more than 2"
+      this.popToast(message)
+    }
+
+    this.selection = true
+}
 
   async popToast(message: string) {
     const toast = await this.toastController.create({

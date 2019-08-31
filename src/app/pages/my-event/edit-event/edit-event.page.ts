@@ -29,7 +29,7 @@ export class EditEventPage implements OnInit {
     this.item = JSON.parse(this.item)
     this.selectedImage = this.item.image
       this.editEventForm = new FormGroup({
-        image: new FormControl(this.item.image),
+        images: new FormControl(this.item.image),
         title: new FormControl(this.item.title, {
           updateOn: 'blur',
           validators: [Validators.required]
@@ -74,28 +74,29 @@ export class EditEventPage implements OnInit {
   }
 
   onPickImage() {
-    if (!Capacitor.isPluginAvailable('camera')) {
-      this.filePickerRef.nativeElement.click()
+    if (!Capacitor.isPluginAvailable('Camera')) {
+      this.filePickerRef.nativeElement.click();
       return;
     }
-
     Plugins.Camera.getPhoto({
       quality: 50,
       source: CameraSource.Prompt,
       correctOrientation: true,
-      height: 320,
-      width: 200,
+      // height: 320,
+      width: 300,
       resultType: CameraResultType.Base64
-    }).then(image => {
-      this.selectedImage = image.base64String
-      this.imagePicker = image.base64String
-      this.editEventForm.patchValue({ image: this.imagePicker })
-    }).catch(err => {
-      if (this.usePicker) {
-        this.filePickerRef.nativeElement.click();
-      }
-      return false;
     })
+      .then(image => {
+        this.selectedImage = `data:image/jpeg;base64,${image.base64String}`;
+        this.onImagePicked(image.base64String);
+      })
+      .catch(error => {
+        console.log(error);
+        if (this.usePicker) {
+          this.filePickerRef.nativeElement.click();
+        }
+        return false;
+      });
   }
 
   onFileChosen(event: Event) {
@@ -107,10 +108,24 @@ export class EditEventPage implements OnInit {
     fr.onload = () => {
       const dataUrl = fr.result.toString();
       this.selectedImage = dataUrl;
-      this.imagePicker = dataUrl;
-      this.editEventForm.patchValue({ image: this.imagePicker })
+      this.onImagePicked(pickedFile);
     };
     fr.readAsDataURL(pickedFile);
+  }
+
+  onImagePicked(imageData: string | File) {
+    let imageFile;
+    if (typeof imageData === 'string') {
+      try {
+        imageFile = imageData
+      } catch (error) {
+        console.log(error);
+        return;
+      }
+    } else {
+      imageFile = imageData;
+    }
+    this.editEventForm.patchValue({ images: imageFile });
   }
 
   onSubmit() {
@@ -133,7 +148,7 @@ export class EditEventPage implements OnInit {
           this.editEventForm.value.goal,
           this.editEventForm.value.whatsapp_link,
           this.editEventForm.value.description,
-          this.editEventForm.value.image,
+          this.editEventForm.value.images,
           this.editEventForm.value.noVolunteers,
           this.item.id
         )

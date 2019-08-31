@@ -47,8 +47,8 @@
                     <ion-thumbnail no-margin slot="start" style="padding-top: 10px;
                     ">
                     <div style="display: flex; justify-content: center; align-content: center;">
-                      <img *ngIf="item.image==null" style="width:70%; height: auto;" src="../../../assets/logo.png"/>
-                      <ion-img *ngIf="item.image!=null" [src]="item.image" style="width:70%; height: auto;"></ion-img>
+                      <img *ngIf="item.images.length == 0" style="width:70%; height: auto;" src="../../../assets/logo.png"/>
+                      <ion-img *ngIf="item.images.length != 0" [src]="item.images[0].image" style="width:70%; height: auto;"></ion-img>
                     </div>
                     </ion-thumbnail>
                     <ion-label>

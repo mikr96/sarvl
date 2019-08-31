@@ -47,7 +47,7 @@ export class HomePage implements OnInit {
       .subscribe((data: any) => {
         this.loading = false
         this.events = data.events
-        Storage.set({ key: 'items', value: JSON.stringify(this.events) })
+        console.log(this.events)
       }, ({ error }) => this.handleError(error))
   }
 

@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class CreateEventComponent implements OnInit {
 
   eventForm: FormGroup
+  imageFile : any = [];
 
   constructor(private eventService: EventService, private loadingCtrl: LoadingController, private router: Router, private toastController: ToastController) {
     this.eventForm = new FormGroup({
@@ -59,24 +60,19 @@ export class CreateEventComponent implements OnInit {
 
    }
 
-   ngAfterContentChecked() {
-    
-  }
-
   onImagePicked(imageData: string | File) {
-    let imageFile
-    if (typeof imageData == 'string') {
+    if (typeof imageData === 'string') {
       try {
-        imageFile = imageData
-      } catch (err) {
-        console.log(err)
+        this.imageFile.push(imageData)
+      } catch (error) {
+        console.log(error);
         return;
       }
     } else {
-      imageFile = imageData
+      this.imageFile.push(imageData)
     }
-    this.eventForm.patchValue({ images: imageFile })
-    console.log(imageFile)
+    console.log(this.imageFile)
+    this.eventForm.patchValue({ images: this.imageFile });
   }
 
 

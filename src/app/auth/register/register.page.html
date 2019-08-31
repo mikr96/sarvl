@@ -64,10 +64,21 @@
                   <ion-select-option>Selangor Darul Ehsan</ion-select-option>
                   <ion-select-option>Terengganu Darul Iman</ion-select-option>
                 </ion-select>
-                </ion-input>
+              </ion-item>
+              <ion-item>
+                  <ion-label position="floating">Skill Set (max 2)</ion-label>
+                  <ion-select multiple="true" (ionChange)="onSelect($event)" formControlName="skillset">
+                    <ion-select-option>Photography</ion-select-option>
+                    <ion-select-option>Manage Event</ion-select-option>
+                    <ion-select-option>Helper</ion-select-option>
+                    <ion-select-option>DJ / Emcee / Sound System</ion-select-option>
+                    <ion-select-option>Marketing</ion-select-option>
+                    <ion-select-option>Social Media Trooper</ion-select-option>
+                    <ion-select-option>Etc</ion-select-option>
+                  </ion-select>
               </ion-item>
             </ion-list>
-          <ion-button color="primary" type="submit" expand="block" [disabled]="!registerForm.valid" margin-vertical>SIGN IN</ion-button>
+          <ion-button color="primary" type="submit" expand="block" [disabled]="!registerForm.valid && selection" margin-vertical>SIGN IN</ion-button>
         </ion-col>
       </ion-row>
     </form>

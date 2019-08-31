@@ -15,7 +15,7 @@ export class CreateEventPage implements OnInit {
   }
 
 
-goBack() {
+  goBack() {
     this.location.back();
   }
 }

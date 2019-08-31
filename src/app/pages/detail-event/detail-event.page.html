@@ -11,8 +11,8 @@
   <ion-grid>
     <ion-row>
       <ion-card>
-        <img *ngIf="item.images==null" class="img-card" src="../../../assets/logo.png"/>
-        <ion-img *ngIf="item.images!=null" class="img-card" [src]="item.images"></ion-img>
+        <img *ngIf="item.images.length == 0" class="img-card" src="../../../assets/logo.png"/>
+        <ion-img *ngIf="item.images.length != 0" class="img-card" [src]="item.images[0].image"></ion-img>
         <ion-card-header>
           <ion-card-subtitle>{{item.campaign}}</ion-card-subtitle>
           <ion-card-title>{{item.title}}</ion-card-title>

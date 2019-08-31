@@ -7,6 +7,7 @@ export class Profile {
     public fullname: string,
     public telNo: string,
     public location: string,
-    public image: any
+    public image: any,
+    public skillset: any,
   ) {}
 }

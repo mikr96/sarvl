@@ -26,11 +26,10 @@ export class ProfilePage implements OnInit, OnDestroy {
   editForm: FormGroup
   private profileSub: Subscription;
   isLoading = false;
-  imagePicker: any
   selectedImage: string
   usePicker = false;
   id: any
-  constructor(private profileService: ProfileService, private loadingCtrl: LoadingController, private toastController: ToastController, private modalCtrl: ModalController) { }
+  constructor(private profileService: ProfileService, private platform: Platform, private loadingCtrl: LoadingController, private toastController: ToastController, private modalCtrl: ModalController) { }
 
   ngOnInit() {
     this.isLoading = true;
@@ -59,6 +58,12 @@ export class ProfilePage implements OnInit, OnDestroy {
       });
       this.isLoading = false;
     })
+    if (
+      (this.platform.is('mobile') && !this.platform.is('hybrid')) ||
+      this.platform.is('desktop')
+    ) {
+      this.usePicker = true;
+    }
   }
 
   doRefresh(event) {
@@ -78,34 +83,41 @@ export class ProfilePage implements OnInit, OnDestroy {
         })
         this.isLoading = false
       })
+      if (
+        (this.platform.is('mobile') && !this.platform.is('hybrid')) ||
+        this.platform.is('desktop')
+      ) {
+        this.usePicker = true;
+      }
         event.target.complete()
     }, 2000)
   }
   
 
   onPickImage() {
-    if (!Capacitor.isPluginAvailable('camera')) {
-      this.filePickerRef.nativeElement.click()
+    if (!Capacitor.isPluginAvailable('Camera')) {
+      this.filePickerRef.nativeElement.click();
       return;
     }
-
     Plugins.Camera.getPhoto({
       quality: 50,
       source: CameraSource.Prompt,
       correctOrientation: true,
-      height: 320,
-      width: 200,
+      // height: 320,
+      width: 300,
       resultType: CameraResultType.Base64
-    }).then(image => {
-      this.selectedImage = image.base64String
-      this.imagePicker = image.base64String
-      this.editForm.patchValue({ dp: this.imagePicker })
-    }).catch(err => {
-      if (this.usePicker) {
-        this.filePickerRef.nativeElement.click();
-      }
-      return false;
     })
+      .then(image => {
+        this.selectedImage = `data:image/jpeg;base64,${image.base64String}`;
+        this.onImagePicked(image.base64String);
+      })
+      .catch(error => {
+        console.log(error);
+        if (this.usePicker) {
+          this.filePickerRef.nativeElement.click();
+        }
+        return false;
+      });
   }
 
   onFileChosen(event: Event) {
@@ -117,10 +129,24 @@ export class ProfilePage implements OnInit, OnDestroy {
     fr.onload = () => {
       const dataUrl = fr.result.toString();
       this.selectedImage = dataUrl;
-      this.imagePicker = dataUrl;
-      this.editForm.patchValue({ dp: this.imagePicker })
+      this.onImagePicked(pickedFile);
     };
     fr.readAsDataURL(pickedFile);
+  }
+
+  onImagePicked(imageData: string | File) {
+    let imageFile;
+    if (typeof imageData === 'string') {
+      try {
+        imageFile = imageData
+      } catch (error) {
+        console.log(error);
+        return;
+      }
+    } else {
+      imageFile = imageData;
+    }
+    this.editForm.patchValue({ dp: imageFile });
   }
 
   onEdit() {
