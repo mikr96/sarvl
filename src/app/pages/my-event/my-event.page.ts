@@ -28,7 +28,7 @@ export class MyEventPage implements OnInit {
 
   ngOnInit() {
     this.eventService.getCreatedEvents().subscribe(resEvent => {
-      //console.log(resEvent)
+      console.log(resEvent)
       this.data = resEvent
       console.log(this.data.events)
       this.noEvent = false;
