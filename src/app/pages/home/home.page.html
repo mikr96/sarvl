@@ -68,13 +68,13 @@
                 <ion-button color="secondary" (click)="goToDetails(item)">Read More</ion-button>
               </ion-item>
             </ion-item-sliding>
-              <ion-grid *ngIf="this.events.next_page_url">
-                <ion-row justify-content-center>
-                  <ion-col size="5">
-                    <ion-button color="light" (click)="loadMore()" expand="block">Load more</ion-button>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
+            <ion-grid *ngIf="this.events.next_page_url">
+              <ion-row justify-content-center>
+                <ion-col size="5">
+                  <ion-button color="light" (click)="loadMore()" expand="block">Load more</ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
           </ion-list>
         </ion-col>
       </ion-row>

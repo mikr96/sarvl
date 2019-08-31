@@ -4,6 +4,7 @@ import { EventService } from '../../services/event/event.service';
 import { Plugins } from '@capacitor/core';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
+import { Event } from 'src/app/models/event.model';
 const { Storage } = Plugins
 
 @Component({
@@ -12,15 +13,27 @@ const { Storage } = Plugins
   styleUrls: ['./detail-event.page.scss'],
 })
 export class DetailEventPage implements OnInit {
-  item: any = []
+  item: Event = {
+    title: '',
+    start_date: '',
+    end_date: '',
+    location: '',
+    campaign: '',
+    goal: '',
+    whatsapp_link: '',
+    description: '',
+    images: [],
+    noVolunteers: '',
+  }
+
   message: string;
   method: string;
   comment: string
   commentsDiv: boolean = false
-  constructor(private alertCtrl: AlertController, private eventService: EventService, private loadingCtrl: LoadingController, private router: Router, private toastController: ToastController) {}
+  constructor(private alertCtrl: AlertController, private eventService: EventService, private loadingCtrl: LoadingController, private router: Router, private toastController: ToastController) { }
 
   ngOnInit() {
-    this.getObject()
+    this.getObject().then().catch(err => console.log(err))
   }
 
   async getObject() {
@@ -30,33 +43,33 @@ export class DetailEventPage implements OnInit {
     this.eventService.viewCount(this.item.id).subscribe()
   }
 
-  join(id:string) {
+  join(id: string) {
     this.message = "Successfully Registered!"
     this.method = "Join"
     this.loadingCtrl
-    .create({
-      message: 'Creating...'
-    })
-    .then(loadingEl => {
-      loadingEl.present();
-      this.eventService.joinEvent(id)
-      .subscribe(
-        res => {
-        loadingEl.dismiss()
-        this.showAlert(this.message, this.method)
-      }, 
-      err => {
-        console.log(err)
-        const firstError: string = Object.values(err)[0][0]
-        loadingEl.dismiss()
-        this.popToast(firstError)
-    })
-  });
-    
-    
+      .create({
+        message: 'Creating...'
+      })
+      .then(loadingEl => {
+        loadingEl.present();
+        this.eventService.joinEvent(id)
+          .subscribe(
+            res => {
+              loadingEl.dismiss()
+              this.showAlert(this.message, this.method)
+            },
+            err => {
+              console.log(err)
+              const firstError: string = Object.values(err)[0][0]
+              loadingEl.dismiss()
+              this.popToast(firstError)
+            })
+      });
+
+
   }
 
-  donate(){
+  donate() {
     this.message = "1800262525"
     this.method = "Donate"
     this.showAlert(this.message, this.method)
@@ -64,43 +77,43 @@ export class DetailEventPage implements OnInit {
 
   daysLeft(startDate: string) {
     let c = new Date()
-    let a = moment(c,'M/D/YYYY');
-    let b = moment(startDate,'YYYY-MM-DD HH:mm:ss');
+    let a = moment(c, 'M/D/YYYY');
+    let b = moment(startDate, 'YYYY-MM-DD HH:mm:ss');
     let diffDays = b.diff(a, 'days');
     return diffDays
   }
 
   postComment(id) {
     this.loadingCtrl
-    .create({
-      message: 'Creating...'
-    })
-    .then(loadingEl => {
-      loadingEl.present();
-      this.eventService.postComment(this.comment, id)
-      .subscribe(
-        res => {
-        loadingEl.dismiss()
-        this.router.navigate(['/pages/home'])
-      }, 
-      err => {
-        console.log(err)
-        const firstError: string = Object.values(err)[0][0]
-        loadingEl.dismiss()
-        this.popToast(firstError)
-    })
-  });
+      .create({
+        message: 'Creating...'
+      })
+      .then(loadingEl => {
+        loadingEl.present();
+        this.eventService.postComment(this.comment, id)
+          .subscribe(
+            res => {
+              loadingEl.dismiss()
+              this.router.navigate(['/pages/home'])
+            },
+            err => {
+              console.log(err)
+              const firstError: string = Object.values(err)[0][0]
+              loadingEl.dismiss()
+              this.popToast(firstError)
+            })
+      });
   }
 
   len(val) {
-    if(val == null){
+    if (val == null) {
       return 0
     }
     return Object.keys(val).length
   }
 
-  date(date:string) {
-    if(date == null || date == undefined){
+  date(date: string) {
+    if (date == null || date == undefined) {
       return 0
     }
     let temp = date.split(" ")
@@ -108,7 +121,7 @@ export class DetailEventPage implements OnInit {
   }
 
   reply(data) {
-    if(data.length == 0) {
+    if (data.length == 0) {
       return false
     }
     return true
@@ -135,12 +148,12 @@ export class DetailEventPage implements OnInit {
         .then(alertEl => alertEl.present());
     } else {
       this.alertCtrl
-      .create({
-        header: 'Join Now',
-        message: message,
-        buttons: ['Okay']
-      })
-      .then(alertEl => alertEl.present());
+        .create({
+          header: 'Join Now',
+          message: message,
+          buttons: ['Okay']
+        })
+        .then(alertEl => alertEl.present());
     }
   }
 }
