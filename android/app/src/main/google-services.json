@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "31798403922",
+    "firebase_url": "https://sarawak-volunteer.firebaseio.com",
+    "project_id": "sarawak-volunteer",
+    "storage_bucket": "sarawak-volunteer.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:31798403922:android:8fa2f0f58e7244a8",
+        "android_client_info": {
+          "package_name": "com.cyrix.sarvl"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "31798403922-cv0jfsapqptvhriroi5c6aagb6irc7f5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cyrix.sarvl",
+            "certificate_hash": "b28722f3dae90388bb854aa0a2b863fa709a4a8c"
+          }
+        },
+        {
+          "client_id": "31798403922-he35js2u4k0pon25856ml84kl8cr02mf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cyrix.sarvl",
+            "certificate_hash": "522a98cb0a2c8e31761ed603fb5acf5de7db428d"
+          }
+        },
+        {
+          "client_id": "31798403922-dvcoo4ol8ueg8ve466tkes9s4j9cruim.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYSf5QGgflfLO99_qJh8KJIS72vWkA2ok"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "31798403922-dvcoo4ol8ueg8ve466tkes9s4j9cruim.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

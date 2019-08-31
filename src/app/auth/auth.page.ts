@@ -2,8 +2,12 @@ import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import { AuthService, AuthResponseData } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { LoadingController, AlertController } from '@ionic/angular';
+import { LoadingController, AlertController, Platform } from '@ionic/angular';
 import { Observable } from 'rxjs';
+import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
+import * as firebase from 'firebase/app';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
 
 @Component({
   selector: "app-auth",
@@ -17,9 +21,13 @@ export class AuthPage implements OnInit {
   token: any;
   status: boolean = true;
   password: any
+  userData : any
   @ViewChild("password", { read: ElementRef, static: false } ) passwordElementRef: ElementRef;
+  user : Observable<firebase.User>
 
-  constructor(private authService: AuthService, private router: Router, private loadingCtrl: LoadingController, private alertCtrl: AlertController) { }
+  constructor(private authService: AuthService, private router: Router, private loadingCtrl: LoadingController, private alertCtrl: AlertController, private facebook: Facebook, private platform: Platform, private gplus : GooglePlus, private afAuth: AngularFireAuth) { 
+    this.user = this.afAuth.authState
+  }
 
   ngOnInit() {
     this.form = new FormGroup({
@@ -32,6 +40,35 @@ export class AuthPage implements OnInit {
         validators: [Validators.required]
       })
     });
+  }
+
+  loginWithFB() {
+    this.facebook.login(['email', 'public_profile']).then((res : FacebookLoginResponse) => {
+      this.facebook.api('me?fields=id,name,email,first_name,picture.width(720).height(720).as(picture_large)',[]).then(profile => {
+        this.userData = {
+          username: profile['email'],
+          fullname: profile['name'],
+          dp: profile['picture_large']['data']['url']
+        }
+      })
+    })
+  }
+
+  async loginWithGoogle(): Promise<void> {
+    try {
+  
+      const gplusUser = await this.gplus.login({
+        'webClientId': 'your-webClientId-XYZ.apps.googleusercontent.com',
+        'offline': true,
+        'scopes': 'profile email'
+      })
+  
+      // return await this.afAuth.auth.signInWithCredential(
+      //   firebase.auth.GoogleAuthProvider.credential(gplusUser.idToken))
+  
+    } catch(err) {
+      console.log(err)
+    }
   }
 
   onSubmit() {

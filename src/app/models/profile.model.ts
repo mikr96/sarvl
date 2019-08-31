@@ -8,6 +8,6 @@ export class Profile {
     public telNo: string,
     public location: string,
     public image: any,
-    public skillset: any,
+    public skills: any,
   ) {}
 }

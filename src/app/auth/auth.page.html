@@ -65,13 +65,13 @@
     </ion-row>
     <ion-row class="ion-justify-content-center">
       <ion-col size="8" no-padding>
-        <ion-button color="facebook ion-text-capitalize" expand="block">Sign-in with Facebook
+        <ion-button color="facebook ion-text-capitalize" (click)="loginWithFB()" expand="block">Sign-in with Facebook
         </ion-button>
       </ion-col>
     </ion-row>
     <ion-row class="ion-justify-content-center">
       <ion-col size="8" no-padding>
-        <ion-button color="google ion-text-capitalize" expand="block">Sign-in with Google+
+        <ion-button color="google ion-text-capitalize" expand="block" (click)="loginWithGoogle()">Sign-in with Google+
         </ion-button>
       </ion-col>
     </ion-row>
