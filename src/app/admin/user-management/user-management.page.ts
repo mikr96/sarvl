@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminEventService } from 'src/app/services/event/admin-event.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-management',
@@ -12,7 +13,7 @@ export class UserManagementPage implements OnInit {
     next_page_url: null,
     total: 0
   }
-  constructor(private adminEventService: AdminEventService) { }
+  constructor(private adminEventService: AdminEventService, private router: Router) { }
 
   ngOnInit() {
     this.adminEventService.getUsers().subscribe((res:any) => {
@@ -33,6 +34,7 @@ export class UserManagementPage implements OnInit {
 
   viewMore(user) {
     console.log(user)
+    this.router.navigate(['/', 'admin', 'user-management', 'user-detail'], {state: {user: JSON.stringify(user)}})
   }
 
 }

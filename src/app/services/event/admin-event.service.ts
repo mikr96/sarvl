@@ -189,4 +189,35 @@ export class AdminEventService {
   public getFAQ() {
     return this.http.get(URL + 'faqs')
   }
+
+  public makeAnnouncement(heading, content) {
+    const apiRequest = {
+      "app_id" : "424f25ed-3aa5-4388-a678-ebc0e02157bd",
+      "included_segments": ["All"],
+      "data": {
+        "task": "Send through API"
+      },
+      "headings": {
+        "en": heading
+      },
+      "contents": {
+        "en": content
+      }
+    }
+    return this.http.post('https://onesignal.com/api/v1/notfications', {apiRequest}, {
+      headers : {
+        "Authorization" : 'Basic MjFmNzg4NTAtMjY3OS00M2YyLWIwOTctYmFlYzA5ODYxNDEx',
+        "Content-Type": "application/json; charset=utf-8"
+      }
+    })
+  } 
+
+  public getAnnouncement() {
+    return this.http.get('https://onesignal.com/api/v1/notifications?app_id=424f25ed-3aa5-4388-a678-ebc0e02157bd', {
+      headers : {
+        "Authorization" : 'Basic MjFmNzg4NTAtMjY3OS00M2YyLWIwOTctYmFlYzA5ODYxNDEx',
+        "Content-Type": "application/json; charset=utf-8"
+      }
+    })
+  }
 }

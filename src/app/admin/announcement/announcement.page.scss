@@ -1,0 +1,12 @@
+.box {
+  border: 1px solid gray;
+  border-radius: 10px;
+  box-shadow: 2px;
+  display: flex;
+  padding: 10px;
+  height: 170px;
+  .right {
+    position: absolute;
+    right: 20px;
+  }
+}

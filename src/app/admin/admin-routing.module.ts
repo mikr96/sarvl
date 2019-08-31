@@ -13,7 +13,16 @@ const routes: Routes = [
       },
       {
         path: 'user-management',
-        loadChildren: './user-management/user-management.module#UserManagementPageModule'
+        children: [
+          {
+            path: '',
+            loadChildren: './user-management/user-management.module#UserManagementPageModule'
+          },
+          {
+            path: 'user-detail', 
+            loadChildren: './user-management/user-detail/user-detail.module#UserDetailPageModule'
+          }
+        ]
       },
       { 
         path: 'campaign/:id',
@@ -41,6 +50,10 @@ const routes: Routes = [
           }
         ] 
       },
+      { 
+        path: 'announcement', 
+        loadChildren: './announcement/announcement.module#AnnouncementPageModule' 
+      },
       {
         path: '',
         redirectTo: '/admin/dashboard',
@@ -52,7 +65,7 @@ const routes: Routes = [
     path: '',
     redirectTo: '/admin/dashboard',
     pathMatch: 'full'
-  }
+  },
 ];
 
 

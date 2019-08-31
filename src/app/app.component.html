@@ -83,7 +83,7 @@
           </ion-menu-toggle>
           <ion-menu-toggle>
             <ion-item lines="none" (click)='goToCampaign("All")' button>
-              <ion-icon slot="start" name="megaphone" *ngIf="!open"></ion-icon>
+              <ion-icon slot="start" name="briefcase" *ngIf="!open"></ion-icon>
               <ion-label>Campaign</ion-label>
             </ion-item>
             <!--SUB MENU-->
@@ -107,6 +107,12 @@
               <ion-label>FAQ</ion-label>
             </ion-item>
           </ion-menu-toggle>
+          <ion-menu-toggle>
+              <ion-item lines="none" routerLink="/admin/announcement" button>
+                <ion-icon name="megaphone" slot="start"></ion-icon>
+                <ion-label>Announcement</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
           <ion-menu-toggle>
             <ion-item lines="none" (click)="onLogout()" button>
               <ion-icon name="exit" slot="start"></ion-icon>
