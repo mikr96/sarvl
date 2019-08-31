@@ -25,9 +25,9 @@ export class HomePage implements OnInit {
   img: boolean = true
   errors: any
   currentCategory: string = 'latest'
-  activeLatest : boolean = true
-  activePopular : boolean = false
-  activeEndingSoon : boolean = false
+  activeLatest: boolean = true
+  activePopular: boolean = false
+  activeEndingSoon: boolean = false
 
   constructor(private eventService: EventService, private toastController: ToastController, private router: Router, private authService: AuthService) { }
 
@@ -39,6 +39,19 @@ export class HomePage implements OnInit {
       color: 'danger',
     })
     toast.present()
+  }
+
+  loadMore() {
+    this.currentPage += 1
+    this.eventService.getByCategory(this.currentPage, this.currentCategory).subscribe(({ events }: any) => {
+      this.events = {
+        ...events,
+        data: [
+          ...this.events.data,
+          ...events.data
+        ]
+      }
+    }, ({ error }) => this.handleError(error))
   }
 
   ngOnInit() {
@@ -54,7 +67,7 @@ export class HomePage implements OnInit {
   changeCategory(category: string) {
     this.loading = true
 
-    if(category === "latest") {
+    if (category === "latest") {
       this.activeLatest = true
       this.activePopular = false
       this.activeEndingSoon = false
@@ -79,7 +92,7 @@ export class HomePage implements OnInit {
 
   createEvent() {
     let from = "user"
-    this.router.navigate(['/', 'pages', 'create-event'], {state: {from: from}})
+    this.router.navigate(['/', 'pages', 'create-event'], { state: { from: from } })
   }
 
   goToDetails(item) {
@@ -87,24 +100,24 @@ export class HomePage implements OnInit {
     this.router.navigateByUrl('/pages/detail-event')
   }
 
-  truncate (elem, limit, after) {
+  truncate(elem, limit, after) {
 
     // Make sure an element and number of items to truncate is provided
     if (!elem || !limit) return;
-  
+
     // Get the inner content of the element
     var content = elem;
-  
+
     // Convert the content into an array of words
     // Remove any words above the limit
     content = content.split(' ').slice(0, limit);
-  
+
     // Convert the array of words back into a string
     // If there's content to add after it, add it
     content = content.join(' ') + (after ? after : '');
     // Inject the content back into the DOM
     return content;
-  
+
   };
 
   private handleError(error: {}) {
@@ -113,7 +126,7 @@ export class HomePage implements OnInit {
   }
 
   doRefresh(event) {
-    setTimeout(()=> {
+    setTimeout(() => {
       // this.loading = true
       this.eventService.get(this.currentPage)
         .subscribe((data: any) => {
