@@ -36,69 +36,24 @@ export class CampaignPage implements OnInit {
         return;
       }
       this.currentCampaign = paramMap.get('id');
-      if(this.currentCampaign == "All") {
+      if (this.currentCampaign == "All") {
         this.currentCategory = 3
         this.adminEventService
-        .getAllEventByStatus(this.currentPage, this.currentCategory)
-        .subscribe(
-          (event: any) => {
-            this.isLoading = false;
-            this.dataEvent = event.events;
-            console.log(this.dataEvent.data)
-            this.dataEvent.data.length < 1 ? this.empty = false : this.empty = true
-          },
-          error => {
-            this.handleError(error)
-          }
-        );
-      } else {
-        this.currentCategory = 3
-        this.adminEventService
-        .getAll(this.currentPage, this.currentCampaign, this.currentCategory)
-        .subscribe(
-          (event: any) => {
-            this.isLoading = false;
-            this.dataEvent = event.events;
-            console.log(this.dataEvent.data.length)
-            this.dataEvent.data.length < 1 ? this.empty = false : this.empty = true
-          },
-          error => {
-            this.handleError(error)
-          }
-        );
-      }
-    })
-  }
-
-  doRefresh(events) {
-    setTimeout(()=> {
-      this.route.paramMap.subscribe(paramMap => {
-        if (!paramMap.has('id')) {
-          this.navCtrl.navigateBack('/pages/home');
-          return;
-        }
-        this.currentCampaign = paramMap.get('id');
-        if(this.currentCampaign == "All") {
-          this.currentCategory = 3
-          this.adminEventService
-          .getAllEvent(this.currentPage)
+          .getAllEventByStatus(this.currentPage, this.currentCategory)
           .subscribe(
             (event: any) => {
               this.isLoading = false;
               this.dataEvent = event.events;
-              console.log(this.dataEvent.data.length)
+              console.log(this.dataEvent.data)
               this.dataEvent.data.length < 1 ? this.empty = false : this.empty = true
-              events.target.complete()
             },
             error => {
               this.handleError(error)
-              events.target.complete()
-
             }
           );
-        } else {
-          this.currentCategory = 3
-          this.adminEventService
+      } else {
+        this.currentCategory = 3
+        this.adminEventService
           .getAll(this.currentPage, this.currentCampaign, this.currentCategory)
           .subscribe(
             (event: any) => {
@@ -106,14 +61,72 @@ export class CampaignPage implements OnInit {
               this.dataEvent = event.events;
               console.log(this.dataEvent.data.length)
               this.dataEvent.data.length < 1 ? this.empty = false : this.empty = true
-              events.target.complete()
-
             },
             error => {
               this.handleError(error)
-              events.target.complete()
             }
           );
+      }
+    })
+  }
+
+  loadMore() {
+    this.currentPage += 1
+    this.adminEventService.getAllEventByStatus(this.currentPage, this.currentCategory).subscribe(({ events }: any) => {
+      this.dataEvent = {
+        ...events,
+        data: [
+          ...this.dataEvent.data,
+          ...events.data
+        ]
+      }
+    }, ({ error }) => this.handleError(error))
+  }
+
+  doRefresh(events) {
+    setTimeout(() => {
+      this.route.paramMap.subscribe(paramMap => {
+        if (!paramMap.has('id')) {
+          this.navCtrl.navigateBack('/pages/home');
+          return;
+        }
+        this.currentCampaign = paramMap.get('id');
+        if (this.currentCampaign == "All") {
+          this.currentCategory = 3
+          this.adminEventService
+            .getAllEvent(this.currentPage)
+            .subscribe(
+              (event: any) => {
+                this.isLoading = false;
+                this.dataEvent = event.events;
+                console.log(this.dataEvent.data.length)
+                this.dataEvent.data.length < 1 ? this.empty = false : this.empty = true
+                events.target.complete()
+              },
+              error => {
+                this.handleError(error)
+                events.target.complete()
+
+              }
+            );
+        } else {
+          this.currentCategory = 3
+          this.adminEventService
+            .getAll(this.currentPage, this.currentCampaign, this.currentCategory)
+            .subscribe(
+              (event: any) => {
+                this.isLoading = false;
+                this.dataEvent = event.events;
+                console.log(this.dataEvent.data.length)
+                this.dataEvent.data.length < 1 ? this.empty = false : this.empty = true
+                events.target.complete()
+
+              },
+              error => {
+                this.handleError(error)
+                events.target.complete()
+              }
+            );
         }
       })
     }, 2000)
@@ -121,7 +134,7 @@ export class CampaignPage implements OnInit {
 
   changeCategory(currentCategory) {
     this.isLoading = true
-    if(currentCategory === "all") {
+    if (currentCategory === "all") {
       this.activeAll = true
       this.activeApproved = false
       this.activeDeclined = false
@@ -147,15 +160,15 @@ export class CampaignPage implements OnInit {
       this.currentCategory = 0
     }
     this.currentPage = 1
-    if(this.currentCampaign == "All") {
+    if (this.currentCampaign == "All") {
       this.adminEventService.getAllEventByStatus(this.currentPage, this.currentCategory)
-      .subscribe( (data: any) => {
-        this.isLoading = false
-        this.dataEvent = data.events
-        this.dataEvent.data.length < 1 ? this.empty = false : this.empty = true
-      })
+        .subscribe((data: any) => {
+          this.isLoading = false
+          this.dataEvent = data.events
+          this.dataEvent.data.length < 1 ? this.empty = false : this.empty = true
+        })
     } else {
-      if(this.currentCategory != 3) {
+      if (this.currentCategory != 3) {
         this.adminEventService.getByStatus(this.currentPage, this.currentCampaign, this.currentCategory)
           .subscribe((data: any) => {
             this.isLoading = false
@@ -164,43 +177,43 @@ export class CampaignPage implements OnInit {
           }, ({ error }) => this.handleError(error))
       } else {
         this.adminEventService
-        .getAll(this.currentPage, this.currentCampaign, this.currentCategory)
-        .subscribe(
-          (event: any) => {
-            this.isLoading = false;
-            this.dataEvent = event.events;
-            this.dataEvent.data.length < 1 ? this.empty = false : this.empty = true
-          },
-          error => {
-            this.handleError(error)
-          }
-        );
+          .getAll(this.currentPage, this.currentCampaign, this.currentCategory)
+          .subscribe(
+            (event: any) => {
+              this.isLoading = false;
+              this.dataEvent = event.events;
+              this.dataEvent.data.length < 1 ? this.empty = false : this.empty = true
+            },
+            error => {
+              this.handleError(error)
+            }
+          );
       }
     }
   }
 
   viewDetail(item) {
-    this.router.navigate(['/', 'admin', 'update'], {state: {item: JSON.stringify(item)}})
+    this.router.navigate(['/', 'admin', 'update'], { state: { item: JSON.stringify(item) } })
   }
 
-  truncate (elem, limit, after) {
+  truncate(elem, limit, after) {
 
     // Make sure an element and number of items to truncate is provided
     if (!elem || !limit) return;
-  
+
     // Get the inner content of the element
     var content = elem;
-  
+
     // Convert the content into an array of words
     // Remove any words above the limit
     content = content.split(' ').slice(0, limit);
-  
+
     // Convert the array of words back into a string
     // If there's content to add after it, add it
     content = content.join(' ') + (after ? after : '');
     // Inject the content back into the DOM
     return content;
-  
+
   };
 
   checkStatus(val) {
