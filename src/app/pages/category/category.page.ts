@@ -60,6 +60,19 @@ export class CategoryPage implements OnInit {
     })
   }
 
+  loadMore() {
+    this.currentPage += 1
+    this.eventService.getEventByCampaign(this.currentCampaign, this.currentPage).subscribe(({ events }: any) => {
+      this.dataEvent = {
+        ...events,
+        data: [
+          ...this.dataEvent.data,
+          ...events.data
+        ]
+      }
+    }, ({ error }) => this.handleError(error))
+  }
+
   doRefresh(event) {
     setTimeout(()=> {
       this.isLoading = true;
