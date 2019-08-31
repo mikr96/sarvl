@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminEventService } from 'src/app/services/event/admin-event.service';
 import { Router } from '@angular/router';
+import * as papa from 'papaparse';
 
 @Component({
   selector: 'app-user-management',
@@ -13,6 +14,9 @@ export class UserManagementPage implements OnInit {
     next_page_url: null,
     total: 0
   }
+  file : any
+  csvData: any[] = [];
+  headerRow = ["created_at", "created_by", "dp", "fullname", "ic", "id", "joined", "last_login", "location", "role", "skills", "telNo",  "updated_at", "updated_by", "username", "volunteered"]
   constructor(private adminEventService: AdminEventService, private router: Router) { }
 
   ngOnInit() {
@@ -20,6 +24,22 @@ export class UserManagementPage implements OnInit {
       console.log(res)
       this.dataUser = res.users
     })
+  }
+
+  downloadCSV() {
+    let csv = papa.unparse({
+      fields: this.headerRow,
+      data: this.dataUser.data
+    });
+ 
+    // Dummy implementation for Desktop download purpose
+    var blob = new Blob([csv]);
+    var a = window.document.createElement("a");
+    a.href = window.URL.createObjectURL(blob);
+    a.download = "newdata.csv";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   }
 
   doRefresh(event) {
