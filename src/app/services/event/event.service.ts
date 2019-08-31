@@ -9,13 +9,19 @@ import * as moment from 'moment';
 
 export interface EventData {
   title: string,
+  id: string,
   start_date: any,
   end_date: any,
   location: string,
   campaign: string,
   goal: string,
   whatsapp_link: string,
-  description: string
+  description: string,
+  images: [],
+  noVolunteers: any,
+  raise: any,
+  joined: any,
+  comments: any,
 }
 
 @Injectable({
@@ -64,16 +70,16 @@ export class EventService {
     );
   }
 
-  public postComment(comment:string, id:string) {
+  public postComment(comment: string, id: string) {
     return this.authService.token.pipe(
       take(1),
       switchMap(token => {
-        return this.http.post(URL + `comments/${id}`, {comment} , 
-        { 
-          headers: {
-            Authorization: 'Bearer ' + token
-          }
-        });
+        return this.http.post(URL + `comments/${id}`, { comment },
+          {
+            headers: {
+              Authorization: 'Bearer ' + token
+            }
+          });
       })
     );
   }
@@ -82,30 +88,30 @@ export class EventService {
     return this.authService.token.pipe(
       take(1),
       switchMap(token => {
-        return this.http.put(URL + `comments/${id}/reply`, {...body} , 
-        { 
-          headers: {
-            Authorization: 'Bearer ' + token
-          }
-        });
+        return this.http.put(URL + `comments/${id}/reply`, { ...body },
+          {
+            headers: {
+              Authorization: 'Bearer ' + token
+            }
+          });
       })
     );
   }
 
-  public joinEvent(id:string) {
+  public joinEvent(id: string) {
     return this.authService.token.pipe(
       take(1),
       switchMap(token => {
-        return this.http.put(URL + `join_event/${id}` , {} , 
-        { 
-          headers: {
-            Authorization: 'Bearer ' + token
-          }
-        });
+        return this.http.put(URL + `join_event/${id}`, {},
+          {
+            headers: {
+              Authorization: 'Bearer ' + token
+            }
+          });
       })
     );
   }
-            
+
   public createEvent(
     title: string,
     start_date: Date,
@@ -205,7 +211,7 @@ export class EventService {
     return this.authService.token.pipe(
       take(1),
       switchMap(token => {
-        return this.http.put(URL + `users/${id}/change_password`, {...data}, {
+        return this.http.put(URL + `users/${id}/change_password`, { ...data }, {
           headers: {
             Authorization: 'Bearer ' + token
           }
@@ -213,7 +219,7 @@ export class EventService {
       })
     )
   }
-  
+
 
   public viewCount(event_id: any) {
     return this.authService.token.pipe(

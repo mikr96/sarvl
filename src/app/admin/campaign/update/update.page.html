@@ -31,7 +31,7 @@
                     <ion-text>Goal</ion-text>
                     <ion-note slot="end" color="primary">RM {{item.raised}} / RM {{item.goal}}</ion-note>
                     <div class="raised">
-                      <ion-range min="0" max="100" step="10" pin color="secondary" style="padding: 0px;" [value]="raised" (ionChange)="changeRaised($event, goal)">
+                      <ion-range min="0" max="100" step="10" pin color="secondary" style="padding: 0px;" [value]="raised" (ionChange)="changeRaised($event, item.goal)">
                         <ion-icon slot="start" size="small" name="star-outline"></ion-icon>
                         <ion-icon slot="end" name="star-outline"></ion-icon>
                       </ion-range>
