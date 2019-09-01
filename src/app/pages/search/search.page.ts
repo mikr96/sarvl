@@ -50,8 +50,7 @@ export class SearchPage implements OnInit {
   }
 
   goToDetails(item) {
-    Storage.set({ key: 'items', value: JSON.stringify(item) })
-    this.router.navigateByUrl('/pages/detail-event')
+    this.router.navigate(['/', 'pages', 'detail-event'], {state: {item: JSON.stringify(item)}})
   }
   
 }

@@ -4,8 +4,6 @@ import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
-import { Plugins } from '@capacitor/core';
-const { Storage } = Plugins
 
 @Component({
   selector: 'app-home',
@@ -96,8 +94,7 @@ export class HomePage implements OnInit {
   }
 
   goToDetails(item) {
-    Storage.set({ key: 'item', value: JSON.stringify(item) })
-    this.router.navigateByUrl('/pages/detail-event')
+    this.router.navigate(['/', 'pages', 'detail-event'], {state: {item: JSON.stringify(item)}})
   }
 
   truncate(elem, limit, after) {
@@ -127,12 +124,10 @@ export class HomePage implements OnInit {
 
   doRefresh(event) {
     setTimeout(() => {
-      // this.loading = true
       this.eventService.get(this.currentPage)
         .subscribe((data: any) => {
           this.loading = false
           this.events = data.events
-          Storage.set({ key: 'items', value: JSON.stringify(this.events) })
           event.target.complete()
         }, ({ error }) => this.handleError(error))
     }, 2000)

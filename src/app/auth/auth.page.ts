@@ -1,13 +1,15 @@
 import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
+import { AngularFireAuth } from '@angular/fire/auth';
+import * as firebase from 'firebase/app';
+import "@codetrix-studio/capacitor-google-auth";
 import { AuthService, AuthResponseData } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoadingController, AlertController, Platform } from '@ionic/angular';
 import { Observable } from 'rxjs';
-import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook/ngx';
-import * as firebase from 'firebase/app';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { Plugins } from '@capacitor/core';
+import { FacebookLoginResponse } from '@rdlabo/capacitor-facebook-login';
+const { FacebookLogin } = Plugins;
 
 @Component({
   selector: "app-auth",
@@ -16,17 +18,20 @@ import { GooglePlus } from '@ionic-native/google-plus/ngx';
 })
 
 export class AuthPage implements OnInit {
-
+  
+  
   form: FormGroup;
   token: any;
   status: boolean = true;
   password: any
   userData : any
+  user: Observable<firebase.User>;
   @ViewChild("password", { read: ElementRef, static: false } ) passwordElementRef: ElementRef;
-  user : Observable<firebase.User>
-
-  constructor(private authService: AuthService, private router: Router, private loadingCtrl: LoadingController, private alertCtrl: AlertController, private facebook: Facebook, private platform: Platform, private gplus : GooglePlus, private afAuth: AngularFireAuth) { 
-    this.user = this.afAuth.authState
+  hasAccessTokenSubject: any;
+  userRetrievedSuccessSubject: any;
+  
+  constructor(private authService: AuthService, private router: Router, private loadingCtrl: LoadingController, private alertCtrl: AlertController, private platform: Platform, private afAuth: AngularFireAuth,) {
+    this.user = this.afAuth.authState;
   }
 
   ngOnInit() {
@@ -41,33 +46,30 @@ export class AuthPage implements OnInit {
       })
     });
   }
-
-  loginWithFB() {
-    this.facebook.login(['email', 'public_profile']).then((res : FacebookLoginResponse) => {
-      this.facebook.api('me?fields=id,name,email,first_name,picture.width(720).height(720).as(picture_large)',[]).then(profile => {
-        this.userData = {
-          username: profile['email'],
-          fullname: profile['name'],
-          dp: profile['picture_large']['data']['url']
-        }
-      })
-    })
+  
+  async loginWithFB() {
+    const FACEBOOK_PERMISSIONS = ['email', 'user_birthday', 'user_photos', 'user_gender'];
+    const result = await <FacebookLoginResponse>FacebookLogin.login({ permissions: FACEBOOK_PERMISSIONS });
+    if (result.accessToken) {
+      // Login successful.
+      console.log(`Facebook access token is ${result.accessToken.token}`);
+      console.log(result)
+    } else {
+      // Cancelled by user.
+    }
   }
 
-  async loginWithGoogle(): Promise<void> {
-    try {
-  
-      const gplusUser = await this.gplus.login({
-        'webClientId': 'your-webClientId-XYZ.apps.googleusercontent.com',
-        'offline': true,
-        'scopes': 'profile email'
-      })
-  
-      // return await this.afAuth.auth.signInWithCredential(
-      //   firebase.auth.GoogleAuthProvider.credential(gplusUser.idToken))
-  
-    } catch(err) {
-      console.log(err)
+  loginWithGoogle() {
+    let data = this.googleSignIn()
+    console.log(data)
+  }
+
+  async googleSignIn() {
+    let googleUser = await Plugins.GoogleAuth.signIn().catch(err => console.log(err));
+    if (googleUser) {
+      console.log(googleUser)
+      const credential = firebase.auth.GoogleAuthProvider.credential(googleUser.authentication.idToken);
+      return this.afAuth.auth.signInAndRetrieveDataWithCredential(credential);
     }
   }
 

@@ -126,6 +126,7 @@ export class EventService {
     return this.authService.token.pipe(
       take(1),
       switchMap(token => {
+        let id = ''
         let newCampaign = campaign.split(" ")
         newEvent = new Event(
           title,
@@ -137,7 +138,8 @@ export class EventService {
           whatsapp_link,
           description,
           images,
-          noVolunteers
+          noVolunteers,
+          id
         );
         return this.http.post(URL + 'events', { ...newEvent },
           {
@@ -185,7 +187,8 @@ export class EventService {
           whatsapp_link,
           description,
           dp,
-          noVolunteers
+          noVolunteers,
+          id
         );
         return this.http.put(URL + `events/${id}`, { ...newEvent },
           {

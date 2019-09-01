@@ -1,5 +1,4 @@
 .img-card {
-  width: 60%;
   height: auto;
   margin-left: auto;
   margin-right: auto;
@@ -49,4 +48,10 @@ ion-note{
   border: 1px solid #262626;
   margin-top: 5px;
   border-radius: 10px
+}
+
+ion-alert
+{
+ --background: var(--ion-color-secondary) !important;
+ --ion-text-color: var(--ion-color-primary) !important;
 }

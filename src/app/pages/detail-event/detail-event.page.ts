@@ -13,37 +13,42 @@ const { Storage } = Plugins
   styleUrls: ['./detail-event.page.scss'],
 })
 export class DetailEventPage implements OnInit {
-  item: Event = {
-    title: '',
-    start_date: '',
-    end_date: '',
-    location: '',
-    campaign: '',
-    goal: '',
-    whatsapp_link: '',
-    description: '',
-    images: [],
-    noVolunteers: '',
+  // item: Event = {
+  //   title: '',
+  //   start_date: '',
+  //   end_date: '',
+  //   location: '',
+  //   campaign: '',
+  //   goal: '',
+  //   whatsapp_link: '',
+  //   description: '',
+  //   images: [],
+  //   noVolunteers: '',
+  //   id: ''
+  // }
+
+  item : any
+  sliderOpts = {
+    zoom: false,
+    slidesPerView: 1.5,
+    centeredSlides: true,
+    spaceBetween: 20
   }
 
   message: string;
   method: string;
   comment: string
   commentsDiv: boolean = false
-  constructor(private alertCtrl: AlertController, private eventService: EventService, private loadingCtrl: LoadingController, private router: Router, private toastController: ToastController) { }
-
-  ngOnInit() {
-    this.getObject().then().catch(err => console.log(err))
+  constructor(private alertCtrl: AlertController, private eventService: EventService, private loadingCtrl: LoadingController, private router: Router, private toastController: ToastController) { 
+    this.item = this.router.getCurrentNavigation().extras.state.item
   }
 
-  async getObject() {
-    const ret = await Storage.get({ key: 'item' });
-    this.item = JSON.parse(ret.value);
-    console.log(this.item)
+  ngOnInit() {
+    this.item = JSON.parse(this.item)
     this.eventService.viewCount(this.item.id).subscribe()
   }
 
-  join(id: string) {
+  join(id: string, whatsapp_link : any) {
     this.message = "Successfully Registered!"
     this.method = "Join"
     this.loadingCtrl
@@ -56,7 +61,7 @@ export class DetailEventPage implements OnInit {
           .subscribe(
             res => {
               loadingEl.dismiss()
-              this.showAlert(this.message, this.method)
+              this.showAlert(this.message, this.method, whatsapp_link)
             },
             err => {
               console.log(err)
@@ -70,9 +75,10 @@ export class DetailEventPage implements OnInit {
   }
 
   donate() {
+    let whatsapp_link = ''
     this.message = "1800262525"
     this.method = "Donate"
-    this.showAlert(this.message, this.method)
+    this.showAlert(this.message, this.method, whatsapp_link)
   }
 
   daysLeft(startDate: string) {
@@ -137,17 +143,21 @@ export class DetailEventPage implements OnInit {
     toast.present()
   }
 
-  private showAlert(message: string, method: string) {
+  private showAlert(message: string, method: string, whatsapp_link : string) {
+    let alert
     if (method === "Donate") {
-      this.alertCtrl
+      alert = this.alertCtrl
         .create({
           header: 'Donate Now',
           message: message,
           buttons: ['Okay']
         })
         .then(alertEl => alertEl.present());
+        alert.onDidDismiss().then(() => {
+          window.open(whatsapp_link, '_system');
+        })
     } else {
-      this.alertCtrl
+      alert = this.alertCtrl
         .create({
           header: 'Join Now',
           message: message,

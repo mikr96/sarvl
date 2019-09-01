@@ -10,8 +10,12 @@
       <ion-grid>
           <ion-row>
             <ion-card>
-              <img *ngIf="item.image==null" class="img-card" src="../../../assets/logo.png"/>
-              <ion-img *ngIf="item.image!=null" class="img-card" [src]="item.image"></ion-img>
+                <ion-slides [options]="sliderOpts">
+                    <img *ngIf="item.images.length == 0" class="img-card" style=" width: 70%;" src="../../../assets/logo.png"/>
+                    <ion-slide *ngFor="let img of item.images">
+                      <ion-img class="img-card" [src]="img.image"></ion-img>
+                     </ion-slide>
+                  </ion-slides>
               <ion-card-header>
                 <ion-card-subtitle>{{item.campaign}}</ion-card-subtitle>
                 <ion-card-title>{{item.title}}</ion-card-title>
@@ -54,6 +58,11 @@
                     <ion-icon name="eye" color="primary"></ion-icon>
                     <ion-text>View Count</ion-text>
                     <ion-note slot="end" color="primary">{{item.view_count}}</ion-note>
+                  </ion-item>
+                  <ion-item lines="none" no-padding>
+                    <ion-icon name="link" color="primary"></ion-icon>
+                    <ion-text>Whatsapp Link</ion-text>
+                    <ion-note slot="end" color="primary">{{item.whatsapp_link}}</ion-note>
                   </ion-item>
                   <ion-item lines="none" no-padding>
                     <ion-label>Comments</ion-label>

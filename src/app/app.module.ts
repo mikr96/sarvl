@@ -9,28 +9,27 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
-import { Facebook } from '@ionic-native/facebook/ngx'
+
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 
-import { GooglePlus } from '@ionic-native/google-plus/ngx'; 
-
-const firebaseConfig = {
-
-}
-
+export const firebaseConfig = {
+  apiKey: "AIzaSyAYSf5QGgflfLO99_qJh8KJIS72vWkA2ok",
+  projectId: "sarawak-volunteer",
+  storageBucket: "gs://sarawak-volunteer.appspot.com/",
+  messagingSenderId: "31798403922"
+};
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, HttpClientModule, IonicModule.forRoot(), AppRoutingModule, AngularFireModule.initializeApp(firebaseConfig), AngularFireAuthModule],
+  imports: [BrowserModule, HttpClientModule, IonicModule.forRoot(), AppRoutingModule, AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireAuthModule,],
   providers: [
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    OneSignal,
-    Facebook,
-    GooglePlus
+    OneSignal
   ],
   bootstrap: [AppComponent]
 })

@@ -6,5 +6,5 @@
     <string name="fileprovider_authority">com.cyrix.sarvl.fileprovider</string>
     <string name="custom_url_scheme">com.cyrix.sarvl</string>
     <string name="facebook_app_id">2364639740470780</string>
-    <string name="googleplus_app_id">1:31798403922:android:8fa2f0f58e7244a8</string>
+    <string name="fb_login_protocol_scheme">fb2364639740470780</string>
 </resources>

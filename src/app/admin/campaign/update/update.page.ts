@@ -16,7 +16,13 @@ export class UpdatePage implements OnInit {
   update: boolean;
   form: FormGroup
   decline: boolean = false
-  constructor(private router: Router, private loadingCtrl: LoadingController, private adminEventService: AdminEventService, private toastCtrl: ToastController, private modalCtrl: ModalController) {
+  sliderOpts = {
+    zoom: false,
+    slidesPerView: 1.5,
+    centeredSlides: true,
+    spaceBetween: 20
+  }
+  constructor(private router: Router, private loadingCtrl: LoadingController, private adminEventService: AdminEventService, private toastCtrl: ToastController) {
     this.item = this.router.getCurrentNavigation().extras.state.item
    }
 

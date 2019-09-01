@@ -3,5 +3,11 @@
   "appName": "sarvl",
   "bundledWebRuntime": false,
   "npmClient": "npm",
-  "webDir": "www"
+  "webDir": "www",
+  "plugins": {
+    "GoogleAuth": {
+      "scopes": ["profile", "email"],
+      "serverClientId": "31798403922-cv0jfsapqptvhriroi5c6aagb6irc7f5.apps.googleusercontent.com"
+    }
+  }
 }
