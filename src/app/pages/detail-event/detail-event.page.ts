@@ -1,10 +1,9 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { AlertController, LoadingController, ToastController } from '@ionic/angular';
-import { EventService } from '../../services/event/event.service';
+import { EventService, EventData } from '../../services/event/event.service';
 import { Plugins } from '@capacitor/core';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
-import { Event } from 'src/app/models/event.model';
 const { Storage } = Plugins
 
 @Component({

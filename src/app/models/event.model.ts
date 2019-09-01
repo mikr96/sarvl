@@ -9,7 +9,6 @@ export class Event {
     public whatsapp_link: string,
     public description: string,
     public images: [],
-    public noVolunteers: any,
-    public id: any
+    public noVolunteers: any
   ) {}
 }
