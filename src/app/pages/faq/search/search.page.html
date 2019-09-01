@@ -1,0 +1,20 @@
+<ion-header translucent>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-back-button
+            [defaultHref]="'/pages/faq'"
+          ></ion-back-button>
+        </ion-buttons>
+      <ion-searchbar (ionChange)="getItems($event)"></ion-searchbar>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content fullscreen>
+    <ion-list *ngIf="isItemAvailable">
+      <ion-item lines="none" *ngFor="let item of questions" button>
+        <ion-label>
+          <h2>{{ item.question }}</h2>
+          <p>{{ item.answer }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>

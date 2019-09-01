@@ -147,9 +147,8 @@ export class CategoryPage implements OnInit {
     this.router.navigateByUrl('/pages/detail-event')
   }
 
-  private handleError(error: {}) {
-    const firstError: string = Object.values(error)[0][0]
-    return this.popToast(firstError)
+  private handleError(err : any) {
+    return this.popToast(err.error.message)
   }
 
   async popToast(message: string) {

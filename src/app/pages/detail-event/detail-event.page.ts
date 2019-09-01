@@ -1,10 +1,8 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 import { EventService, EventData } from '../../services/event/event.service';
-import { Plugins } from '@capacitor/core';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
-const { Storage } = Plugins
 
 @Component({
   selector: 'app-detail-event',
@@ -63,21 +61,16 @@ export class DetailEventPage implements OnInit {
               this.showAlert(this.message, this.method, whatsapp_link)
             },
             err => {
-              console.log(err)
-              const firstError: string = Object.values(err)[0][0]
               loadingEl.dismiss()
-              this.popToast(firstError)
+              this.popToast(err.error.message)
             })
       });
-
-
   }
 
-  donate() {
+  donate(message) {
     let whatsapp_link = ''
-    this.message = "1800262525"
     this.method = "Donate"
-    this.showAlert(this.message, this.method, whatsapp_link)
+    this.showAlert(message, this.method, whatsapp_link)
   }
 
   daysLeft(startDate: string) {
@@ -103,9 +96,8 @@ export class DetailEventPage implements OnInit {
             },
             err => {
               console.log(err)
-              const firstError: string = Object.values(err)[0][0]
               loadingEl.dismiss()
-              this.popToast(firstError)
+              this.popToast(err.error.message)
             })
       });
   }
@@ -142,27 +134,27 @@ export class DetailEventPage implements OnInit {
     toast.present()
   }
 
-  private showAlert(message: string, method: string, whatsapp_link : string) {
+  private async showAlert(message: string, method: string, whatsapp_link : string) {
     let alert
     if (method === "Donate") {
-      alert = this.alertCtrl
-        .create({
-          header: 'Donate Now',
-          message: message,
-          buttons: ['Okay']
-        })
-        .then(alertEl => alertEl.present());
-        alert.onDidDismiss().then(() => {
-          window.open(whatsapp_link, '_system');
-        })
+      const alertIc = await this.alertCtrl
+                      .create({
+                        header: 'Donate Now',
+                        message: message,
+                        buttons: ['Okay']
+                      })
+      await alertIc.present()
+
     } else {
-      alert = this.alertCtrl
-        .create({
+      const alertEl = await this.alertCtrl.create({
           header: 'Join Now',
           message: message,
           buttons: ['Okay']
         })
-        .then(alertEl => alertEl.present());
+      await alertEl.present();        
+      alertEl.onDidDismiss().then((data) => {
+        window.open(whatsapp_link, '_system');
+      });
     }
   }
 }

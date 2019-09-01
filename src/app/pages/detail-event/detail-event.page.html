@@ -68,8 +68,8 @@
               </div>
             </ion-list>
             </ion-list>
-            <ion-button color="secondary" fill="outline" (click)="join(item.id)" expand="block" style="margin-bottom: 5px;">JOIN NOW</ion-button>
-            <ion-button color="secondary" expand="block" (click)="donate()">DONATE NOW</ion-button>
+            <ion-button color="secondary" fill="outline" (click)="join(item.id, item.whatsapp_link)" expand="block" style="margin-bottom: 5px;">JOIN NOW</ion-button>
+            <ion-button color="secondary" expand="block" (click)="donate(item.bank_account)">DONATE NOW</ion-button>
           </ion-card-content>
         </ion-card>
     </ion-row>

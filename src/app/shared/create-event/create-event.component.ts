@@ -112,7 +112,7 @@ export class CreateEventComponent implements OnInit {
               console.log(err)
               const firstError: string = Object.values(err)[0][0]
               loadingEl.dismiss()
-              this.popToast(firstError)
+              this.popToast(err.error.message)
             })
       });
   }

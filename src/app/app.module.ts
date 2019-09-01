@@ -15,6 +15,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyAYSf5QGgflfLO99_qJh8KJIS72vWkA2ok",
+  authDomain: "sarawak-volunteer.firebaseapp.com",
   projectId: "sarawak-volunteer",
   storageBucket: "gs://sarawak-volunteer.appspot.com/",
   messagingSenderId: "31798403922"

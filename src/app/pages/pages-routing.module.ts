@@ -42,7 +42,16 @@ const routes: Routes = [
       },
       { 
         path: 'faq', 
-        loadChildren: './faq/faq.module#FaqPageModule' 
+        children: [
+          {
+            path: '',
+            loadChildren: './faq/faq.module#FaqPageModule' 
+          },
+          { 
+            path: 'search', 
+            loadChildren: './faq/search/search.module#SearchPageModule' 
+          }
+        ]
       },
       { 
         path: 'search', 

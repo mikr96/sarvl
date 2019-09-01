@@ -117,9 +117,8 @@ export class HomePage implements OnInit {
 
   };
 
-  private handleError(error: {}) {
-    const firstError: string = Object.values(error)[0][0]
-    return this.popToast(firstError)
+  private handleError(err: any) {
+    return this.popToast(err.error.message)
   }
 
   doRefresh(event) {

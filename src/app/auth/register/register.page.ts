@@ -93,10 +93,9 @@ export class RegisterPage implements OnInit {
             }
             this.registerForm.reset()
             this.router.navigateByUrl('/auth')
-          }, ({ error }) => {
-            const firstError: string = Object.values(error)[0][0]
+          }, (err : any) => {
             loadingEl.dismiss()
-            return this.popToast(firstError)
+            return this.popToast(err.error.message)
           })
       });
   }

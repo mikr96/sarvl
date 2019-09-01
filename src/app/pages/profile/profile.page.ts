@@ -167,11 +167,9 @@ export class ProfilePage implements OnInit, OnDestroy {
             if (!res) {
               return this.popToast('Something went wrong...')
             }
-          }, ({ error }) => {
-            console.error(error)
-            const firstError: string = Object.values(error)[0][0]
+          }, ( err : any ) => {
             loadingEl.dismiss()
-            return this.popToast(firstError)
+            return this.popToast(err.error.message)
           })
       });
   }

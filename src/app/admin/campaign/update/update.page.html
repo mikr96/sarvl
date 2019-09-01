@@ -62,7 +62,7 @@
                   <ion-item lines="none" no-padding>
                     <ion-icon name="link" color="primary"></ion-icon>
                     <ion-text>Whatsapp Link</ion-text>
-                    <ion-note slot="end" color="primary">{{item.whatsapp_link}}</ion-note>
+                    <ion-button (click)="viewLink(item.whatsapp_link)">View Link</ion-button>
                   </ion-item>
                   <ion-item lines="none" no-padding>
                     <ion-label>Comments</ion-label>
@@ -81,13 +81,22 @@
             </ion-col>
           </ion-row>
           <ion-row *ngIf="decline">
-              <ion-col size="12">
-                <form [formGroup]="form">
-                  <ion-textarea 
-                  placeholder="Please state your comments before declining the event."                 
-                  required formControlName="comment"></ion-textarea>
-                </form>
-              </ion-col>
-            </ion-row>
+            <ion-col size="12">
+              <form [formGroup]="form">
+                <ion-textarea 
+                placeholder="Please state your comments before declining the event."                 
+                required formControlName="comment"></ion-textarea>
+              </form>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="approve">
+            <ion-col size="12">
+              <form [formGroup]="form2">
+                <ion-textarea 
+                placeholder="Please state your bank accounts number (eg. 123456789 - Maybank)"                 
+                required formControlName="bank_account"></ion-textarea>
+              </form>
+            </ion-col>
+          </ion-row>
         </ion-grid>
   </ion-content>

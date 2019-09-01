@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from '../../services/event/event.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-faq',
@@ -14,7 +15,7 @@ export class FaqPage implements OnInit {
   volunteerFaqs: any
   organizerFaqs: any
 
-  constructor(private eventService: EventService) { }
+  constructor(private eventService: EventService, private router: Router) { }
 
   ngOnInit() {
     this.eventService.getFAQ().subscribe(res => {
@@ -33,6 +34,10 @@ export class FaqPage implements OnInit {
         event.target.complete()
       })
     }, 2000)
+  }
+
+  searchPage() {
+    this.router.navigate(['/', 'pages', 'faq', 'search'], {state: {faq: JSON.stringify(this.faq)}})
   }
 
 }

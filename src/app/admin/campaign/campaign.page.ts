@@ -47,7 +47,7 @@ export class CampaignPage implements OnInit {
               console.log(this.dataEvent.data)
               this.dataEvent.data.length < 1 ? this.empty = false : this.empty = true
             },
-            error => {
+            (error : any) => {
               this.handleError(error)
             }
           );
@@ -226,9 +226,8 @@ export class CampaignPage implements OnInit {
     }
   }
 
-  private handleError(error: {}) {
-    const firstError: string = Object.values(error)[0][0]
-    return this.popToast(firstError)
+  private handleError(err: any) {
+    return this.popToast(err.error.message)
   }
 
   async popToast(message: string) {

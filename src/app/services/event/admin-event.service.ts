@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http'
 import { URL } from '../../constants'
 import { AuthService } from '../auth.service';
 import { Faq } from '../../models/faq.model'
-import { take, switchMap, tap } from 'rxjs/operators';
+import { take, switchMap, tap, sampleTime } from 'rxjs/operators';
  
 @Injectable({
   providedIn: 'root'
@@ -141,12 +141,11 @@ export class AdminEventService {
     )
   }
 
-  public approveEvent(id : string) {
-    let status = 1
+  public approveEvent(id : string, data : any) {
     return this.authService.token.pipe(
       take(1),
       switchMap(token => {
-        return this.http.put(URL + `events/${id}/change_status`, { status }, {
+        return this.http.put(URL + `events/${id}/change_status`, { status: 1, bank_account: data }, {
           headers: {
             Authorization: 'Bearer ' + token
           }

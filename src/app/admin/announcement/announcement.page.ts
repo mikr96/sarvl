@@ -75,10 +75,9 @@ export class AnnouncementPage implements OnInit {
               return this.popToast('Something went wrong...')
             }
             this.form.reset()
-          }, ({ error }) => {
-            const firstError: string = Object.values(error)[0][0]
+          }, (err : any) => {
             loadingEl.dismiss()
-            return this.popToast(firstError)
+            return this.popToast(err.error.message)
           })
       });
   }
