@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { LoadingController, ToastController, ModalController, AlertController } from '@ionic/angular';
 import { AdminEventService } from 'src/app/services/event/admin-event.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ImageModalComponent } from 'src/app/shared/image-modal/image-modal.component';
 
 @Component({
   selector: 'app-update',
@@ -24,7 +25,7 @@ export class UpdatePage implements OnInit {
     centeredSlides: true,
     spaceBetween: 20
   }
-  constructor(private router: Router, private loadingCtrl: LoadingController, private adminEventService: AdminEventService, private toastCtrl: ToastController, private alertCtrl: AlertController) {
+  constructor(private router: Router, private loadingCtrl: LoadingController, private adminEventService: AdminEventService, private toastCtrl: ToastController, private alertCtrl: AlertController, private modalController: ModalController) {
     this.item = this.router.getCurrentNavigation().extras.state.item
    }
 
@@ -61,6 +62,18 @@ export class UpdatePage implements OnInit {
     data = data*this.percent/100
     this.raised = data
     this.update = true
+    this.item.raised = data
+  }
+
+  openPreview(img) {
+    this.modalController.create({
+      component : ImageModalComponent,
+      componentProps : {
+        img : img
+      }
+    }).then(modal => {
+      modal.present()
+    })
   }
 
   updateRaised(id) {

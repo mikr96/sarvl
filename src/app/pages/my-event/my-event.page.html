@@ -11,6 +11,11 @@
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content refreshingSpinner="circles" refreshingText="Refreshing..."></ion-refresher-content>
   </ion-refresher>
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+      <ion-fab-button color="secondary" (click)="createEvent()">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
   <ion-grid>
     <ion-row *ngIf="noEvent">
       <ion-text>You have not create any event.</ion-text>

@@ -25,6 +25,8 @@ export class AuthPage implements OnInit {
   status: boolean = true;
   password: any
   userData : any
+  id : any
+  accessToken : any
   user: Observable<firebase.User>;
   @ViewChild("password", { read: ElementRef, static: false } ) passwordElementRef: ElementRef;
   hasAccessTokenSubject: any;
@@ -53,7 +55,15 @@ export class AuthPage implements OnInit {
     if (result.accessToken) {
       // Login successful.
       console.log(`Facebook access token is ${result.accessToken.token}`);
-      console.log(result)
+      this.authService.getID(result.accessToken.token).subscribe((res : any) => {
+        console.log(res)
+        let item = {
+          id : res.id,
+          access_token : result.accessToken.token
+        }
+        console.log(item)
+        this.router.navigate(['/', 'auth', 'social'], {state: {item: JSON.stringify(item)}})
+      })
     } else {
       // Cancelled by user.
     }

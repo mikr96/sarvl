@@ -13,6 +13,7 @@ export class CreateEventComponent implements OnInit {
 
   eventForm: FormGroup
   imageFile : any = [];
+  PdfFile : any
 
   constructor(private eventService: EventService, private loadingCtrl: LoadingController, private router: Router, private toastController: ToastController) {
     this.eventForm = new FormGroup({
@@ -53,7 +54,24 @@ export class CreateEventComponent implements OnInit {
         updateOn: 'blur',
         validators: [Validators.required]
       }),
+      proposal: new FormControl(null, {
+        updateOn: 'blur',
+        validators: [Validators.required]
+      })
     });
+   }
+
+  onFilePicked (event : any) {
+     const pickedFile = (event.target as HTMLInputElement).files[0];
+     if (!pickedFile) {
+       return;
+     }
+     const fr = new FileReader();
+     fr.onload = () => {
+       const dataUrl = fr.result.toString();
+       this.eventForm.patchValue({ proposal: dataUrl });
+     };
+     fr.readAsDataURL(pickedFile);
    }
 
    ngOnInit() {
@@ -99,7 +117,8 @@ export class CreateEventComponent implements OnInit {
           this.eventForm.value.whatsapp_link,
           this.eventForm.value.description,
           this.eventForm.value.images,
-          this.eventForm.value.noVolunteers
+          this.eventForm.value.noVolunteers,
+          this.eventForm.value.proposal,
         )
           .subscribe(
             res => {

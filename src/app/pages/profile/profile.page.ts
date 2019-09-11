@@ -6,6 +6,8 @@ import { Subscription } from 'rxjs';
 import { Capacitor, Plugins, CameraSource, CameraResultType } from '@capacitor/core';
 import { Platform } from '@ionic/angular';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -29,7 +31,9 @@ export class ProfilePage implements OnInit, OnDestroy {
   selectedImage: string
   usePicker = false;
   id: any
-  constructor(private profileService: ProfileService, private platform: Platform, private loadingCtrl: LoadingController, private toastController: ToastController, private modalCtrl: ModalController) { }
+  stateSelected : any
+  states : any = ["Johor Darul Ta'zim", "Kedah Darul Aman", "Kelantan Darul Naim", "Malacca", "Negeri Sembilan Darul Khusus", "Pahang Darul Makmur", "Penang Perak Darul Ridzuan", "Perlis Indera Kayangan", "Sabah", "Sarawak", "Selangor Darul Ehsan", "Terengganu Darul Iman"]
+  constructor(private profileService: ProfileService, private platform: Platform, private loadingCtrl: LoadingController, private toastController: ToastController, private modalCtrl: ModalController, private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
     this.isLoading = true;
@@ -56,6 +60,7 @@ export class ProfilePage implements OnInit, OnDestroy {
         }),
         dp: new FormControl(this.profile.user.dp)
       });
+      this.stateSelected = this.profile.user.location
       this.isLoading = false;
     })
     if (
@@ -109,7 +114,7 @@ export class ProfilePage implements OnInit, OnDestroy {
     })
       .then(image => {
         this.selectedImage = `data:image/jpeg;base64,${image.base64String}`;
-        this.onImagePicked(image.base64String);
+        this.onImagePicked(`data:image/jpeg;base64,${image.base64String}`);
       })
       .catch(error => {
         console.log(error);
@@ -188,6 +193,11 @@ export class ProfilePage implements OnInit, OnDestroy {
     if (this.profileSub) {
       this.profileSub.unsubscribe();
     }
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigateByUrl('/auth');
   }
 
   async changePass() {

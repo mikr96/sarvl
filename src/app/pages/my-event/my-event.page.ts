@@ -104,6 +104,11 @@ export class MyEventPage implements OnInit {
     return await modal.present();
   }
 
+  createEvent() {
+    let from = "user"
+    this.router.navigate(['/', 'pages', 'create-event'], { state: { from: from } })
+  }
+
   checkStatus(val) {
     if (val == "0") {
       return "Waiting"

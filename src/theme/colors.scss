@@ -15,6 +15,14 @@
   --ion-color-facebook-contrast-rgb: 255, 255, 255;
   --ion-color-facebook-shade: #344e86;
   --ion-color-facebook-tint: #4f6aa2;
+
+  /** whatsapp **/
+  --ion-color-whatsapp: #25D366;
+  --ion-color-whatsapp-rgb: 37,211,102;
+  --ion-color-whatsapp-contrast: #ffffff;
+  --ion-color-whatsapp-contrast-rgb: 0,0,0;
+  --ion-color-whatsapp-shade: #21ba5a;
+  --ion-color-whatsapp-tint: #3bd775;
 }
 
 .ion-color-google {
@@ -33,4 +41,13 @@
   --ion-color-contrast-rgb: var(--ion-color-facebook-contrast-rgb) !important;
   --ion-color-shade: var(--ion-color-facebook-shade) !important;
   --ion-color-tint: var(--ion-color-facebook-tint) !important;
+}
+
+.ion-color-whatsapp {
+  --ion-color-base: var(--ion-color-whatsapp) !important;
+  --ion-color-base-rgb: var(--ion-color-whatsapp-rgb) !important;
+  --ion-color-contrast: var(--ion-color-whatsapp-contrast) !important;
+  --ion-color-contrast-rgb: var(--ion-color-whatsapp-contrast-rgb) !important;
+  --ion-color-shade: var(--ion-color-whatsapp-shade) !important;
+  --ion-color-tint: var(--ion-color-whatsapp-tint) !important;
 }

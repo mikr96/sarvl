@@ -10,6 +10,7 @@
   --white-color: #E8F1F2;
   --ion-color-facebook: #3B5998;
   --ion-color-google: #DD4B39;
+  --ion-color-whatsapp: #25D366;
   --ion-color-volunteer-sarawak: #262626;
 
   /** primary **/
@@ -83,4 +84,12 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+    /** whatsapp **/
+    --ion-color-whatsapp: #25D366;
+    --ion-color-whatsapp-rgb: 37,211,102;
+    --ion-color-whatsapp-contrast: #000000;
+    --ion-color-whatsapp-contrast-rgb: 0,0,0;
+    --ion-color-whatsapp-shade: #21ba5a;
+    --ion-color-whatsapp-tint: #3bd775;
 }

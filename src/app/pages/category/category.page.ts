@@ -143,8 +143,7 @@ export class CategoryPage implements OnInit {
   }
 
   goToDetails(item) {
-    Storage.set({ key: 'item', value: JSON.stringify(item) })
-    this.router.navigateByUrl('/pages/detail-event')
+    this.router.navigate(['/', 'pages', 'detail-event'], {state: {item: JSON.stringify(item)}})
   }
 
   private handleError(err : any) {

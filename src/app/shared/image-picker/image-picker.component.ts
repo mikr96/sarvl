@@ -40,7 +40,7 @@ export class ImagePickerComponent implements OnInit {
       return;
     }
     Plugins.Camera.getPhoto({
-      quality: 50,
+      quality: 70,
       source: CameraSource.Prompt,
       correctOrientation: true,
       // height: 320,
@@ -68,11 +68,11 @@ export class ImagePickerComponent implements OnInit {
     }
     console.log(this.images.source.length)
     Plugins.Camera.getPhoto({
-      quality: 50,
+      quality: 70,
       source: CameraSource.Prompt,
       correctOrientation: true,
       // height: 320,
-      width: 100,
+      width: 300,
       resultType: CameraResultType.Base64
     })
       .then(image => {

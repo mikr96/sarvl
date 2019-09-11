@@ -26,6 +26,8 @@ export class HomePage implements OnInit {
   activeLatest: boolean = true
   activePopular: boolean = false
   activeEndingSoon: boolean = false
+  listA : boolean = true
+  listB : boolean = false
 
   constructor(private eventService: EventService, private toastController: ToastController, private router: Router, private authService: AuthService) { }
 

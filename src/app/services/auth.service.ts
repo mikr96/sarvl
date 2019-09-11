@@ -85,6 +85,18 @@ export class AuthService {
       tap(this.setToken.bind(this)));
   }
 
+  loginWithFB(access_token: any, id: any, password: any, password_confirmation: any) {
+    return this.http.post(URL + `social_login/${access_token}`,{
+      id : id,
+      password : password,
+      password_confirmation : password_confirmation
+    })
+  }
+
+  getID(token:string) {
+    return this.http.get(`https://graph.facebook.com/me?access_token=${token}`)
+  }
+
   createAcc(profile: Profile) {
     return this.http.post(URL + 'register', profile);
   }
@@ -92,6 +104,39 @@ export class AuthService {
   logout() {
     this._user.next(null);
     Storage.clear();
+  }
+
+  autoLogin() {
+    return from(Plugins.Storage.get({ key: 'authData' })).pipe(
+      map(storedData => {
+        console.log(storedData)
+        if (!storedData || !storedData.value) {
+          return null;
+        }
+
+        const userData = JSON.parse(storedData.value) as {
+          token: string;
+          isAdmin: boolean;
+          user_id: string;
+        };
+
+        const user = new User(
+          "volunteer",
+          userData.token,
+          userData.isAdmin,
+          userData.user_id
+        )
+        return user;
+      }),
+      tap(user => {
+        if (user) {
+          this._user.next(user);
+        }
+      }),
+      map(user => {
+        return !!user;
+      })
+    );
   }
 
   private setToken(userData: AuthResponseData) {
@@ -105,10 +150,15 @@ export class AuthService {
     user.user = userData.user
 
     this._user.next(user)
-    this.storeToken(userData.token);
+    this.storeToken(userData.token, userData.isAdmin, userData.user_id);
   }
 
-  private storeToken(token: string) {
-    Storage.set({ key: 'token', value: token })
+  private storeToken(token: string, isAdmin: boolean, user_id: string) {
+    const data = JSON.stringify({
+      user_id: user_id,
+      token: token,
+      isAdmin: isAdmin
+    })
+    Storage.set({ key: 'authData', value: data })
   }
 }

@@ -30,8 +30,8 @@ export class ProfileService {
         return this.authService.token.pipe(
           take(1),
           switchMap(token => {
-            return this.http.put(
-              `${URL}users/${id}`, profile, { 
+            return this.http.post(
+              `${URL}users/${id}/edit`, profile, { 
                 headers: {
                   Authorization: 'Bearer ' + token
                 }

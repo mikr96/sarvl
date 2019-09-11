@@ -66,6 +66,10 @@ export class EditEventPage implements OnInit {
           updateOn: 'blur',
           validators: [Validators.required]
         }),
+        proposal: new FormControl(null, {
+          updateOn: 'blur',
+          validators: [Validators.required]
+        }),
       });
       this.isLoading = false;
       if (this.platform.is('mobile') && !this.platform.is('hybrid') || this.platform.is('desktop')) {
@@ -128,6 +132,19 @@ export class EditEventPage implements OnInit {
     this.editEventForm.patchValue({ images: imageFile });
   }
 
+  onFilePicked (event : any) {
+    const pickedFile = (event.target as HTMLInputElement).files[0];
+    if (!pickedFile) {
+      return;
+    }
+    const fr = new FileReader();
+    fr.onload = () => {
+      const dataUrl = fr.result.toString();
+      this.editEventForm.patchValue({ proposal: dataUrl });
+    };
+    fr.readAsDataURL(pickedFile);
+  }
+
   onSubmit() {
     if (!this.editEventForm.valid) {
       return;
@@ -150,7 +167,8 @@ export class EditEventPage implements OnInit {
           this.editEventForm.value.description,
           this.editEventForm.value.images,
           this.editEventForm.value.noVolunteers,
-          this.item.id
+          this.item.id,
+          this.editEventForm.value.proposal
         )
           .subscribe(
             res => {

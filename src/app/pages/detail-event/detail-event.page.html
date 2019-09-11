@@ -14,7 +14,7 @@
         <ion-slides [options]="sliderOpts">
           <img *ngIf="item.images.length == 0" class="img-card" style=" width: 70%;" src="../../../assets/logo.png"/>
           <ion-slide *ngFor="let img of item.images">
-            <ion-img class="img-card" [src]="img.image"></ion-img>
+            <ion-img class="img-card" [src]="img.image" tappable (click)="openPreview(img.image)"></ion-img>
            </ion-slide>
         </ion-slides>
         <ion-card-header>
@@ -42,8 +42,10 @@
             </ion-item>
             <ion-item lines="none" no-padding>
               <ion-icon name="people" color="primary"></ion-icon>
-              <ion-text>Registered</ion-text>
-              <ion-note slot="end" color="primary">{{len(item.joined)}}/{{item.noVolunteers}}</ion-note>
+              <ion-text>Volunteers Needed</ion-text>
+              <!-- <ion-note slot="end" color="primary">{{len(item.joined)}}/{{item.noVolunteers}}</ion-note> -->
+              <ion-note slot="end" color="primary">{{item.noVolunteers}}</ion-note>
+
             </ion-item>
             <ion-item lines="none" no-padding>
               <ion-icon name="calendar" color="primary"></ion-icon>
@@ -68,7 +70,8 @@
               </div>
             </ion-list>
             </ion-list>
-            <ion-button color="secondary" fill="outline" (click)="join(item.id, item.whatsapp_link)" expand="block" style="margin-bottom: 5px;">JOIN NOW</ion-button>
+            <!-- <ion-button color="secondary" fill="outline" (click)="join(item.id, item.whatsapp_link)" expand="block" style="margin-bottom: 5px;">JOIN NOW</ion-button> -->
+            <ion-button color="whatsapp ion-text-capitalize" expand="block" (click)="joinGroup(item.whatsapp_link)" style="margin-bottom: 5px;">JOIN WHATSAPP GROUP</ion-button>
             <ion-button color="secondary" expand="block" (click)="donate(item.bank_account)">DONATE NOW</ion-button>
           </ion-card-content>
         </ion-card>

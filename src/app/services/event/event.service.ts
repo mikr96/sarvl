@@ -22,6 +22,7 @@ export interface EventData {
   raise: any,
   joined: any,
   comments: any,
+  proposal: any
 }
 
 @Injectable({
@@ -88,7 +89,7 @@ export class EventService {
     return this.authService.token.pipe(
       take(1),
       switchMap(token => {
-        return this.http.put(URL + `comments/${id}/reply`, { ...body },
+        return this.http.post(URL + `comments/${id}/reply`, { ...body },
           {
             headers: {
               Authorization: 'Bearer ' + token
@@ -102,7 +103,7 @@ export class EventService {
     return this.authService.token.pipe(
       take(1),
       switchMap(token => {
-        return this.http.put(URL + `join_event/${id}`, {},
+        return this.http.get(URL + `join_event/${id}`,
           {
             headers: {
               Authorization: 'Bearer ' + token
@@ -122,7 +123,8 @@ export class EventService {
     whatsapp_link: string,
     description: string,
     images: any,
-    noVolunteers: string
+    noVolunteers: string,
+    proposal: string
   ) {
     let newEvent: Event;
     var start = moment(start_date);
@@ -145,7 +147,8 @@ export class EventService {
           description,
           images,
           noVolunteers,
-          id
+          id,
+          proposal
         );
         return this.http.post(URL + 'events', { ...newEvent },
           {
@@ -172,7 +175,8 @@ export class EventService {
     description: string,
     dp: any,
     noVolunteers: string,
-    id: any
+    id: any,
+    proposal: string
   ) {
     let newEvent: Event;
     var start = moment(start_date);
@@ -194,9 +198,10 @@ export class EventService {
           description,
           dp,
           noVolunteers,
-          id
+          id,
+          proposal
         );
-        return this.http.put(URL + `events/${id}`, { ...newEvent },
+        return this.http.post(URL + `events/${id}/edit`, { ...newEvent },
           {
             headers: {
               Authorization: 'Bearer ' + token
@@ -214,7 +219,7 @@ export class EventService {
     return this.authService.token.pipe(
       take(1),
       switchMap(token => {
-        return this.http.put(URL + `users/${id}/change_password`, { ...data }, {
+        return this.http.post(URL + `users/${id}/change_password`, { ...data }, {
           headers: {
             Authorization: 'Bearer ' + token
           }
@@ -228,7 +233,7 @@ export class EventService {
     return this.authService.token.pipe(
       take(1),
       switchMap(token => {
-        return this.http.put(URL + `events/update_count/${event_id}`, {}, {
+        return this.http.get(URL + `events/update_count/${event_id}`, {
           headers: {
             Authorization: 'Bearer ' + token
           }

@@ -1,8 +1,9 @@
 import { Component, OnInit, NgZone } from '@angular/core';
-import { AlertController, LoadingController, ToastController } from '@ionic/angular';
+import { AlertController, LoadingController, ToastController, ModalController } from '@ionic/angular';
 import { EventService, EventData } from '../../services/event/event.service';
 import * as moment from 'moment';
 import { Router } from '@angular/router';
+import { ImageModalComponent } from 'src/app/shared/image-modal/image-modal.component';
 
 @Component({
   selector: 'app-detail-event',
@@ -36,7 +37,7 @@ export class DetailEventPage implements OnInit {
   method: string;
   comment: string
   commentsDiv: boolean = false
-  constructor(private alertCtrl: AlertController, private eventService: EventService, private loadingCtrl: LoadingController, private router: Router, private toastController: ToastController) { 
+  constructor(private alertCtrl: AlertController, private eventService: EventService, private loadingCtrl: LoadingController, private router: Router, private toastController: ToastController, private modalController: ModalController) { 
     this.item = this.router.getCurrentNavigation().extras.state.item
   }
 
@@ -65,6 +66,21 @@ export class DetailEventPage implements OnInit {
               this.popToast(err.error.message)
             })
       });
+  }
+
+  joinGroup(whatsapp_link : any) {
+    window.open(whatsapp_link, '_system');
+  }
+
+  openPreview(img) {
+    this.modalController.create({
+      component : ImageModalComponent,
+      componentProps : {
+        img : img
+      }
+    }).then(modal => {
+      modal.present()
+    })
   }
 
   donate(message) {

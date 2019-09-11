@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy, ViewChildren, QueryList } from '@angular/core';
-import { Platform, IonRouterOutlet, ToastController, AlertController } from '@ionic/angular';
+import { Platform, IonRouterOutlet, ToastController, AlertController, ActionSheetController } from '@ionic/angular';
 import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
 import { Plugins, Capacitor, DeviceInfo } from '@capacitor/core';
 import { Subscription } from 'rxjs';
 import { OneSignal } from '@ionic-native/onesignal/ngx'
+import { async } from '@angular/core/testing';
 const { Device } = Plugins;
 
 @Component({
@@ -50,7 +51,8 @@ export class AppComponent implements OnInit, OnDestroy{
     private router: Router,
     private toastCtrl: ToastController,
     private oneSignal : OneSignal,
-    private alertCtrl : AlertController
+    private alertCtrl : AlertController,
+    private actionSheetController: ActionSheetController
   ) {
     this.initializeApp();
     // Initialize BackButton Eevent.
@@ -144,9 +146,27 @@ export class AppComponent implements OnInit, OnDestroy{
   private async setAndroidBackButtonBehavior() {
     const deviceInfo = await Device.getInfo()
     if (deviceInfo.platform == "android") {
-      this.platform.backButton.subscribe(() => {
+      this.platform.backButton.subscribe(async () => {
         if (window.location.pathname == "/pages/home") {
-          navigator['app'].exitApp();
+          const actionSheet = await this.alertCtrl.create({
+            header: 'Sarawak Volunteer',
+            buttons: [
+              {
+                text: 'Cancel',
+                role: 'cancel',
+                handler: () => {
+                  console.log('Cancel clicked');
+                }
+              },
+              {
+                text: 'Exit App',
+                handler: () => {
+                  navigator['app'].exitApp();
+                }
+              }
+            ]}
+          );
+          await actionSheet.present();
         }
       });
     }

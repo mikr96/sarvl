@@ -5,14 +5,17 @@ import { IonicModule } from '@ionic/angular';
 import { StatisticComponent } from './statistic/statistic.component';
 import { CreateEventComponent } from './create-event/create-event.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ImageModalComponent } from './image-modal/image-modal.component';
 
 
 
 @NgModule({
-  declarations: [ImagePickerComponent, StatisticComponent, CreateEventComponent],
+  declarations: [ImagePickerComponent, StatisticComponent, CreateEventComponent, ImageModalComponent],
   imports: [
     CommonModule, IonicModule, ReactiveFormsModule
   ],
-  exports: [ImagePickerComponent, StatisticComponent, CreateEventComponent]
+  entryComponents: [ImageModalComponent],
+  exports: [ImagePickerComponent, StatisticComponent, CreateEventComponent, ImageModalComponent]
 })
+
 export class SharedModule { }

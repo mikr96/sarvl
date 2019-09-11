@@ -10,6 +10,7 @@ export class Event {
     public description: string,
     public images: [],
     public noVolunteers: any,
-    public id: any
+    public id: any,
+    public pdf: any
   ) {}
 }

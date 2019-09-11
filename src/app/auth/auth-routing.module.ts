@@ -8,6 +8,10 @@ const routes: Routes = [
   {
     path: "register",
     loadChildren: "./register/register.module#RegisterPageModule"
+  },
+  { 
+    path: 'social', 
+    loadChildren: './social/social.module#SocialPageModule' 
   }
 ];
 

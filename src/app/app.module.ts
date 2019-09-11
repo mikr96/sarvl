@@ -9,6 +9,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
+import { File } from '@ionic-native/file/ngx'
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
@@ -30,7 +31,7 @@ export const firebaseConfig = {
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    OneSignal
+    OneSignal, File
   ],
   bootstrap: [AppComponent]
 })

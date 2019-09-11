@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AdminEventService } from 'src/app/services/event/admin-event.service';
 import { Router } from '@angular/router';
 import * as papa from 'papaparse';
+import { File } from '@ionic-native/file/ngx';
+import { ToastController, AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-user-management',
@@ -14,10 +16,9 @@ export class UserManagementPage implements OnInit {
     next_page_url: null,
     total: 0
   }
-  file : any
   csvData: any[] = [];
   headerRow = ["created_at", "created_by", "dp", "fullname", "ic", "id", "joined", "last_login", "location", "role", "skills", "telNo",  "updated_at", "updated_by", "username", "volunteered"]
-  constructor(private adminEventService: AdminEventService, private router: Router) { }
+  constructor(private adminEventService: AdminEventService, private router: Router, private file: File, private toastController: ToastController, private alertCtrl: AlertController) { }
 
   ngOnInit() {
     this.adminEventService.getUsers().subscribe((res:any) => {
@@ -31,16 +32,61 @@ export class UserManagementPage implements OnInit {
       fields: this.headerRow,
       data: this.dataUser.data
     });
+    var blob = new Blob([csv]);
  
     // Dummy implementation for Desktop download purpose
-    var blob = new Blob([csv]);
-    var a = window.document.createElement("a");
-    a.href = window.URL.createObjectURL(blob);
-    a.download = "newdata.csv";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    // var blob = new Blob([csv]);
+    // var a = window.document.createElement("a");
+    // a.href = window.URL.createObjectURL(blob);
+    // a.download = "newdata.csv";
+    // document.body.appendChild(a);
+    // a.click();
+    // document.body.removeChild(a);
+    this.saveFile(blob)
   }
+
+  async saveFile(body) {
+    let fileName = "newdata.csv"
+    try {
+      const data = await this.file.writeFile(this.file.externalRootDirectory, fileName, body, { replace : true })
+      const res = await data
+      console.log(res)
+      this.showAlert(`Your may find your file at ${this.file.externalRootDirectory}`)
+    } catch (err) {
+      this.popToast(err)
+      console.log(err)
+      try {
+        const file = await this.file.writeExistingFile(this.file.externalRootDirectory, fileName, body)
+        const existing = await file
+        console.log(existing)
+        this.showAlert(`Your existing file has been overwrite at ${this.file.externalRootDirectory}`)
+      } catch (err) {
+        console.log(err)
+        this.popToast(err)
+      }
+    }
+  }
+
+  private showAlert(message: string) {
+    this.alertCtrl
+      .create({
+        header: 'User Management',
+        message: message,
+        buttons: ['Okay']
+      })
+      .then(alertEl => alertEl.present());
+  }
+
+  private async popToast(message: string) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 2000,
+      position: 'top',
+      color: 'danger',
+    })
+    toast.present()
+  }
+  
 
   doRefresh(event) {
     setTimeout(()=> {

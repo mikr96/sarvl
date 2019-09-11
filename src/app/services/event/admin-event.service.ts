@@ -118,7 +118,7 @@ export class AdminEventService {
     return this.authService.token.pipe(
       take(1),
       switchMap(token => {
-        return this.http.put(URL + `events/${id}/change_status`, {...remark}, {
+        return this.http.post(URL + `events/${id}/change_status`, {...remark}, {
           headers: {
             Authorization: 'Bearer ' + token
           }
@@ -132,7 +132,7 @@ export class AdminEventService {
     return this.authService.token.pipe(
       take(1),
       switchMap(token => {
-        return this.http.put(URL + `events/${id}/change_status`, { status }, {
+        return this.http.post(URL + `events/${id}/change_status`, { status }, {
           headers: {
             Authorization: 'Bearer ' + token
           }
@@ -145,7 +145,7 @@ export class AdminEventService {
     return this.authService.token.pipe(
       take(1),
       switchMap(token => {
-        return this.http.put(URL + `events/${id}/change_status`, { status: 1, bank_account: data }, {
+        return this.http.post(URL + `events/${id}/change_status`, { status: 1, bank_account: data }, {
           headers: {
             Authorization: 'Bearer ' + token
           }
@@ -159,7 +159,7 @@ export class AdminEventService {
     return this.authService.token.pipe(
       take(1),
       switchMap(token => {
-        return this.http.put(URL + `events/${id}/change_status`, { status }, {
+        return this.http.post(URL + `events/${id}/change_status`, { status }, {
           headers: {
             Authorization: 'Bearer ' + token
           }
@@ -175,7 +175,7 @@ export class AdminEventService {
     return this.authService.token.pipe(
       take(1),
       switchMap(token => {
-        return this.http.put(URL + `admin/events/${id}/change_raise`, {...data}, {
+        return this.http.post(URL + `admin/events/${id}/change_raise`, {...data}, {
           headers: {
             Authorization: 'Bearer ' + token
           }
@@ -190,11 +190,18 @@ export class AdminEventService {
   }
 
   public makeAnnouncement(heading, content) {
+    let today : any = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = today.getFullYear();
+
+    today = mm + '/' + dd + '/' + yyyy;
+
     const apiRequest = {
       "app_id" : "424f25ed-3aa5-4388-a678-ebc0e02157bd",
       "included_segments": ["All"],
       "data": {
-        "task": "Send through API"
+        "task": today
       },
       "headings": {
         "en": heading
@@ -203,7 +210,7 @@ export class AdminEventService {
         "en": content
       }
     }
-    return this.http.post('https://onesignal.com/api/v1/notfications', {apiRequest}, {
+    return this.http.post('https://onesignal.com/api/v1/notifications', apiRequest, {
       headers : {
         "Authorization" : 'Basic MjFmNzg4NTAtMjY3OS00M2YyLWIwOTctYmFlYzA5ODYxNDEx',
         "Content-Type": "application/json; charset=utf-8"
