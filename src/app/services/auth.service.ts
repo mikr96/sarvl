@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Profile } from '../models/profile.model';
 import { HttpClient } from '@angular/common/http';
 import { Plugins } from '@capacitor/core';
-import { BehaviorSubject, from } from 'rxjs';
+import { BehaviorSubject, from, Subject } from 'rxjs';
 import { map, take, tap, switchMap } from 'rxjs/operators';
 import { URL } from '../constants';
 import { User } from "../models/user.model"
@@ -109,7 +109,6 @@ export class AuthService {
   autoLogin() {
     return from(Plugins.Storage.get({ key: 'authData' })).pipe(
       map(storedData => {
-        console.log(storedData)
         if (!storedData || !storedData.value) {
           return null;
         }
@@ -120,13 +119,25 @@ export class AuthService {
           user_id: string;
         };
 
-        const user = new User(
-          "volunteer",
-          userData.token,
-          userData.isAdmin,
-          userData.user_id
-        )
-        return user;
+        if(userData.isAdmin == true) {
+          const user = new User(
+            "admin",
+            userData.token,
+            userData.isAdmin,
+            userData.user_id
+          )
+          Storage.set({ key: 'role', value: "admin" })
+          return user;
+        } else {
+          const user = new User(
+            "volunteer",
+            userData.token,
+            userData.isAdmin,
+            userData.user_id
+          )
+          Storage.set({ key: 'role', value: "volunteer" })
+          return user;
+        }   
       }),
       tap(user => {
         if (user) {
@@ -140,12 +151,22 @@ export class AuthService {
   }
 
   private setToken(userData: AuthResponseData) {
-    const user = new User(
-      "volunteer",
-      userData.token,
-      userData.isAdmin,
-      userData.user_id
-    )
+    let user
+    if(userData.isAdmin == true) {
+      user = new User(
+        "admin",
+        userData.token,
+        userData.isAdmin,
+        userData.user_id
+      )
+    } else {
+      user = new User(
+        "volunteer",
+        userData.token,
+        userData.isAdmin,
+        userData.user_id
+      )
+    }
 
     user.user = userData.user
 

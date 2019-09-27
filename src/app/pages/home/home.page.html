@@ -39,6 +39,11 @@
           <ion-text [ngClass]="{'active': activeEndingSoon}">Ending Soon</ion-text>
         </ion-buttons>
       </ion-col>
+      <ion-col size="2">
+        <ion-buttons style="float: right;margin-right: 10px;">
+          <ion-icon slot="end" name="list" margin (click)="changeView()"></ion-icon>
+        </ion-buttons>
+      </ion-col>
     </ion-row>
   </ion-grid>
   <ion-fab horizontal="end" vertical="bottom" slot="fixed">
@@ -46,14 +51,9 @@
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-  <ion-grid no-padding no-margin class="animated fast fadeIn">
+  <ion-grid class="animated fast fadeIn">
     <ion-row ion-align-items-center ion-justify-content-center>
       <ion-col size="12" no-margin no-padding>
-        <ion-item lines="full" no-margin no-padding  style="border-bottom: 0.2px solid gray;
-        padding-top: 10px;
-        padding-bottom: 10px;">
-          <ion-icon slot="end" name="list" margin (click)="console.log('test')"></ion-icon>
-        </ion-item>
         <ion-list *ngIf="!loading">
           <div *ngIf="listA">
             <ion-item-sliding *ngFor="let item of events.data" #slidingItem>
@@ -77,22 +77,33 @@
           </div>
           <div *ngIf="listB">
             <ion-item-sliding *ngFor="let item of events.data" #slidingItem>
-                <ion-item class="card" no-padding>
-                  <ion-thumbnail no-margin slot="start" style="    padding-top: 10px;
-                  ">
-                    <div style="display: flex; justify-content: center; align-content: center;">
-                      <img *ngIf="item.images.length == 0" style="width:70%; height: auto;" src="../../../assets/logo.png"/>
-                      <ion-img *ngIf="item.images.length != 0" [src]="item.images[0].image" style="width:70%; height: auto;"></ion-img>
-                    </div>
-                  </ion-thumbnail>
-                  <ion-label>
-                    <h1>{{ item.title }}</h1>
-                    <div class="item-details">
-                      <ion-text color="primary">{{ truncate(item.description, 5, ' ...') }}</ion-text>
-                    </div>
-                  </ion-label>
-                  <ion-button color="secondary" (click)="goToDetails(item)">Read More</ion-button>
-                </ion-item>
+                <ion-item class="card pb-5" lines="none">
+                    <ion-col size="5">
+                      <div>
+                        <img *ngIf="item.images.length == 0" style="width:100%; height: auto;" src="../../../assets/logo.png"/>
+                        <ion-img *ngIf="item.images.length != 0" [src]="item.images[0].image" style="width:100%; height: auto;"></ion-img>
+                      </div>
+                    </ion-col>
+                    <ion-col size="7" style="height: 100%">
+                        <ion-row class="no-padding no-margin">
+                          <h1 style="margin:0px">{{ item.title }}</h1>
+                        </ion-row>
+                        <ion-row class="no-padding no-margin" lines="none">
+                          <ion-text lines="none">Goals : RM{{ item.goal }}</ion-text>
+                        </ion-row>
+                        <ion-row class="no-padding no-margin" lines="none">
+                          <ion-text lines="none">Volunteers : {{ item.volunteered.length }}</ion-text>
+                        </ion-row>
+                        <ion-row class="no-padding no-margin" lines="none">
+                          <ion-text lines="none">Location : {{ item.location }} </ion-text>
+                        </ion-row>
+                        <ion-row class="no-padding no-margin">
+                          <ion-col size="12" class="no-padding no-margin">
+                            <ion-button expand="block" color="secondary" (click)="goToDetails(item)">Read More</ion-button>
+                          </ion-col>
+                        </ion-row>
+                    </ion-col>
+                    </ion-item>
               </ion-item-sliding>
           </div>
             <ion-grid *ngIf="this.events.next_page_url">

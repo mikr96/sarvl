@@ -1,8 +1,10 @@
-import { Component, OnInit, PipeTransform } from '@angular/core';
+import { Component, OnInit, PipeTransform, EventEmitter, Output } from '@angular/core';
 import { EventService } from '../../services/event/event.service'
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { Plugins, Capacitor, DeviceInfo } from '@capacitor/core';
+const { Device, Storage } = Plugins;
 
 
 @Component({
@@ -28,8 +30,19 @@ export class HomePage implements OnInit {
   activeEndingSoon: boolean = false
   listA : boolean = true
   listB : boolean = false
+  name: any
 
-  constructor(private eventService: EventService, private toastController: ToastController, private router: Router, private authService: AuthService) { }
+  constructor(private eventService: EventService, private toastController: ToastController, private router: Router, private authService: AuthService) {
+    this.checkRole()
+  }
+
+  async checkRole(){
+    const ret = await Storage.get({ key: 'role' });
+    let role = ret.value;
+    if(role === "admin") {
+      this.router.navigateByUrl('/admin')
+    }
+  }
 
   async popToast(message: string) {
     const toast = await this.toastController.create({
@@ -53,15 +66,26 @@ export class HomePage implements OnInit {
       }
     }, ({ error }) => this.handleError(error))
   }
-
+  
+  
   ngOnInit() {
-    this.loading = true
-    this.eventService.get(this.currentPage)
+      this.loading = true
+      this.eventService.get(this.currentPage)
       .subscribe((data: any) => {
         this.loading = false
         this.events = data.events
-        console.log(this.events)
+        this.setFullname()
       }, ({ error }) => this.handleError(error))
+  }
+
+  async setFullname() {
+    try {
+      const ret = await Storage.get({ key: 'fullname' });
+      this.name = ret.value;
+      this.eventService.setFullname(this.name);
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   changeCategory(category: string) {
@@ -86,7 +110,6 @@ export class HomePage implements OnInit {
       .subscribe((data: any) => {
         this.loading = false
         this.events = data.events
-        console.log(this.events)
       }, ({ error }) => this.handleError(error))
   }
 
@@ -120,7 +143,19 @@ export class HomePage implements OnInit {
   };
 
   private handleError(err: any) {
-    return this.popToast(err.error.message)
+    console.log(err)
+    return this.popToast(err.error)
+  }
+
+  changeView() {
+    if(this.listA == true) {
+      this.listA = false;
+      this.listB = true;
+    }
+    else if(this.listB == true) {
+      this.listA = true;
+      this.listB = false;
+    }
   }
 
   doRefresh(event) {

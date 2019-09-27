@@ -57,7 +57,6 @@ export class SocialPage implements OnInit {
             console.log(err);
             this.form.reset();
             loadingEl.dismiss();
-            this.router.navigateByUrl('/admin')
           }
         );
       });

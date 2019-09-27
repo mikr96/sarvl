@@ -71,10 +71,10 @@
                     <ion-label position="floating">Campaign</ion-label>
                     <ion-select formControlName="campaign">
                       <ion-select-option>Heart (Programs)</ion-select-option>
-                      <ion-select-option>Collab (Events)</ion-select-option>
+                      <!-- <ion-select-option>Collab (Events)</ion-select-option>
                       <ion-select-option>Touch (Donations)</ion-select-option>
-                      <ion-select-option>Cradle (Workshops)</ion-select-option>
-                      <ion-select-option>Belief (Causes)</ion-select-option>
+                      <ion-select-option>Cradle (Workshops)</ion-select-option> -->
+                      <ion-select-option>Relief (Causes)</ion-select-option>
                     </ion-select>
                   </ion-item>
                 <ion-item>
@@ -92,9 +92,15 @@
                   <ion-textarea autocomplete="off" formControlName="description" minlength="200" maxlength="300">
                   </ion-textarea>
                 </ion-item>
+                <ion-item lines="none" no-margin no-padding style="padding-left:16px; font-size: 12px" class="ion-text-justify">
+                  <ion-text>Note: Tips 200-300 words</ion-text>
+                </ion-item>
                 <ion-item>
                   <ion-label position="stacked">Proposal (PDF)</ion-label>
                   <ion-input type="file" accept="application/pdf" formControlName="proposal" (change)="onFilePicked($event)"></ion-input>
+                </ion-item>
+                <ion-item lines="none" no-margin no-padding style="padding-left:16px; font-size: 12px" class="ion-text-justify">
+                  <ion-text>Note: Tips docx/pdf only, less than 10MB only</ion-text>
                 </ion-item>
                 <ion-item>
                   <ion-label position="floating">No of Volunteers</ion-label>

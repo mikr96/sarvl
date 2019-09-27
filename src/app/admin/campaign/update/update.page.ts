@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { LoadingController, ToastController, ModalController, AlertController } from '@ionic/angular';
 import { AdminEventService } from 'src/app/services/event/admin-event.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { File } from '@ionic-native/file/ngx';
 import { ImageModalComponent } from 'src/app/shared/image-modal/image-modal.component';
 
 @Component({
@@ -25,7 +26,7 @@ export class UpdatePage implements OnInit {
     centeredSlides: true,
     spaceBetween: 20
   }
-  constructor(private router: Router, private loadingCtrl: LoadingController, private adminEventService: AdminEventService, private toastCtrl: ToastController, private alertCtrl: AlertController, private modalController: ModalController) {
+  constructor(private router: Router, private loadingCtrl: LoadingController, private adminEventService: AdminEventService, private toastCtrl: ToastController, private alertCtrl: AlertController, private modalController: ModalController, private file: File,) {
     this.item = this.router.getCurrentNavigation().extras.state.item
    }
 
@@ -43,16 +44,45 @@ export class UpdatePage implements OnInit {
       })
     });
     this.item = JSON.parse(this.item)
-    console.log(this.item)
   }
+  
+  downloadPDF(base64) {
+    const byteCharacters = atob(base64)
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
 
+    const byteArray = new Uint8Array(byteNumbers)
+    var blob = new Blob([byteArray], { type: 'application/pdf'});
+    this.saveFile(blob)
+  }
+  
+  async saveFile(body) {
+    let fileName = `${this.item.title}.pdf`
+    try {
+      const data = await this.file.writeFile(this.file.externalRootDirectory, fileName, body, { replace : true })
+      const res = await data
+      this.showAlert(`Your may find your file at ${this.file.externalRootDirectory}`)
+    } catch (err) {
+      this.popToast(err)
+      console.log(err)
+      try {
+        const file = await this.file.writeExistingFile(this.file.externalRootDirectory, fileName, body)
+        const existing = await file
+        this.showAlert(`Your existing file has been overwrite at ${this.file.externalRootDirectory}`)
+      } catch (err) {
+        console.log(err)
+        this.popToast(err)
+      }
+    }
+  }
   viewLink(message: string) {
     this.showAlert(message)
   }
 
   formatDate(date : string) {
     let temp = date.split(" ");
-    console.log(temp)
     return temp[0]
   }
 
@@ -120,9 +150,7 @@ export class UpdatePage implements OnInit {
         this.adminEventService.approveEvent(id, this.form2.value.bank_account)
         .subscribe(
           res => {
-          console.log(res)
           loadingEl.dismiss()
-          console.log(campaign)
           this.router.navigate(['/', 'admin', 'campaign', campaign])
         }, 
         err => {

@@ -41,7 +41,6 @@ export class AdminEventService {
           questions,
           category.toUpperCase()
         );
-        console.log(newFaq)
         return this.http.post(URL + 'faqs', { ...newFaq }, 
         { 
           headers: {
@@ -53,8 +52,6 @@ export class AdminEventService {
   }
 
   public getByStatus(currentPage, currentCampaign, currentCategory) {
-    console.log("campaign: ", currentCampaign)
-    console.log("category: ", currentCategory)
     return this.authService.token.pipe(
       take(1),
       switchMap(token => {

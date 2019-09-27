@@ -76,7 +76,6 @@ export class RegisterPage implements OnInit {
     if (!this.registerForm.valid) {
       return;
     }
-    console.log(this.registerForm.value)
     this.loadingCtrl
       .create({
         message: 'Registering...'
@@ -86,7 +85,6 @@ export class RegisterPage implements OnInit {
         this.authService
           .createAcc(this.registerForm.value)
           .subscribe(res => {
-            console.log(res)
             loadingEl.dismiss()
             if (!res) {
               return this.popToast('Something went wrong...')

@@ -89,7 +89,6 @@ export class CreateEventComponent implements OnInit {
     } else {
       this.imageFile.push(imageData)
     }
-    console.log(this.imageFile)
     this.eventForm.patchValue({ images: this.imageFile });
   }
 
@@ -98,8 +97,6 @@ export class CreateEventComponent implements OnInit {
     if (!this.eventForm.valid) {
       return;
     }
-
-    console.log(this.eventForm.value);
 
     this.loadingCtrl
       .create({
@@ -122,7 +119,6 @@ export class CreateEventComponent implements OnInit {
         )
           .subscribe(
             res => {
-              console.log(res)
               loadingEl.dismiss()
               this.eventForm.reset()
               this.router.navigate(['/pages/home'])

@@ -172,7 +172,6 @@ export class EditEventPage implements OnInit {
         )
           .subscribe(
             res => {
-              console.log(res)
               loadingEl.dismiss()
               this.editEventForm.reset()
               this.router.navigate(['/pages/my-event'])

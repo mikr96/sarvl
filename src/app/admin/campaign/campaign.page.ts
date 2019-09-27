@@ -1,8 +1,10 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NavController, ToastController, LoadingController, ModalController } from '@ionic/angular';
-import { AdminEventService } from 'src/app/services/event/admin-event.service';
+import { AdminEventService } from '../../services/event/admin-event.service';
 import { EventService } from '../../services/event/event.service';
+import { Plugins } from '@capacitor/core';
+const { Storage } = Plugins
 
 @Component({
   selector: 'app-campaign',
@@ -25,6 +27,7 @@ export class CampaignPage implements OnInit {
     total: 0
   }
   empty: boolean = false
+  name: any;
 
   constructor(private router: Router, private route: ActivatedRoute, private navCtrl: NavController, private adminEventService: AdminEventService, private eventService: EventService, private toastCtrl: ToastController, private loadingCtrl: LoadingController, private modalCtrl: ModalController) { }
 
@@ -44,7 +47,6 @@ export class CampaignPage implements OnInit {
             (event: any) => {
               this.isLoading = false;
               this.dataEvent = event.events;
-              console.log(this.dataEvent.data)
               this.dataEvent.data.length < 1 ? this.empty = false : this.empty = true
             },
             (error : any) => {
@@ -59,7 +61,6 @@ export class CampaignPage implements OnInit {
             (event: any) => {
               this.isLoading = false;
               this.dataEvent = event.events;
-              console.log(this.dataEvent.data.length)
               this.dataEvent.data.length < 1 ? this.empty = false : this.empty = true
             },
             error => {
@@ -67,9 +68,19 @@ export class CampaignPage implements OnInit {
             }
           );
       }
+      this.setFullname()
     })
   }
-
+  
+  async setFullname() {
+    try {
+      const ret = await Storage.get({ key: 'fullname' });
+      this.name = ret.value;
+      this.eventService.setFullname(this.name);
+    } catch (err) {
+    }
+  }
+  
   loadMore() {
     this.currentPage += 1
     this.adminEventService.getAllEventByStatus(this.currentPage, this.currentCategory).subscribe(({ events }: any) => {
@@ -99,7 +110,6 @@ export class CampaignPage implements OnInit {
               (event: any) => {
                 this.isLoading = false;
                 this.dataEvent = event.events;
-                console.log(this.dataEvent.data.length)
                 this.dataEvent.data.length < 1 ? this.empty = false : this.empty = true
                 events.target.complete()
               },
@@ -117,7 +127,6 @@ export class CampaignPage implements OnInit {
               (event: any) => {
                 this.isLoading = false;
                 this.dataEvent = event.events;
-                console.log(this.dataEvent.data.length)
                 this.dataEvent.data.length < 1 ? this.empty = false : this.empty = true
                 events.target.complete()
 

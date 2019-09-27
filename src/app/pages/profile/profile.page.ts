@@ -8,6 +8,8 @@ import { Platform } from '@ionic/angular';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
+import { EventService } from 'src/app/services/event/event.service';
+const { Storage } = Plugins
 
 @Component({
   selector: 'app-profile',
@@ -33,7 +35,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   id: any
   stateSelected : any
   states : any = ["Johor Darul Ta'zim", "Kedah Darul Aman", "Kelantan Darul Naim", "Malacca", "Negeri Sembilan Darul Khusus", "Pahang Darul Makmur", "Penang Perak Darul Ridzuan", "Perlis Indera Kayangan", "Sabah", "Sarawak", "Selangor Darul Ehsan", "Terengganu Darul Iman"]
-  constructor(private profileService: ProfileService, private platform: Platform, private loadingCtrl: LoadingController, private toastController: ToastController, private modalCtrl: ModalController, private authService: AuthService, private router: Router) { }
+  constructor(private profileService: ProfileService, private platform: Platform, private loadingCtrl: LoadingController, private toastController: ToastController, private modalCtrl: ModalController, private authService: AuthService, private router: Router, private eventService: EventService) { }
 
   ngOnInit() {
     this.isLoading = true;
@@ -68,6 +70,17 @@ export class ProfilePage implements OnInit, OnDestroy {
       this.platform.is('desktop')
     ) {
       this.usePicker = true;
+    }
+    this.setFullname()
+  }
+  
+  async setFullname() {
+    try {
+      const ret = await Storage.get({ key: 'fullname' });
+      this.name = ret.value;
+      this.eventService.setFullname(this.name);
+    } catch (err) {
+      console.log(err)
     }
   }
 
@@ -168,7 +181,6 @@ export class ProfilePage implements OnInit, OnDestroy {
           .editProfile(this.editForm.value)
           .subscribe(res => {
             loadingEl.dismiss()
-            console.log('res', res)
             if (!res) {
               return this.popToast('Something went wrong...')
             }

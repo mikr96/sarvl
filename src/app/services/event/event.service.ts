@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { URL } from '../../constants';
-import { BehaviorSubject, of } from 'rxjs';
+import { BehaviorSubject, of, Subject } from 'rxjs';
 import { take, map, tap, delay, switchMap } from 'rxjs/operators';
 import { Event } from '../../models/event.model'
 import { AuthService } from '../auth.service';
@@ -263,5 +263,14 @@ export class EventService {
 
   public getFAQ() {
     return this.http.get(URL + 'faqs')
+  }
+
+  // Observable string sources
+  private fullname = new Subject<any>();
+  // Observable string streams
+  fullname$ = this.fullname.asObservable();
+  // Service message commands
+  setFullname(change: any) {
+    this.fullname.next(change);
   }
 }

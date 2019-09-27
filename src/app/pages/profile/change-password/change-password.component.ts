@@ -34,8 +34,6 @@ export class ChangePasswordComponent implements OnInit {
     if (!this.form.valid) {
       return;
     }
-
-    console.log(this.form.value);
     this.id = this.navParams.get('id')
     this.loadingCtrl
       .create({
@@ -46,7 +44,6 @@ export class ChangePasswordComponent implements OnInit {
         return this.eventService.updatePassword(this.id, this.form.value)
           .subscribe(
             res => {
-              console.log(res)
               loadingEl.dismiss()
               this.form.reset()
               this.dismissModal()

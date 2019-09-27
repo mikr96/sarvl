@@ -21,11 +21,6 @@ export class ImagePickerComponent implements OnInit {
   constructor(private platform: Platform) {}
 
   ngOnInit() {
-    console.log('Mobile:', this.platform.is('mobile'));
-    console.log('Hybrid:', this.platform.is('hybrid'));
-    console.log('iOS:', this.platform.is('ios'));
-    console.log('Android:', this.platform.is('android'));
-    console.log('Desktop:', this.platform.is('desktop'));
     if (
       (this.platform.is('mobile') && !this.platform.is('hybrid')) ||
       this.platform.is('desktop')
@@ -66,7 +61,6 @@ export class ImagePickerComponent implements OnInit {
       this.filePickerRef.nativeElement.click();
       return;
     }
-    console.log(this.images.source.length)
     Plugins.Camera.getPhoto({
       quality: 70,
       source: CameraSource.Prompt,

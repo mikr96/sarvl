@@ -6,7 +6,9 @@ import { Plugins, Capacitor, DeviceInfo } from '@capacitor/core';
 import { Subscription } from 'rxjs';
 import { OneSignal } from '@ionic-native/onesignal/ngx'
 import { async } from '@angular/core/testing';
-const { Device } = Plugins;
+import { EventService } from './services/event/event.service';
+const { Device, Storage } = Plugins;
+
 
 @Component({
   selector: 'app-root',
@@ -22,20 +24,20 @@ export class AppComponent implements OnInit, OnDestroy{
       title: 'Heart',
       category: '(Programs)'
     },
+    // {
+    //   title: 'Collab',
+    //   category: '(Events)'
+    // },
+    // {
+    //   title: 'Touch',
+    //   category: '(Donations)'
+    // },
+    // {
+    //   title: 'Cradle',
+    //   category: '(Workshops)'
+    // },
     {
-      title: 'Collab',
-      category: '(Events)'
-    },
-    {
-      title: 'Touch',
-      category: '(Donations)'
-    },
-    {
-      title: 'Cradle',
-      category: '(Workshops)'
-    },
-    {
-      title: 'Belief',
+      title: 'Relief',
       category: '(Causes)'
     },
   ];
@@ -52,7 +54,8 @@ export class AppComponent implements OnInit, OnDestroy{
     private toastCtrl: ToastController,
     private oneSignal : OneSignal,
     private alertCtrl : AlertController,
-    private actionSheetController: ActionSheetController
+    private actionSheetController: ActionSheetController,
+    private eventService: EventService
   ) {
     this.initializeApp();
     // Initialize BackButton Eevent.
@@ -106,9 +109,11 @@ export class AppComponent implements OnInit, OnDestroy{
     this.authSub = this.authService.isAdmin.subscribe(isAdmin => this.isAdmin = isAdmin)
     this.authService.user.subscribe(o => {
       if (o && o.fullname)
-        this.fullname = o.fullname
+      Storage.set({ key: 'fullname', value: o.fullname})
     })
-
+    this.eventService.fullname$.subscribe(res => {
+      this.fullname = res;
+    });
   }
 
   initializeApp() {

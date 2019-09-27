@@ -57,6 +57,14 @@ const routes: Routes = [
         path: 'search', 
         loadChildren: './search/search.module#SearchPageModule' 
       },
+      { 
+        path: 'about', 
+        loadChildren: './about/about.module#AboutPageModule' 
+      },
+      { 
+        path: 'contact', 
+        loadChildren: './contact/contact.module#ContactPageModule' 
+      },
       {
         path: '',
         redirectTo: '/pages/home',

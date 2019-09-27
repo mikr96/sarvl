@@ -56,12 +56,10 @@ export class AuthPage implements OnInit {
       // Login successful.
       console.log(`Facebook access token is ${result.accessToken.token}`);
       this.authService.getID(result.accessToken.token).subscribe((res : any) => {
-        console.log(res)
         let item = {
           id : res.id,
           access_token : result.accessToken.token
         }
-        console.log(item)
         this.router.navigate(['/', 'auth', 'social'], {state: {item: JSON.stringify(item)}})
       })
     } else {
@@ -71,13 +69,11 @@ export class AuthPage implements OnInit {
 
   loginWithGoogle() {
     let data = this.googleSignIn()
-    console.log(data)
   }
 
   async googleSignIn() {
     let googleUser = await Plugins.GoogleAuth.signIn().catch(err => console.log(err));
     if (googleUser) {
-      console.log(googleUser)
       const credential = firebase.auth.GoogleAuthProvider.credential(googleUser.authentication.idToken);
       return this.afAuth.auth.signInAndRetrieveDataWithCredential(credential);
     }
@@ -111,6 +107,7 @@ export class AuthPage implements OnInit {
             loadingEl.dismiss();
             let message = 'Could not log in, please try again.';
             this.showAlert(message);
+            this.router.navigateByUrl('/auth')
           }
         );
       });

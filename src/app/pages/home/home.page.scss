@@ -10,18 +10,19 @@ ion-item {
   background: transparent;
 }
 
-ion-button {
-  font-size: 12px;
-  float: right;
-}
+// ion-button {
+//   font-size: 12px;
+//   float: right;
+// }
 
 .m-10 {
   margin: 10px;
 }
 
 h1 {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
+  margin:0px;
 }
 
 .card {
@@ -38,4 +39,13 @@ h1 {
 
 .active {
   font-weight: 600;
+}
+
+.pb-5 {
+  padding-bottom:10px;
+}
+
+ion-item{
+  --inner-padding-end: 0px;
+  --padding-start:0px
 }

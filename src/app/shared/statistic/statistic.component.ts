@@ -43,7 +43,6 @@ export class StatisticComponent implements OnInit {
       .subscribe(
         (res: EventResponseI) => {
           this.data = res
-          console.log(res)
         },
         err => this.popToast(
           'Something went wrong in getting list of events'
@@ -58,7 +57,6 @@ export class StatisticComponent implements OnInit {
       .subscribe(
         (res: EventResponseI) => {
           this.data = res
-          console.log(res)
           events.target.complete()
         },
         err => this.popToast(
@@ -128,7 +126,6 @@ export class StatisticComponent implements OnInit {
   }
 
   initNewBarChart(x: Array<string | number>, y: Array<number | string>, selector: Element, label: string) {
-    console.log(y)
     return new Chart(selector, {
       type: 'bar',
       data: {

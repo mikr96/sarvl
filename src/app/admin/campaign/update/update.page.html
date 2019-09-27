@@ -68,6 +68,7 @@
                     <ion-label>Comments</ion-label>
                     <ion-badge color="primary" slot="end">{{item.comments.length}}</ion-badge>
                   </ion-item>
+                  <ion-button expand="block" color="primary" (click)="downloadPDF(item.pdf)">Download Proposal</ion-button>
                   </ion-list>
                 </ion-card-content>
               </ion-card>

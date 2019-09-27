@@ -4,9 +4,9 @@ import { Router, NavigationExtras } from '@angular/router';
 import { CommentComponent } from '../my-event/comment/comment.component'
 import { ModalController } from '@ionic/angular';
 import { Plugins } from '@capacitor/core';
+const { Storage } = Plugins
 import { ShowCommentComponent } from './show-comment/show-comment.component';
 import { ReplyCommentComponent } from './reply-comment/reply-comment.component';
-const { Storage } = Plugins
 
 @Component({
   selector: 'app-my-event',
@@ -23,28 +23,36 @@ export class MyEventPage implements OnInit {
   noEvent: boolean
   commentStatus: boolean = false
   unread: any
+  name: string;
 
   constructor(private eventService: EventService, private router: Router, private modalCtrl: ModalController) { }
 
   ngOnInit() {
     this.eventService.getCreatedEvents().subscribe(resEvent => {
-      console.log(resEvent)
       this.data = resEvent
-      console.log(this.data.events)
       this.noEvent = false;
       if (this.data.events === undefined || this.data.events.length == 0) {
         // array empty or does not exist
         this.noEvent = true;
       }
+      this.setFullname()
     })
+  }
+
+  async setFullname() {
+    try {
+      const ret = await Storage.get({ key: 'fullname' });
+      this.name = ret.value;
+      this.eventService.setFullname(this.name);
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   doRefresh(event) {
     setTimeout(()=> {
       this.eventService.getCreatedEvents().subscribe(resEvent => {
-        //console.log(resEvent)
         this.data = resEvent
-        //console.log(this.data.events)
         this.noEvent = false;
         if (this.data.events === undefined || this.data.events.length == 0) {
           // array empty or does not exist
@@ -91,7 +99,6 @@ export class MyEventPage implements OnInit {
 
     modal.onDidDismiss().then(() => {
       this.eventService.getCreatedEvents().subscribe(resEvent => {
-        //console.log(resEvent)
         this.data = resEvent
         this.noEvent = false;
         if (this.data.events === undefined || this.data.events.length == 0) {

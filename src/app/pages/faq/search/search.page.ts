@@ -21,7 +21,6 @@ export class SearchPage implements OnInit {
       return data.questions
     })
     this.isItemAvailable = true;
-    console.log(this.questions)
   }
   
   initializeItems() { 

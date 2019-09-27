@@ -32,14 +32,12 @@ export class AnnouncementPage implements OnInit {
     });
 
     this.adminEventService.getAnnouncement().subscribe((res : any) => {
-      console.log(res.notifications)
       this.announcement = res
     })
   }
 
   doRefresh(event) {
     this.adminEventService.getAnnouncement().subscribe((res : any) => {
-      console.log(res.notifications)
       this.announcement = res
       event.target.complete()
     })
@@ -59,7 +57,6 @@ export class AnnouncementPage implements OnInit {
     if (!this.form.valid) {
       return;
     }
-    console.log(this.form.value)
     this.loadingCtrl
       .create({
         message: 'Processing...'
@@ -69,7 +66,6 @@ export class AnnouncementPage implements OnInit {
         this.adminEventService
           .makeAnnouncement(this.form.value.heading, this.form.value.content)
           .subscribe(res => {
-            console.log(res)
             loadingEl.dismiss()
             if (!res) {
               return this.popToast('Something went wrong...')

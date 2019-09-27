@@ -34,8 +34,6 @@ export class CreatePage implements OnInit {
     if (!this.form.valid) {
       return;
     }
-    
-    console.log(this.form.value);
 
     this.loadingCtrl
     .create({
@@ -50,7 +48,6 @@ export class CreatePage implements OnInit {
       )
       .subscribe(
         res => {
-        console.log(res)
         loadingEl.dismiss()
         this.form.reset()
         this.router.navigate(['/admin/faq-admin'])
