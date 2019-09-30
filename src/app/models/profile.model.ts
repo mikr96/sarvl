@@ -9,5 +9,6 @@ export class Profile {
     public location: string,
     public image: any,
     public skills: any,
+    public occupation: any
   ) {}
 }

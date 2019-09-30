@@ -50,6 +50,10 @@ export class RegisterPage implements OnInit {
         updateOn: 'blur',
         validators: [Validators.required]
       }),
+      occupation: new FormControl(null, {
+        updateOn: 'blur',
+        validators: [Validators.required]
+      })
     });
   }
 

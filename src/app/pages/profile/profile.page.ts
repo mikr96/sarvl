@@ -60,6 +60,10 @@ export class ProfilePage implements OnInit, OnDestroy {
           updateOn: 'blur',
           validators: [Validators.required]
         }),
+        occupation: new FormControl(this.profile.user.occupation, {
+          updateOn: 'blur',
+          validators: [Validators.required]
+        }),
         dp: new FormControl(this.profile.user.dp)
       });
       this.stateSelected = this.profile.user.location
