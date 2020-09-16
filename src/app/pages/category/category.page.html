@@ -39,10 +39,10 @@
         <ion-row>
           <ion-col size="12">
             <ion-list class="animated fast fadeIn">
+              <div *ngIf="empty" class="ion-text-center">
+                <h5>Currently there are no events</h5>
+              </div>
                 <ion-item-sliding *ngFor="let item of dataEvent.data" #slidingItem>
-                  <ion-row *ngIf="!empty">
-                   <ion-text>There are no event created</ion-text>
-                  </ion-row>
                 <ion-item class="card" no-padding>
                     <ion-thumbnail no-margin slot="start" style="padding-top: 10px;
                     ">

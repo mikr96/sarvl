@@ -23,6 +23,7 @@ export class HomePage implements OnInit {
   }
   loading: boolean = true
   img: boolean = true
+  empty: boolean
   errors: any
   currentCategory: string = 'latest'
   activeLatest: boolean = true
@@ -47,7 +48,7 @@ export class HomePage implements OnInit {
   async popToast(message: string) {
     const toast = await this.toastController.create({
       message,
-      duration: 2000,
+      duration: 3000,
       position: 'top',
       color: 'danger',
     })
@@ -74,6 +75,11 @@ export class HomePage implements OnInit {
       .subscribe((data: any) => {
         this.loading = false
         this.events = data.events
+        if(this.events.data.length) {
+          this.empty = false
+        } else {
+          this.empty = true
+      }
         this.setFullname()
       }, ({ error }) => this.handleError(error))
   }
@@ -113,9 +119,13 @@ export class HomePage implements OnInit {
       }, ({ error }) => this.handleError(error))
   }
 
-  createEvent() {
+  createSubmission(create: string) {
     let from = "user"
-    this.router.navigate(['/', 'pages', 'create-event'], { state: { from: from } })
+    if(create=='create-event'){
+      this.router.navigate(['/', 'pages', create], { state: { from: from } })
+    } else {
+      this.router.navigate(['/', 'pages', create])
+    }
   }
 
   goToDetails(item) {
@@ -167,6 +177,10 @@ export class HomePage implements OnInit {
           event.target.complete()
         }, ({ error }) => this.handleError(error))
     }, 2000)
+  }
+
+  test() {
+    console.log('test')
   }
 
 }

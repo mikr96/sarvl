@@ -85,9 +85,10 @@ export class AuthService {
       tap(this.setToken.bind(this)));
   }
 
-  loginWithFB(access_token: any, id: any, password: any, password_confirmation: any) {
+  loginWithFB(access_token: any, id: any, tel: any, password: any, password_confirmation: any) {
     return this.http.post(URL + `social_login/${access_token}`,{
       id : id,
+      telNo: tel,
       password : password,
       password_confirmation : password_confirmation
     })
@@ -98,7 +99,21 @@ export class AuthService {
   }
 
   createAcc(profile: Profile) {
+    console.log(profile)
     return this.http.post(URL + 'register', profile);
+  }
+
+  requestVerificationNumber(username: any) {
+    return this.http.post(`${URL}users/send_verification`, {
+      username: username
+    })
+  }
+
+  verifyAccount(username: any, verifyNum: any) {
+    return this.http.post(`${URL}users/verify`, {
+      username: username,
+      verify_num: verifyNum
+    })
   }
 
   logout() {

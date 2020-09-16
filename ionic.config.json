@@ -3,5 +3,10 @@
   "integrations": {
     "capacitor": {}
   },
-  "type": "angular"
+  "type": "angular",
+  "typescript": true,
+  "proxies": [{
+      "path": "/goto",
+      "proxyUrl": "https://sarawakvoice.com/feed/"
+  }]
 }

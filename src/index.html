@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>Ionic App</title>
+  <title>Sarawak Volunteer</title>
 
   <base href="/" />
 
@@ -17,11 +17,16 @@
   <!-- add to homescreen for ios -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-
+  
 </head>
 
 <body>
   <app-root></app-root>
+  <script src="src/assets/js/rss-parser.min.js"></script>
+  <!-- The polyfills js is generated during the build process -->
+  <script src="build/polyfills.js"></script>
+  
+  <!-- The bundle js is generated during the build process -->
+  <script src="build/main.js"></script>
 </body>
-
 </html>

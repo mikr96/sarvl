@@ -30,20 +30,6 @@
               <ion-card-content>
                 {{item.description}}
                 <ion-list>
-                  <ion-item lines="none" no-padding style="height:125px;">
-                    <ion-icon name="star-outline"></ion-icon>
-                    <ion-text>Goal</ion-text>
-                    <ion-note slot="end" color="primary">RM {{item.raised}} / RM {{item.goal}}</ion-note>
-                    <div class="raised">
-                      <ion-range min="0" max="100" step="10" pin color="secondary" style="padding: 0px;" [value]="raised" (ionChange)="changeRaised($event, item.goal)">
-                        <ion-icon slot="start" size="small" name="star-outline"></ion-icon>
-                        <ion-icon slot="end" name="star-outline"></ion-icon>
-                      </ion-range>
-                    </div>
-                    <div class="btn-positioning">
-                      <ion-button color="secondary" [disabled]="!update" (click)="updateRaised(item.id)" slot="end">Update</ion-button>
-                    </div>
-                  </ion-item>
                   <ion-item lines="none" no-padding>
                       <ion-icon name="pin" color="primary"></ion-icon>
                       <ion-text>Location</ion-text>
@@ -68,18 +54,10 @@
                     <ion-label>Comments</ion-label>
                     <ion-badge color="primary" slot="end">{{item.comments.length}}</ion-badge>
                   </ion-item>
-                  <ion-button expand="block" color="primary" (click)="downloadPDF(item.pdf)">Download Proposal</ion-button>
+                  <ion-button expand="block" color="primary" (click)="openPDF(item.file)">Open Proposal</ion-button>
                   </ion-list>
                 </ion-card-content>
               </ion-card>
-          </ion-row>
-          <ion-row justify-content-center align-items-center>
-            <ion-col size="6" style="justify-content: center;">
-                <ion-button color="success" [disabled]="item.status!= 0" expand="block" (click)="approveEvent(item.id, item.campaign)">Approve</ion-button>
-            </ion-col>
-            <ion-col size="6" style="justify-content: center;">
-              <ion-button color="danger" [disabled]="item.status!= 0" expand="block" (click)="declineEvent(item.id, item.campaign)">Decline</ion-button> 
-            </ion-col>
           </ion-row>
           <ion-row *ngIf="decline">
             <ion-col size="12">
@@ -94,9 +72,17 @@
             <ion-col size="12">
               <form [formGroup]="form2">
                 <ion-textarea 
-                placeholder="Please state your bank accounts number (eg. 123456789 - Maybank)"                 
-                required formControlName="bank_account"></ion-textarea>
+                placeholder="Please enter the whatsapp_link."                 
+                required formControlName="whatsapp_link"></ion-textarea>
               </form>
+            </ion-col>
+          </ion-row>
+          <ion-row justify-content-center align-items-center>
+            <ion-col size="6" style="justify-content: center;">
+                <ion-button color="success" [disabled]="item.status!= 0" expand="block" (click)="approveEvent(item.id, item.campaign)">Approve</ion-button>
+            </ion-col>
+            <ion-col size="6" style="justify-content: center;">
+              <ion-button color="danger" [disabled]="item.status!= 0" expand="block" (click)="declineEvent(item.id, item.campaign)">Decline</ion-button> 
             </ion-col>
           </ion-row>
         </ion-grid>

@@ -51,7 +51,11 @@ export class CategoryPage implements OnInit {
         (event: any) => {
           this.isLoading = false;
           this.dataEvent = event.events;
-          this.dataEvent.data.length < 1 ? this.empty = false : this.empty = true
+          if(this.dataEvent.data.length) {
+            this.empty = false
+          } else {
+            this.empty = true
+        }
         },
         error => {
           this.handleError(error)

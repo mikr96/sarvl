@@ -18,8 +18,6 @@ const { FacebookLogin } = Plugins;
 })
 
 export class AuthPage implements OnInit {
-  
-  
   form: FormGroup;
   token: any;
   status: boolean = true;
@@ -50,7 +48,8 @@ export class AuthPage implements OnInit {
   }
   
   async loginWithFB() {
-    const FACEBOOK_PERMISSIONS = ['email', 'user_birthday', 'user_photos', 'user_gender'];
+    // this.whatabump();
+    const FACEBOOK_PERMISSIONS = ['email'];
     const result = await <FacebookLoginResponse>FacebookLogin.login({ permissions: FACEBOOK_PERMISSIONS });
     if (result.accessToken) {
       // Login successful.
@@ -72,11 +71,23 @@ export class AuthPage implements OnInit {
   }
 
   async googleSignIn() {
-    let googleUser = await Plugins.GoogleAuth.signIn().catch(err => console.log(err));
-    if (googleUser) {
-      const credential = firebase.auth.GoogleAuthProvider.credential(googleUser.authentication.idToken);
-      return this.afAuth.auth.signInAndRetrieveDataWithCredential(credential);
-    }
+    // this.whatabump()
+    // let googleUser = await Plugins.GoogleAuth.signIn().catch(err => console.log(err));
+    // if (googleUser) {
+    //   const credential = firebase.auth.GoogleAuthProvider.credential(googleUser.authentication.idToken);
+    //   console.log(credential)
+    //   return this.afAuth.auth.signInAndRetrieveDataWithCredential(credential);
+    // }
+  }
+
+  async whatabump() {
+    const alert = await this.alertCtrl.create({
+      header: 'Alert',
+      message: 'What a bump ! Sorry, please click register now.',
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 
   onSubmit() {
@@ -103,11 +114,11 @@ export class AuthPage implements OnInit {
           },
           err => {
             console.log(err);
+            let message = 'Could not log in, please try again.';
+            err.status== 401 ? this.router.navigate(['/', 'auth' , 'register', 'verification'], {state: {item: this.form.value.username}}) :
+            err.status== 400 ? this.showAlert(message) : ''
             this.form.reset();
             loadingEl.dismiss();
-            let message = 'Could not log in, please try again.';
-            this.showAlert(message);
-            this.router.navigateByUrl('/auth')
           }
         );
       });

@@ -10,9 +10,16 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { File } from '@ionic-native/file/ngx'
+import { FileTransfer } from '@ionic-native/file-transfer/ngx';
+import { FileChooser } from '@ionic-native/file-chooser/ngx';
+import { FilePath } from '@ionic-native/file-path/ngx';
+import { Base64 } from '@ionic-native/base64/ngx';
+import { FileOpener } from '@ionic-native/file-opener/ngx';
 
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyAYSf5QGgflfLO99_qJh8KJIS72vWkA2ok",
@@ -31,7 +38,7 @@ export const firebaseConfig = {
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    OneSignal, File
+    OneSignal, File, FileTransfer, FileChooser, FilePath, Base64, FileOpener, InAppBrowser
   ],
   bootstrap: [AppComponent]
 })

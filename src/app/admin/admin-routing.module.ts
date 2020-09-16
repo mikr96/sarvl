@@ -65,7 +65,7 @@ const routes: Routes = [
     path: '',
     redirectTo: '/admin/dashboard',
     pathMatch: 'full'
-  },
+  }
 ];
 
 

@@ -54,10 +54,6 @@ export class EditEventPage implements OnInit {
           updateOn: 'blur',
           validators: [Validators.required]
         }),
-        whatsapp_link: new FormControl(this.item.whatsapp_link, {
-          updateOn: 'blur',
-          validators: [Validators.required]
-        }),
         description: new FormControl(this.item.description, {
           updateOn: 'blur',
           validators: [Validators.required]
@@ -163,7 +159,6 @@ export class EditEventPage implements OnInit {
           this.editEventForm.value.location,
           this.editEventForm.value.campaign,
           this.editEventForm.value.goal,
-          this.editEventForm.value.whatsapp_link,
           this.editEventForm.value.description,
           this.editEventForm.value.images,
           this.editEventForm.value.noVolunteers,
@@ -178,9 +173,9 @@ export class EditEventPage implements OnInit {
             },
             err => {
               console.log(err)
-              const firstError: string = Object.values(err)[0][0]
+              const firstError: any = Object.values(err)[0]
               loadingEl.dismiss()
-              this.popToast(err.error.message)
+              this.popToast(firstError)
             })
       });
   }

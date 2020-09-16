@@ -11,19 +11,6 @@ import { ImageModalComponent } from 'src/app/shared/image-modal/image-modal.comp
   styleUrls: ['./detail-event.page.scss'],
 })
 export class DetailEventPage implements OnInit {
-  // item: Event = {
-  //   title: '',
-  //   start_date: '',
-  //   end_date: '',
-  //   location: '',
-  //   campaign: '',
-  //   goal: '',
-  //   whatsapp_link: '',
-  //   description: '',
-  //   images: [],
-  //   noVolunteers: '',
-  //   id: ''
-  // }
 
   item : any
   sliderOpts = {
@@ -81,12 +68,6 @@ export class DetailEventPage implements OnInit {
     }).then(modal => {
       modal.present()
     })
-  }
-
-  donate(message) {
-    let whatsapp_link = ''
-    this.method = "Donate"
-    this.showAlert(message, this.method, whatsapp_link)
   }
 
   daysLeft(startDate: string) {

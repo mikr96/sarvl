@@ -8,7 +8,7 @@
                 <ion-row>
                   <ion-col size="12" no-padding>
                     <div style="display: flex;justify-content: center;" margin>
-                      <img style="width:60%; height: auto;" src="../assets/logo.png" />
+                      <img style="width:100%; height: auto;" src="../assets/logo.png" />
                     </div>
                   </ion-col>
                 </ion-row>
@@ -32,10 +32,16 @@
               <ion-label>Home</ion-label>
             </ion-item>
           </ion-menu-toggle>
+          <ion-menu-toggle>
+            <ion-item lines="none" routerLink="/pages/news" button>
+              <ion-icon name="paper" slot="start" ></ion-icon>
+              <ion-label>News</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
           <ion-item lines="none" button (click)="open = !open" [class.parent-active]="open" detail="false">
             <ion-icon slot="start" name="megaphone" *ngIf="!open"></ion-icon>
             <ion-icon slot="start" name="megaphone" *ngIf="open"></ion-icon>
-            <ion-label>Campaign</ion-label>
+            <ion-label>Events</ion-label>
           </ion-item>
           <!--SUB MENU-->
           <ion-list *ngIf="open">
@@ -47,28 +53,43 @@
               </ion-item>
             </ion-menu-toggle>
           </ion-list>
-          <ion-menu-toggle>
+          <!-- <ion-menu-toggle>
             <ion-item lines="none" routerLink="/pages/my-event" button>
               <ion-icon name="book" slot="start"></ion-icon>
-              <ion-label>My Event</ion-label>
+              <ion-label>Submission</ion-label>
             </ion-item>
-          </ion-menu-toggle>
+          </ion-menu-toggle> -->
+          <ion-item lines="none" button (click)="open2 = !open2" [class.parent-active]="open2" detail="false">
+            <ion-icon slot="start" name="book" *ngIf="!open2"></ion-icon>
+            <ion-icon slot="start" name="book" *ngIf="open2"></ion-icon>
+            <ion-label>Submission</ion-label>
+          </ion-item>
+          <!--SUB MENU-->
+          <ion-list *ngIf="open2">
+            <ion-menu-toggle>
+              <ion-item *ngFor="let sub of submissionSubMenu" (click)='goToSubmission(sub.title)' button>
+                <ion-label class="sub-item">
+                  {{ sub.title }} <span style="font-size: 10px;">{{ sub.category }}</span>
+                </ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </ion-list>
           <ion-menu-toggle>
             <ion-item lines="none" routerLink="/pages/profile" button>
               <ion-icon name="contact" slot="start"></ion-icon>
               <ion-label>Profile</ion-label>
             </ion-item>
           </ion-menu-toggle>
-          <ion-menu-toggle>
+          <!-- <ion-menu-toggle>
             <ion-item lines="none" routerLink="/pages/faq" button>
               <ion-icon name="help" slot="start"></ion-icon>
               <ion-label>FAQ</ion-label>
             </ion-item>
-          </ion-menu-toggle>
+          </ion-menu-toggle> -->
           <ion-menu-toggle>
             <ion-item lines="none" routerLink="/pages/about" button>
               <ion-icon name="book" slot="start"></ion-icon>
-              <ion-label>About Us</ion-label>
+              <ion-label>About Sarawak</ion-label>
             </ion-item>
           </ion-menu-toggle>
           <ion-menu-toggle>
@@ -90,11 +111,11 @@
           <ion-menu-toggle>
             <ion-item lines="none" (click)='goToCampaign("All")' button>
               <ion-icon slot="start" name="briefcase" *ngIf="!open"></ion-icon>
-              <ion-label>Campaign</ion-label>
+              <ion-label>Event (type)</ion-label>
             </ion-item>
             <!--SUB MENU-->
             <ion-list>
-                <ion-item *ngFor="let sub of submenu" (click)='goToCampaign(sub.title)' button>
+                <ion-item *ngFor="let sub of submenuadmin" (click)='goToCampaign(sub.title)' button>
                   <ion-label class="sub-item">
                     {{ sub.title }} <span style="font-size: 10px;">{{ sub.category }}</span>
                   </ion-label>
@@ -107,12 +128,12 @@
               <ion-label>User Management</ion-label>
             </ion-item>
           </ion-menu-toggle>
-          <ion-menu-toggle>
+          <!-- <ion-menu-toggle>
             <ion-item lines="none" routerLink="/admin/faq-admin" button>
               <ion-icon name="help" slot="start"></ion-icon>
               <ion-label>FAQ</ion-label>
             </ion-item>
-          </ion-menu-toggle>
+          </ion-menu-toggle> -->
           <ion-menu-toggle>
               <ion-item lines="none" routerLink="/admin/announcement" button>
                 <ion-icon name="megaphone" slot="start"></ion-icon>
@@ -126,6 +147,10 @@
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
+        <!-- <div class="ion-text-center" style="position: absolute; bottom: 1px; right: 0px; left: 0px;">
+          <h6 style="margin-bottom: 0px;"><b>Sarawak Volunteer</b></h6>
+          <h6 style="margin-top: 0px;"><b>Version 2.1</b></h6>
+        </div> -->
       </ion-content>
     </ion-menu>
   <ion-router-outlet main></ion-router-outlet>

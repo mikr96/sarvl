@@ -50,9 +50,9 @@ export class ChangePasswordComponent implements OnInit {
             },
             err => {
               console.log(err)
-              const firstError: string = Object.values(err)[0][0]
+              const firstError: any = Object.values(err)[0]
               loadingEl.dismiss()
-              this.popToast(err.error.message)
+              this.popToast(firstError)
             })
       });
   }

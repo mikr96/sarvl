@@ -18,41 +18,43 @@
       </ion-card-header>
       <div style="padding-right:16px">
         <ion-item lines="none">
-          <ion-icon name="pin" slot="start"></ion-icon>
+          <ion-icon name="star-outline" slot="start"></ion-icon>
           <ion-label>Full Name : {{user.fullname}} </ion-label>
         </ion-item>
         <ion-item lines="none">
-          <ion-icon name="pin" slot="start"></ion-icon>
+          <ion-icon name="star-outline" slot="start"></ion-icon>
           <ion-label>IC : {{user.ic}}</ion-label>
         </ion-item>
         <ion-item lines="none">
-          <ion-icon name="pin" slot="start"></ion-icon>
+          <ion-icon name="star-outline" slot="start"></ion-icon>
           <ion-label>Phone No. : {{user.telNo}}</ion-label>
         </ion-item>
         <ion-item lines="none">
-          <ion-icon name="pin" slot="start"></ion-icon>
+          <ion-icon name="star-outline" slot="start"></ion-icon>
           <ion-label>Location : {{user.location}}</ion-label>
         </ion-item>
         <ion-item lines="none">
-          <ion-icon name="pin" slot="start"></ion-icon>
-          <ion-label>Skill Set : {{user.skills}}</ion-label>
+          <ion-icon name="star-outline" slot="start"></ion-icon>
+          <ion-label>Skill Set : {{ getSkill(user.skills) }}</ion-label>
         </ion-item>
         <ion-item lines="none">
-          <ion-icon name="pin" slot="start"></ion-icon>
+          <ion-icon name="star-outline" slot="start"></ion-icon>
           <ion-label>Occupation : {{user.occupation}}</ion-label>
         </ion-item>
         <ion-item lines="none">
-          <ion-icon name="pin" slot="start"></ion-icon>
+          <ion-icon name="star-outline" slot="start"></ion-icon>
           <ion-label>Joined : {{user.created_at}}</ion-label>
         </ion-item>
         <ion-item lines="none">
-          <ion-icon name="pin" slot="start"></ion-icon>
+          <ion-icon name="star-outline" slot="start"></ion-icon>
           <ion-label>Volunteered : {{user.volunteered.length}} program</ion-label>
         </ion-item>
         <ion-item lines="none">
-          <ion-icon name="pin" slot="start"></ion-icon>
+          <ion-icon name="star-outline" slot="start"></ion-icon>
           <ion-label>Last Login : {{user.last_login}}</ion-label>
         </ion-item>
+        <ion-button color="primary" [disabled]="!tutup" expand="block" (click)="makeAdmin(user.id)">Make Admin
+        </ion-button>
       </div>
   </ion-card>
 </ion-content>

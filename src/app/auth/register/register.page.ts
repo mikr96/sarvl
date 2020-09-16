@@ -13,12 +13,18 @@ export class RegisterPage implements OnInit {
 
   registerForm: FormGroup
   selection : boolean = false
+  selection2 : boolean = false
+  error: any
 
   constructor(private authService: AuthService, private loadingCtrl: LoadingController, private router: Router, private toastController: ToastController) { }
 
   ngOnInit() {
     this.registerForm = new FormGroup({
       username: new FormControl(null, {
+        updateOn: 'blur',
+        validators: [Validators.required]
+      }),
+      address: new FormControl(null, {
         updateOn: 'blur',
         validators: [Validators.required]
       }),
@@ -50,6 +56,10 @@ export class RegisterPage implements OnInit {
         updateOn: 'blur',
         validators: [Validators.required]
       }),
+      volunteerbranch: new FormControl(null, {
+        updateOn: 'blur',
+        validators: [Validators.required]
+      }),
       occupation: new FormControl(null, {
         updateOn: 'blur',
         validators: [Validators.required]
@@ -66,6 +76,10 @@ export class RegisterPage implements OnInit {
     this.selection = true
 }
 
+  onSelect2(event){
+    this.selection = true
+  }
+
   async popToast(message: string) {
     const toast = await this.toastController.create({
       message,
@@ -78,7 +92,7 @@ export class RegisterPage implements OnInit {
 
   onSubmit() {
     if (!this.registerForm.valid) {
-      return;
+      return this.popToast('Please fill in the form')
     }
     this.loadingCtrl
       .create({
@@ -94,10 +108,11 @@ export class RegisterPage implements OnInit {
               return this.popToast('Something went wrong...')
             }
             this.registerForm.reset()
-            this.router.navigateByUrl('/auth')
+            this.router.navigate(['/','auth', 'register', 'verification'], {state: {item: this.registerForm.value.username}})
           }, (err : any) => {
             loadingEl.dismiss()
-            return this.popToast(err.error.message)
+            this.error = Object.values(err.error)[0]
+            return this.popToast(this.error)
           })
       });
   }

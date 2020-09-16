@@ -36,14 +36,13 @@
           </div>
           <ion-list style="margin-top: 15px;">
             <ion-item lines="none" no-padding no-margin>
-              <ion-progress-bar color="secondary" [value]="item.raise/100" style="position: absolute; top:0px; width:95%;"></ion-progress-bar>
-              <ion-text>Raised</ion-text>
-              <ion-note slot="end" color="primary">RM{{item.raise == null ? 0 : item.raise}} / RM{{item.goal}}</ion-note>
+              <ion-icon name="clipboard" color="primary"></ion-icon>
+              <ion-text>Goals</ion-text>
+              <ion-note slot="end" color="primary">RM{{item.goal}}</ion-note>
             </ion-item>
             <ion-item lines="none" no-padding>
               <ion-icon name="people" color="primary"></ion-icon>
               <ion-text>Volunteers Needed</ion-text>
-              <!-- <ion-note slot="end" color="primary">{{len(item.joined)}}/{{item.noVolunteers}}</ion-note> -->
               <ion-note slot="end" color="primary">{{item.noVolunteers}}</ion-note>
 
             </ion-item>
@@ -70,9 +69,7 @@
               </div>
             </ion-list>
             </ion-list>
-            <!-- <ion-button color="secondary" fill="outline" (click)="join(item.id, item.whatsapp_link)" expand="block" style="margin-bottom: 5px;">JOIN NOW</ion-button> -->
             <ion-button color="whatsapp ion-text-capitalize" expand="block" (click)="joinGroup(item.whatsapp_link)" style="margin-bottom: 5px;">JOIN WHATSAPP GROUP</ion-button>
-            <ion-button color="secondary" expand="block" (click)="donate(item.bank_account)">DONATE NOW</ion-button>
           </ion-card-content>
         </ion-card>
     </ion-row>

@@ -65,6 +65,18 @@ const routes: Routes = [
         path: 'contact', 
         loadChildren: './contact/contact.module#ContactPageModule' 
       },
+      { 
+        path: 'news', 
+        loadChildren: './news/news.module#NewsPageModule' 
+      },
+      { 
+        path: 'iGPS', 
+        loadChildren: './i-gps/i-gps.module#IGPSPageModule' 
+      },
+      { 
+        path: 'welfare-assistant', 
+        loadChildren: './welfare-assistant/welfare-assistant.module#WelfareAssistantPageModule' 
+      },
       {
         path: '',
         redirectTo: '/pages/home',

@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="volunteer"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Welfare & Medical</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen class="ion-padding">
+  <ion-grid>
+    <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="10">
+          <ion-list class="ion-no-margin ion-no-padding">
+              <ion-item>
+                <ion-label position="floating">Nama Pesakit</ion-label>
+                <ion-input autocomplete="off" formControlName="name" required>
+                </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">No KP Pesakit</ion-label>
+                <ion-input autocomplete="off" formControlName="no_kp" required>
+                </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Hospital</ion-label>
+                <ion-input autocomplete="off" formControlName="hospital" required>
+                </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Isu Kesihatan</ion-label>
+                <ion-input autocomplete="off" formControlName="health_issues" required>
+                </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Nama Pengiring</ion-label>
+                <ion-input autocomplete="off" formControlName="sender_list" required>
+                </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">No KP Pengiring</ion-label>
+                <ion-input autocomplete="off" formControlName="sender_kp_no" required>
+                </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">No Tel Pengiring</ion-label>
+                <ion-input autocomplete="off" formControlName="sender_tel_no" required>
+                </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Hubungan Pengiring & Pesakit</ion-label>
+                <ion-input autocomplete="off" formControlName="relationship" required>
+                </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Alamat di Sarawak</ion-label>
+                <ion-input autocomplete="off" formControlName="sarawak_address" required>
+                </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Alamat Semasa Pengiring</ion-label>
+                <ion-input autocomplete="off" formControlName="current_address" required>
+                </ion-input>
+              </ion-item>
+            </ion-list>
+          <ion-button color="secondary" type="submit" expand="block" margin-vertical>SUBMIT FORM</ion-button>
+        </ion-col>
+      </ion-row>
+    </form>
+  </ion-grid>
+</ion-content>

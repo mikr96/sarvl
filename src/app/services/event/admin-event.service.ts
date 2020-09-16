@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http'
 import { URL } from '../../constants'
 import { AuthService } from '../auth.service';
 import { Faq } from '../../models/faq.model'
+import { Welfare } from '../../models/welfare.model'
 import { take, switchMap, tap, sampleTime } from 'rxjs/operators';
  
 @Injectable({
@@ -47,6 +48,48 @@ export class AdminEventService {
             Authorization: 'Bearer ' + token
           }
         });
+      })
+    )
+  }
+
+  public createWelfareAssistant(              
+    name : string,
+    no_kp : string,
+    hospital : string,
+    health_issues : string,
+    sender_list : string,
+    sender_kp_no : string,
+    sender_tel_no : string,
+    relationship : string,
+    sarawak_address : string,
+    current_address : string
+  ) {
+    let newWelfare: Welfare;
+    return this.authService.token.pipe(
+      take(1),
+      switchMap(token => {
+        newWelfare = new Welfare(
+          name,
+          no_kp,
+          hospital,
+          health_issues,
+          sender_list,
+          sender_kp_no,
+          sender_tel_no,
+          relationship,
+          sarawak_address,
+          current_address
+        );
+        return this.http.post(URL + 'welfare_assistants ', { ...newWelfare },
+          {
+            headers: {
+              Authorization: 'Bearer ' + token
+            }
+          });
+      }),
+      take(1),
+      tap(events => {
+        // this._events.next(events.next(newEvent));
       })
     )
   }
@@ -138,11 +181,11 @@ export class AdminEventService {
     )
   }
 
-  public approveEvent(id : string, data : any) {
+  public approveEvent(id : string, wa : string) {
     return this.authService.token.pipe(
       take(1),
       switchMap(token => {
-        return this.http.post(URL + `events/${id}/change_status`, { status: 1, bank_account: data }, {
+        return this.http.post(URL + `events/${id}/change_status`, { status: 1, whatsapp_link: wa }, {
           headers: {
             Authorization: 'Bearer ' + token
           }
@@ -181,7 +224,6 @@ export class AdminEventService {
     )
   }
 
-
   public getFAQ() {
     return this.http.get(URL + 'faqs')
   }
@@ -219,6 +261,15 @@ export class AdminEventService {
     return this.http.get('https://onesignal.com/api/v1/notifications?app_id=424f25ed-3aa5-4388-a678-ebc0e02157bd', {
       headers : {
         "Authorization" : 'Basic MjFmNzg4NTAtMjY3OS00M2YyLWIwOTctYmFlYzA5ODYxNDEx',
+        "Content-Type": "application/json; charset=utf-8"
+      }
+    })
+  }
+
+  public makeAdmin(id: any) {
+    return this.http.get(`${URL}admin/users/${id}/make_admin` , {
+      headers: {
+        "Authorization" : "Basic MjFmNzg4NTAtMjY3OS00M2YyLWIwOTctYmFlYzA5ODYxNDEx",
         "Content-Type": "application/json; charset=utf-8"
       }
     })

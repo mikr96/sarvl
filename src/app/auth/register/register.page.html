@@ -10,7 +10,7 @@
   <ion-grid>
     <ion-row class="ion-justify-content-center ion-margin-top">
       <div style="display: flex; justify-content: center;">
-        <img style="width: 50%; height: auto;" src="../assets/logo.png" />
+        <img style="width: 80%; height: auto;" src="../assets/logo.png" />
       </div>
     </ion-row>
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
@@ -18,18 +18,27 @@
         <ion-col size="8">
           <ion-list class="ion-no-margin ion-no-padding">
               <ion-item>
-                <ion-label position="floating">Fullname</ion-label>
+                <ion-label position="floating">Name</ion-label>
                 <ion-input autocomplete="off" formControlName="fullname" required>
               </ion-input>
               </ion-item>
               <ion-item>
-                <ion-label position="floating">IC</ion-label>
+                <ion-label position="floating">I/C</ion-label>
                 <ion-input padding-start="2" autocomplete="off" type="text" formControlName="ic" required>
                 </ion-input>
               </ion-item>
               <ion-item>
-                <ion-label position="floating">Username</ion-label>
-                <ion-input padding-start="2" autocomplete="off" type="text" formControlName="username" required>
+                <ion-label position="floating">Address</ion-label>
+                <ion-textarea autocomplete="off" type="text" formControlName="address" rows="3" cols="20" required></ion-textarea>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">H/P Number</ion-label>
+                <ion-input padding-start="2" autocomplete="off" type="text" formControlName="telNo">
+                </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Email</ion-label>
+                <ion-input padding-start="2" autocomplete="off" type="email" formControlName="username" required>
                 </ion-input>
               </ion-item>
               <ion-item>
@@ -43,17 +52,12 @@
                   </ion-input>
               </ion-item>
               <ion-item>
-                <ion-label position="floating">Telephone No.</ion-label>
-                <ion-input padding-start="2" autocomplete="off" type="text" formControlName="telNo">
-                </ion-input>
-              </ion-item>
-              <ion-item>
                 <ion-label position="floating">Occupation</ion-label>
                 <ion-input padding-start="2" autocomplete="off" type="text" formControlName="occupation">
                 </ion-input>
               </ion-item>
               <ion-item>
-                <ion-label position="floating">Location</ion-label>
+                <ion-label position="floating">Active Location</ion-label>
                 <ion-select formControlName="location">
                   <ion-select-option>Johor Darul Ta'zim</ion-select-option>
                   <ion-select-option>Kedah Darul Aman</ion-select-option>
@@ -82,8 +86,20 @@
                     <ion-select-option>Etc</ion-select-option>
                   </ion-select>
               </ion-item>
+              <ion-item>
+                <ion-label position="floating">Volunteer Branch</ion-label>
+                <ion-select multiple="true" (ionChange)="onSelect2($event)" formControlName="volunteerbranch">
+                  <ion-select-option>Kenyalang Rangers: Isu alam sekitar</ion-select-option>
+                  <ion-select-option>Kenyalang Agropreneur: Keusahawanan Agro</ion-select-option>
+                  <ion-select-option>Kenyalang Ma'aruf: Majlis ilmu & hari kebesaran islam</ion-select-option>
+                  <ion-select-option>Kenyalang Prodigy: Kepimpinan Belia</ion-select-option>
+                  <ion-select-option>Kenyalang Care: Kebajikan</ion-select-option>
+                  <ion-select-option>Kenyalang Facilitators: Latihan & Pembangunan Pelajar</ion-select-option>
+                  <ion-select-option>Kenyalang Engineers: Kejuruteraan</ion-select-option>
+                </ion-select>
+             </ion-item>
             </ion-list>
-          <ion-button color="primary" type="submit" expand="block" [disabled]="!registerForm.valid && selection" margin-vertical>SIGN IN</ion-button>
+          <ion-button color="primary" type="submit" expand="block" [disabled]="!registerForm.valid && selection && selection2" margin-vertical>OK</ion-button>
         </ion-col>
       </ion-row>
     </form>

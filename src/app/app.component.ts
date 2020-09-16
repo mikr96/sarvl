@@ -19,27 +19,45 @@ export class AppComponent implements OnInit, OnDestroy{
   @ViewChildren(IonRouterOutlet) routerOutlets: QueryList<IonRouterOutlet>;
   private authSub: Subscription;
   open = false;
+  open2 = false;
   submenu = [
     {
       title: 'Heart',
       category: '(Programs)'
     },
-    // {
-    //   title: 'Collab',
-    //   category: '(Events)'
-    // },
-    // {
-    //   title: 'Touch',
-    //   category: '(Donations)'
-    // },
-    // {
-    //   title: 'Cradle',
-    //   category: '(Workshops)'
-    // },
+    {
+      title: 'Relief',
+      category: '(Causes)'
+    }
+  ];
+  submissionSubMenu = [
+    {
+      title: 'My Event'
+    },
+    {
+      title: 'iGPS',
+      category: '(Student)'
+    },
+    {
+      title: 'Welfare & Medical'
+    }
+  ];
+  submenuadmin = [
+    {
+      title: 'Heart',
+      category: '(Programs)'
+    },
     {
       title: 'Relief',
       category: '(Causes)'
     },
+    {
+      title: 'iGPS',
+      category: '(Student)'
+    },
+    {
+      title: 'Welfare & Medical'
+    }
   ];
   isAdmin: boolean = false
   fullname: string = ''
@@ -124,6 +142,7 @@ export class AppComponent implements OnInit, OnDestroy{
     });
   }
 
+  // user punya
   goToCategory(category: string){
     //plugin.storage
     localStorage.setItem('category', category)
@@ -131,10 +150,27 @@ export class AppComponent implements OnInit, OnDestroy{
     this.router.navigate(['/', 'pages', 'category', category])
   }
 
+  // user punya
+  goToSubmission(submission: string){
+    //plugin.storage
+    localStorage.setItem('submission', submission)
+    this.open = false;
+    (submission == "Welfare & Medical") ? submission = "welfare-assistant" : submission;
+    (submission == "My Event") ? submission = "my-event" : submission;
+    this.router.navigate(['/', 'pages', submission])
+  }
+  
+
+  // admin punya
   goToCampaign(campaign: string) {
     // localStorage.setItem('campaign', campaign)
     this.open = false;
-    this.router.navigate(['/', 'admin', 'campaign', campaign])
+    (campaign == "Welfare & Medical") ? campaign = "welfare-assistant" : campaign
+    if(campaign=="welfare-assistant" || campaign=="iGPS") {
+      this.router.navigate(['/', 'admin', campaign])
+    } else {
+      this.router.navigate(['/', 'admin', 'campaign', campaign])
+    }
   }
 
   onLogout() {

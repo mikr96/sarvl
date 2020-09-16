@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoadingController, ToastController, ModalController, AlertController } from '@ionic/angular';
+import { LoadingController, ToastController, ModalController, AlertController, Platform } from '@ionic/angular';
 import { AdminEventService } from 'src/app/services/event/admin-event.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { File } from '@ionic-native/file/ngx';
 import { ImageModalComponent } from 'src/app/shared/image-modal/image-modal.component';
+import { FileOpener } from '@ionic-native/file-opener/ngx';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @Component({
   selector: 'app-update',
@@ -26,7 +28,7 @@ export class UpdatePage implements OnInit {
     centeredSlides: true,
     spaceBetween: 20
   }
-  constructor(private router: Router, private loadingCtrl: LoadingController, private adminEventService: AdminEventService, private toastCtrl: ToastController, private alertCtrl: AlertController, private modalController: ModalController, private file: File,) {
+  constructor(private router: Router, private loadingCtrl: LoadingController, private adminEventService: AdminEventService, private toastCtrl: ToastController, private alertCtrl: AlertController, private modalController: ModalController, private file: File, private platform: Platform, private opener: FileOpener, private iab: InAppBrowser) {
     this.item = this.router.getCurrentNavigation().extras.state.item
    }
 
@@ -38,45 +40,37 @@ export class UpdatePage implements OnInit {
       })
     });
     this.form2 = new FormGroup({
-      bank_account: new FormControl(null, {
+      whatsapp_link: new FormControl(null, {
         updateOn: 'blur',
         validators: [Validators.required]
       })
     });
     this.item = JSON.parse(this.item)
   }
-  
-  downloadPDF(base64) {
-    const byteCharacters = atob(base64)
-    const byteNumbers = new Array(byteCharacters.length);
-    for (let i = 0; i < byteCharacters.length; i++) {
-        byteNumbers[i] = byteCharacters.charCodeAt(i);
-    }
 
-    const byteArray = new Uint8Array(byteNumbers)
-    var blob = new Blob([byteArray], { type: 'application/pdf'});
-    this.saveFile(blob)
+  openPDF(url: string) {
+    this.iab.create(url,'_system')
   }
-  
-  async saveFile(body) {
-    let fileName = `${this.item.title}.pdf`
-    try {
-      const data = await this.file.writeFile(this.file.externalRootDirectory, fileName, body, { replace : true })
-      const res = await data
-      this.showAlert(`Your may find your file at ${this.file.externalRootDirectory}`)
-    } catch (err) {
-      this.popToast(err)
-      console.log(err)
-      try {
-        const file = await this.file.writeExistingFile(this.file.externalRootDirectory, fileName, body)
-        const existing = await file
-        this.showAlert(`Your existing file has been overwrite at ${this.file.externalRootDirectory}`)
-      } catch (err) {
-        console.log(err)
-        this.popToast(err)
-      }
+
+  convertBase64ToBlob(b64Data, contentType): Blob {
+    contentType = contentType || '';
+    const sliceSize = 512;
+    b64Data = b64Data.replace(/^[^,]+,/, '');
+    b64Data = b64Data.replace(/\s/g, '');
+    const byteCharacters = window.atob(b64Data);
+    const byteArrays = [];
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+         const slice = byteCharacters.slice(offset, offset + sliceSize);
+         const byteNumbers = new Array(slice.length);
+         for (let i = 0; i < slice.length; i++) {
+             byteNumbers[i] = slice.charCodeAt(i);
+         }
+         const byteArray = new Uint8Array(byteNumbers);
+         byteArrays.push(byteArray);
     }
-  }
+   return new Blob(byteArrays, {type: contentType});
+}
+
   viewLink(message: string) {
     this.showAlert(message)
   }
@@ -106,29 +100,6 @@ export class UpdatePage implements OnInit {
     })
   }
 
-  updateRaised(id) {
-    this.loadingCtrl
-    .create({
-      message: 'Updating...'
-    })
-    .then(loadingEl => {
-      loadingEl.present();
-      this.adminEventService.updateRaised(id, this.percent.toString())
-      .subscribe(
-        res => {
-        console.log(res)
-        loadingEl.dismiss()
-        this.update = false
-      }, 
-      err => {
-        console.log(err)
-        const firstError: string = Object.values(err)[0][0]
-        loadingEl.dismiss()
-        this.popToast(err.error.message)
-    })
-  });
-  }
-
   calculate(val) {
     return Number(val)/10;
   }
@@ -138,7 +109,7 @@ export class UpdatePage implements OnInit {
       this.approve = true
     } else {
       if (!this.form2.valid) {
-        let message = "Please state your bank account number first"
+        let message = "Please enter the whatsapp link first"
         return this.popToast(message)
       }
     this.loadingCtrl
@@ -147,7 +118,7 @@ export class UpdatePage implements OnInit {
       })
       .then(loadingEl => {
         loadingEl.present();
-        this.adminEventService.approveEvent(id, this.form2.value.bank_account)
+        this.adminEventService.approveEvent(id, this.form2.value.whatsapp_link)
         .subscribe(
           res => {
           loadingEl.dismiss()
@@ -155,13 +126,13 @@ export class UpdatePage implements OnInit {
         }, 
         err => {
           console.log(err)
-          const firstError: string = Object.values(err)[0][0]
+          const firstError: any = Object.values(err)[0]
           loadingEl.dismiss()
-          this.popToast(err.error.message)
+          this.popToast(firstError)
       })
     });
   }
-  }
+}
 
 
   declineEvent(id, campaign) {
@@ -187,9 +158,9 @@ export class UpdatePage implements OnInit {
         }, 
         err => {
           console.log(err)
-          const firstError: string = Object.values(err)[0][0]
+          const firstError: any = Object.values(err)[0]
           loadingEl.dismiss()
-          this.popToast(err.error.message)
+          this.popToast(firstError)
       })
     });
     }

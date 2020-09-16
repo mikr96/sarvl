@@ -6,6 +6,7 @@ import { take, map, tap, delay, switchMap } from 'rxjs/operators';
 import { Event } from '../../models/event.model'
 import { AuthService } from '../auth.service';
 import * as moment from 'moment';
+import { Welfare } from '../../models/welfare.model'
 
 export interface EventData {
   title: string,
@@ -15,7 +16,6 @@ export interface EventData {
   location: string,
   campaign: string,
   goal: string,
-  whatsapp_link: string,
   description: string,
   images: [],
   noVolunteers: any,
@@ -37,7 +37,7 @@ export class EventService {
   }
 
   constructor(private http: HttpClient, private authService: AuthService) { }
-
+  
   /**
    * getEvents
    */
@@ -61,7 +61,7 @@ export class EventService {
     return this.authService.token.pipe(
       take(1),
       switchMap(token => {
-        return this.http.get(URL + 'created_events',
+        return this.http.get(URL + `created_events`,
           {
             headers: {
               Authorization: 'Bearer ' + token
@@ -120,7 +120,6 @@ export class EventService {
     location: string,
     campaign: string,
     goal: string,
-    whatsapp_link: string,
     description: string,
     images: any,
     noVolunteers: string,
@@ -143,7 +142,6 @@ export class EventService {
           location,
           newCampaign[0],
           goal,
-          whatsapp_link,
           description,
           images,
           noVolunteers,
@@ -151,6 +149,44 @@ export class EventService {
           proposal
         );
         return this.http.post(URL + 'events', { ...newEvent },
+          {
+            headers: {
+              Authorization: 'Bearer ' + token
+            }
+          });
+      })
+    )
+  }
+
+  public createWelfareAssistant(              
+    name : string,
+    no_kp : string,
+    hospital : string,
+    health_issues : string,
+    sender_list : string,
+    sender_kp_no : string,
+    sender_tel_no : string,
+    relationship : string,
+    sarawak_address : string,
+    current_address : string
+  ) {
+    let newWelfare: Welfare;
+    return this.authService.token.pipe(
+      take(1),
+      switchMap(token => {
+        newWelfare = new Welfare(
+          name,
+          no_kp,
+          hospital,
+          health_issues,
+          sender_list,
+          sender_kp_no,
+          sender_tel_no,
+          relationship,
+          sarawak_address,
+          current_address
+        );
+        return this.http.post(URL + 'welfare_assistants ', { ...newWelfare },
           {
             headers: {
               Authorization: 'Bearer ' + token
@@ -171,7 +207,6 @@ export class EventService {
     location: string,
     campaign: string,
     goal: string,
-    whatsapp_link: string,
     description: string,
     dp: any,
     noVolunteers: string,
@@ -194,7 +229,6 @@ export class EventService {
           location,
           newCampaign[0],
           goal,
-          whatsapp_link,
           description,
           dp,
           noVolunteers,

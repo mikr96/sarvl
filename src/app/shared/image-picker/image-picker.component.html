@@ -8,7 +8,7 @@
     ></ion-img>
     <ion-button color="primary" (click)="onPickImage()" *ngIf="!selectedImage || !showPreview">
       <ion-icon name="camera" slot="start"></ion-icon>
-      <ion-label>Take Picture</ion-label>
+      <ion-label>Thumbnail</ion-label>
     </ion-button>
   </div>
   <ion-button color="primary" class="multiple_btn" (click)="onPickMultipleImage()" *ngIf="multiple" [disabled]="this.images.source.length > 2">

@@ -47,19 +47,52 @@
     </ion-row>
   </ion-grid>
   <ion-fab horizontal="end" vertical="bottom" slot="fixed">
-    <ion-fab-button color="secondary" (click)="createEvent()">
+    <!-- <ion-fab-button color="secondary" (click)="createEvent()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button> -->
+    <ion-fab-button color="secondary">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
+    <!-- <ion-fab-list side="top"> -->
+      <!-- <ion-text (click)="createSubmission('create-event')">Event</ion-text>
+      <ion-text (click)="createSubmission('iGPS')">iGPS</ion-text>
+      <ion-text (click)="createSubmission('welfare-medical')">Welfare & Medical</ion-text> -->
+      <!-- <ion-fab-button color="light">
+        <ion-icon name="logo-twitter"></ion-icon>
+        <ion-label>here</ion-label>
+      </ion-fab-button>
+      <ion-fab-button color="light">
+        <ion-icon name="logo-twitter"></ion-icon>
+        <ion-label>here</ion-label>
+      </ion-fab-button>
+      <ion-fab-button color="light">
+        <ion-icon name="logo-vimeo"></ion-icon>
+        <ion-label>here</ion-label>
+      </ion-fab-button>
+    </ion-fab-list> -->
+    <ion-fab-list side="top">
+      <ion-fab-button color="primary" routerDirection="forward" data-desc="Event">
+        <ion-icon name="bicycle" (click)="createSubmission('create-event')"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="primary" routerDirection="forward" data-desc="iGPS">
+        <ion-icon name="body" (click)="createSubmission('iGPS')"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="primary" routerDirection="forward" data-desc="Welfare & Medical">
+        <ion-icon name="medical" (click)="createSubmission('welfare-assistant')"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
   </ion-fab>
   <ion-grid class="animated fast fadeIn">
     <ion-row ion-align-items-center ion-justify-content-center>
       <ion-col size="12" no-margin no-padding>
         <ion-list *ngIf="!loading">
+          <div *ngIf="empty" class="ion-text-center">
+            <h5>Currently there are no events</h5>
+          </div>
           <div *ngIf="listA">
             <ion-item-sliding *ngFor="let item of events.data" #slidingItem>
               <ion-item class="card" no-padding>
-                <ion-thumbnail no-margin slot="start" style="    padding-top: 10px;
-                ">
+                <ion-thumbnail no-margin no-padding slot="start">
                   <div style="display: flex; justify-content: center; align-content: center;">
                       <img *ngIf="item.images.length == 0" style="width:70%; height: auto;" src="../../../assets/logo.png"/>
                     <ion-img *ngIf="item.images.length != 0" [src]="item.images[0].image" style="width:70%; height: auto;"></ion-img>
@@ -92,7 +125,7 @@
                           <ion-text lines="none">Goals : RM{{ item.goal }}</ion-text>
                         </ion-row>
                         <ion-row class="no-padding no-margin" lines="none">
-                          <ion-text lines="none">Volunteers : {{ item.volunteered.length }}</ion-text>
+                          <ion-text lines="none">Volunteers : {{ item.noVolunteers }}</ion-text>
                         </ion-row>
                         <ion-row class="no-padding no-margin" lines="none">
                           <ion-text lines="none">Location : {{ item.location }} </ion-text>

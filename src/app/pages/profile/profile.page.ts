@@ -34,7 +34,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   usePicker = false;
   id: any
   stateSelected : any
-  states : any = ["Johor Darul Ta'zim", "Kedah Darul Aman", "Kelantan Darul Naim", "Malacca", "Negeri Sembilan Darul Khusus", "Pahang Darul Makmur", "Penang Perak Darul Ridzuan", "Perlis Indera Kayangan", "Sabah", "Sarawak", "Selangor Darul Ehsan", "Terengganu Darul Iman"]
+  states : any = ["Johor", "Kedah", "Kelantan", "Melaka", "Negeri Sembilan", "Pahang", "Penang",  "Perak", "Perlis", "Sabah", "Sarawak", "Selangor", "Terengganu", "WP Kuala Lumpur", "WP Labuan"]
   constructor(private profileService: ProfileService, private platform: Platform, private loadingCtrl: LoadingController, private toastController: ToastController, private modalCtrl: ModalController, private authService: AuthService, private router: Router, private eventService: EventService) { }
 
   ngOnInit() {
@@ -101,7 +101,8 @@ export class ProfilePage implements OnInit, OnDestroy {
           username: this.profile.user.username, 
           fullname: this.profile.user.fullname,
           telNo: this.profile.user.telNo,
-          location: this.profile.user.location
+          location: this.profile.user.location,
+          occupation: this.profile.user.occupation
         })
         this.isLoading = false
       })

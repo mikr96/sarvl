@@ -9,7 +9,7 @@
     <ion-row class="ion-justify-content-center">
       <ion-col size="7">
         <div style="display: flex; justify-content: center;">
-          <img style="width: 60%; height: auto;"src="../assets/logo.png" />
+          <img style="width: 100%; height: auto;"src="../assets/logo.png" />
         </div>
       </ion-col>
     </ion-row>
@@ -19,7 +19,7 @@
           <ion-list class="ion-no-margin ion-no-padding">
             <ion-item>
               <ion-icon name="person"></ion-icon>
-              <ion-input autocomplete="off" placeholder="Username"  formControlName="username" required>
+              <ion-input autocomplete="off" placeholder="Email"  formControlName="username" required>
               </ion-input>
             </ion-item>
             <ion-item *ngIf="!form.get('username').valid && form.get('username').touched" lines="none" no-margin no-padding>

@@ -36,23 +36,25 @@
             <ion-item>
               <ion-label position="floating">Location</ion-label>
               <ion-select formControlName="location">
-                <ion-select-option>Johor Darul Ta'zim</ion-select-option>
-                <ion-select-option>Kedah Darul Aman</ion-select-option>
-                <ion-select-option>Kelantan Darul Naim</ion-select-option>
-                <ion-select-option>Malacca</ion-select-option>
-                <ion-select-option>Negeri Sembilan Darul Khusus</ion-select-option>
-                <ion-select-option>Pahang Darul Makmur</ion-select-option>
+                <ion-select-option>Johor</ion-select-option>
+                <ion-select-option>Kedah</ion-select-option>
+                <ion-select-option>Kelantan</ion-select-option>
+                <ion-select-option>Melaka</ion-select-option>
+                <ion-select-option>Negeri Sembilan</ion-select-option>
+                <ion-select-option>Pahang</ion-select-option>
                 <ion-select-option>Penang</ion-select-option>
-                <ion-select-option>Perak Darul Ridzuan</ion-select-option>
-                <ion-select-option>Perlis Indera Kayangan</ion-select-option>
+                <ion-select-option>Perak</ion-select-option>
+                <ion-select-option>Perlis</ion-select-option>
                 <ion-select-option>Sabah</ion-select-option>
                 <ion-select-option>Sarawak</ion-select-option>
-                <ion-select-option>Selangor Darul Ehsan</ion-select-option>
-                <ion-select-option>Terengganu Darul Iman</ion-select-option>
+                <ion-select-option>Selangor</ion-select-option>
+                <ion-select-option>Terengganu</ion-select-option>
+                <ion-select-option>WP Kuala Lumpur</ion-select-option>
+                <ion-select-option>WP Labuan</ion-select-option>
               </ion-select>
             </ion-item>
             <ion-item>
-                <ion-label position="floating">Campaign</ion-label>
+                <ion-label position="floating">Event (type)</ion-label>
                 <ion-select formControlName="campaign">
                   <ion-select-option>Heart (Programs)</ion-select-option>
                   <ion-select-option>Relief (Causes)</ion-select-option>
@@ -64,21 +66,17 @@
                 </ion-input>
               </ion-item>
             <ion-item>
-              <ion-label position="floating">Whatsapp Link</ion-label>
-              <ion-input padding-start="2" autocomplete="off"  formControlName="whatsapp_link" type="text">
-              </ion-input>
-            </ion-item>
-            <ion-item>
               <ion-label position="floating">Description</ion-label>
-              <ion-textarea autocomplete="off" formControlName="description" minlength="200" maxlength="300">
+              <ion-textarea autocomplete="off" formControlName="description" minlength="0" maxlength="300">
               </ion-textarea>
             </ion-item>
             <ion-item lines="none" no-margin no-padding style="padding-left:16px; font-size: 12px" class="ion-text-justify">
-              <ion-text>Note: Tips 200-300 words</ion-text>
+              <ion-text>Note: Recommended 200-300 words</ion-text>
             </ion-item>
             <ion-item>
-              <ion-label position="stacked">Proposal (PDF)</ion-label>
-              <ion-input type="file" accept="application/pdf" formControlName="proposal" (change)="onFilePicked($event)"></ion-input>
+              <ion-label>{{file_name}}</ion-label>
+              <ion-icon *ngIf="!status" name="md-add-circle" item-end color="primary" (click)="selectAFile()"></ion-icon>
+              <ion-icon *ngIf="status" name="checkmark-circle" item-end color="success"></ion-icon>
             </ion-item>
             <ion-item lines="none" no-margin no-padding style="padding-left:16px; font-size: 12px" class="ion-text-justify">
               <ion-text>Note: Tips 200-300 words, docx/pdf only, less than 10MB only</ion-text>
@@ -89,7 +87,7 @@
               </ion-input>
             </ion-item>
           </ion-list>
-        <ion-button color="secondary" type="submit" expand="block" [disabled]="!eventForm.valid" margin-vertical>CREATE EVENT</ion-button>
+        <ion-button color="secondary" type="submit" expand="block" margin-vertical>PROPOSE EVENT</ion-button>
       </ion-col>
     </ion-row>
   </form>

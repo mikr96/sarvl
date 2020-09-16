@@ -1,0 +1,28 @@
+<ion-header class="animated delay-1s fadeIn">
+  <ion-toolbar>
+    <ion-title>Verification</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="animated delay-1s fadeIn">
+  <ion-grid>
+    <div class="ion-text-center">
+      <h4 style="margin-bottom: 0px;">Congratulation, you made it !</h4>
+      <h6 style="margin-top: 0px;">Just one more step ...</h6>
+    </div>
+    <ion-row class="ion-align-items-center ion-justify-content-center" style="margin-top:20px;">
+      <ion-col size="4"> 
+        <ion-input [(ngModel)]="TACnum" placeholder="Your TAC"></ion-input>
+      </ion-col>
+      <ion-col size="5">
+        <!-- <ion-button color="medium" expand="block" [disabled]="block" style="font-size: 12px;" (click)="sendTAC()">{{timeleft}}</ion-button>
+         -->
+        <ion-button color="medium" expand="block" [disabled]="block" style="font-size: 12px;">{{timeleft}}</ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-align-items-center ion-justify-content-center" style="margin-top:10px;">
+      <ion-col size="8">
+        <ion-button color="primary" expand="block" style="font-size: 12px;" (click)="verify()">VERIFY</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
