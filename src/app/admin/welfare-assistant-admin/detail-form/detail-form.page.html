@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/admin/welfare-assistant-admin"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detail Form</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+      <div style="padding-right:16px">
+        <ion-item lines="none">
+          <ion-label class="ion-text-wrap">Nama Pesakit : {{form.name}} </ion-label>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label class="ion-text-wrap">No KP Pesakit : {{form.no_kp}}</ion-label>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label class="ion-text-wrap">Isu Kesihatan : {{form.health_issues}}</ion-label>
+        </ion-item>        
+        <ion-item lines="none">
+          <ion-label class="ion-text-wrap">Hospital : {{form.hospital}}</ion-label>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label class="ion-text-wrap">Nama Pengiring : {{form.sender_list}}</ion-label>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label class="ion-text-wrap">No KP Pengiring : {{ form.sender_kp_no }}</ion-label>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label class="ion-text-wrap">No Tel Pengiring : {{form.sender_tel_no}}</ion-label>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label class="ion-text-wrap">Hubungan Pengiring & Pesakit : {{form.relationship}}</ion-label>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label class="ion-text-wrap">Alamat di Sarawak : {{form.sarawak_address}}</ion-label>
+        </ion-item>
+        <ion-item lines="none">
+          <ion-label class="ion-text-wrap">Alamat Semasa Pengiring : {{form.current_address}}</ion-label>
+        </ion-item>
+      </div>
+    </ion-card>
+    <ion-button class="bottom-button" color="primary" expand="full" (click)="downloadCSV()">Download Detail</ion-button>
+</ion-content>

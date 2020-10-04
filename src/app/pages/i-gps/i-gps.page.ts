@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { URL } from '../../constants';
 
 @Component({
   selector: 'app-i-gps',
@@ -8,7 +9,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 })
 export class IGPSPage implements OnInit {
 
-  constructor(private iab: InAppBrowser) { }
+  constructor(private iab: InAppBrowser) {}
 
   ngOnInit() {
   }
@@ -18,7 +19,9 @@ export class IGPSPage implements OnInit {
   }
 
   onPlayStore(){
-    this.iab.create('https://play.google.com/store/apps/details?id=com.baxter.myapp&hl=en','_system')  
+    fetch(URL + 'playstore_click_counts', { method: 'PATCH' }).then(()=> {
+      this.iab.create('https://play.google.com/store/apps/details?id=com.baxter.myapp&hl=en','_system')
+    })
   }
 
 }

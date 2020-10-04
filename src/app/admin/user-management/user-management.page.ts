@@ -78,19 +78,19 @@ export class UserManagementPage implements OnInit {
       }
     }
   }
-
+  
   private showAlert(message: string) {
     this.alertCtrl
-      .create({
-        header: 'User Management',
-        message: message,
+    .create({
+      header: 'User Management',
+      message: message,
         buttons: ['Okay']
       })
       .then(alertEl => alertEl.present());
-  }
+    }
 
-  private async popToast(message: string) {
-    const toast = await this.toastController.create({
+    private async popToast(message: string) {
+      const toast = await this.toastController.create({
       message,
       duration: 2000,
       position: 'top',
@@ -99,7 +99,7 @@ export class UserManagementPage implements OnInit {
     toast.present()
   }
   
-
+  
   doRefresh(event) {
     setTimeout(()=> {
       this.adminEventService.getUsers().subscribe((res:any) => {
@@ -108,9 +108,13 @@ export class UserManagementPage implements OnInit {
       })
     }, 2000)
   }
-
+  
   viewMore(user) {
     this.router.navigate(['/', 'admin', 'user-management', 'user-detail'], {state: {user: JSON.stringify(user)}})
+  }
+  
+  searchPage() {
+    this.router.navigate(['/', 'admin', 'user-management', 'search'], {state: {user: JSON.stringify(this.dataUser)}})
   }
 
 }

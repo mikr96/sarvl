@@ -10,12 +10,14 @@
       <ion-grid>
           <ion-row>
             <ion-card>
-              <ion-slides [options]="sliderOpts" pager="true">
-                <img *ngIf="item.images.length == 0" class="img-card" style=" width: 70%;" src="../../../assets/logo.png"/>
-                <ion-slide *ngFor="let img of item.images">
-                    <ion-img class="img-card" [src]="img.image" tappable (click)="openPreview(img.image)"></ion-img>
-                 </ion-slide>
-              </ion-slides>
+              <ion-col size="12">
+                <ion-slides [options]="sliderOpts" pager="true">
+                  <img *ngIf="item.images.length == 0" class="img-card" style=" width: 70%;" src="../../../assets/logo.png"/>
+                  <ion-slide *ngFor="let img of item.images">
+                      <ion-img class="img-card" [src]="img.image" tappable (click)="openPreview(img.image)"></ion-img>
+                   </ion-slide>
+                </ion-slides>
+              </ion-col>
               <ion-card-header>
                 <ion-card-subtitle>{{item.campaign}}</ion-card-subtitle>
                 <ion-card-title>{{item.title}}</ion-card-title>
@@ -48,13 +50,19 @@
                   <ion-item lines="none" no-padding>
                     <ion-icon name="link" color="primary"></ion-icon>
                     <ion-text>Whatsapp Link</ion-text>
-                    <ion-button (click)="viewLink(item.whatsapp_link)">View Link</ion-button>
+                    <ion-button (click)="viewLink(item.whatsapp_link)" slot="end">View Link</ion-button>
+                  </ion-item>
+                  <ion-item lines="none" no-padding>
+                    <ion-icon name="body" color="primary"></ion-icon>
+                    <ion-text>Created by</ion-text>
+                    <ion-button (click)="viewMore(item.creator)" slot="end">See More</ion-button>
                   </ion-item>
                   <ion-item lines="none" no-padding>
                     <ion-label>Comments</ion-label>
                     <ion-badge color="primary" slot="end">{{item.comments.length}}</ion-badge>
                   </ion-item>
-                  <ion-button expand="block" color="primary" (click)="openPDF(item.file)">Open Proposal</ion-button>
+                  <ion-button expand="block" color="primary" (click)="openPDF(item.file)">View Proposal</ion-button>
+                  <ion-button expand="block" color="primary" href="{{item.file}}" download={{item.title}}>Download Proposal</ion-button>
                   </ion-list>
                 </ion-card-content>
               </ion-card>
