@@ -125,7 +125,8 @@ export class EventService {
     description: string,
     images: any,
     noVolunteers: string,
-    proposal: string
+    proposal: string,
+    file: string
   ) {
     let newEvent: Event;
     var start = moment(start_date);
@@ -148,7 +149,7 @@ export class EventService {
           images,
           noVolunteers,
           id,
-          proposal
+          file
         );
         return this.http.post(URL + 'events', { ...newEvent },
           {

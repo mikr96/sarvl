@@ -50,7 +50,7 @@ export class UpdatePage implements OnInit {
   }
 
   openPDF(url: string) {
-    this.iab.create(url,'_blank')
+    this.iab.create(`http://docs.google.com/gview?embedded=true&url=${url}`,'_blank')
   }
 
   convertBase64ToBlob(b64Data, contentType): Blob {

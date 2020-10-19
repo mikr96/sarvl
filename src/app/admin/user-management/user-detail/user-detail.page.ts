@@ -17,7 +17,6 @@ export class UserDetailPage implements OnInit {
 
   constructor(private router: Router, private adminService: AdminEventService, private toastCtrl: ToastController, private loadingCtrl: LoadingController, private alertCtrl: AlertController) { 
     this.user = this.router.getCurrentNavigation().extras.state.user
-    this.status = this.router.getCurrentNavigation().extras.state.status
   }
 
   ngOnInit() {

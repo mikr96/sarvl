@@ -23,7 +23,7 @@ export class CreateEventComponent {
   imageFile : any = [];
   PdfFile : any
   returnPath: string;
-  pdf : any
+  pdf : any;
   path: any;
   err: any;
   message: any;
@@ -70,10 +70,12 @@ export class CreateEventComponent {
       noVolunteers: new FormControl(null, {
         updateOn: 'blur'
       }),
-      // proposal: new FormControl(null, {
-      //   updateOn: 'blur',
-      //   validators: [Validators.required]
-      // })
+      id: new FormControl(null, {
+        updateOn: 'blur'
+      }),
+      file: new FormControl(null, {
+        updateOn: 'blur'
+      })
     });
   }
   
@@ -194,6 +196,7 @@ async selectAFile() {
                       console.log("Success: " + JSON.stringify(response, null, 2))
                       console.log("Success: " + response)
                       this.pdf = JSON.parse(response.response).file
+                      this.eventForm.patchValue({ file: this.pdf });
                       console.log("File: " + JSON.parse(response.response).file)
                       this.status = true
                       loadingEl.dismiss()
@@ -223,13 +226,14 @@ async selectAFile() {
 }
   
 async onSubmit() {
+  
   if (!this.eventForm.valid) {
     return this.popToast('Please fill in the form')
   }
-
-  // if (!this.pdf) {
-  //   return this.popToast('Please upload proposal')
-  // }
+  
+  if (!this.pdf) {
+    this.eventForm.patchValue({ file: null });
+  }
 
   this.loadingCtrl
     .create({
@@ -247,7 +251,8 @@ async onSubmit() {
         this.eventForm.value.description,
         this.eventForm.value.images,
         this.eventForm.value.noVolunteers,
-        this.pdf
+        this.eventForm.value.id,
+        this.eventForm.value.file
       )
         .subscribe(
           res => {

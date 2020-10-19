@@ -61,8 +61,8 @@
                     <ion-label>Comments</ion-label>
                     <ion-badge color="primary" slot="end">{{item.comments.length}}</ion-badge>
                   </ion-item>
-                  <ion-button expand="block" color="primary" (click)="openPDF(item.pdf)">View Proposal</ion-button>
-                  <ion-button expand="block" color="primary" href="{{item.pdf}}" download={{item.title}}>Download Proposal</ion-button>
+                  <ion-button expand="block" color="primary" (click)="openPDF(item.file)">View Proposal</ion-button>
+                  <ion-button expand="block" color="primary" href="{{item.file}}" download={{item.title}}>Download Proposal</ion-button>
                   </ion-list>
                 </ion-card-content>
               </ion-card>

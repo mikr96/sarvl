@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
-import { AngularFireAuth } from '@angular/fire/auth';
+// import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 import "@codetrix-studio/capacitor-google-auth";
 import { AuthService, AuthResponseData } from '../services/auth.service';
@@ -26,13 +26,13 @@ export class AuthPage implements OnInit {
   userData : any
   id : any
   accessToken : any
-  user: Observable<firebase.User>;
+  // user: Observable<firebase.User>;
   @ViewChild("password", { read: ElementRef, static: false } ) passwordElementRef: ElementRef;
   hasAccessTokenSubject: any;
   userRetrievedSuccessSubject: any;
   
-  constructor(private modalCtrl: ModalController, private authService: AuthService, private router: Router, private loadingCtrl: LoadingController, private alertCtrl: AlertController, private platform: Platform, private afAuth: AngularFireAuth,) {
-    this.user = this.afAuth.authState;
+  constructor(private modalCtrl: ModalController, private authService: AuthService, private router: Router, private loadingCtrl: LoadingController, private alertCtrl: AlertController, private platform: Platform) {
+    // this.user = this.afAuth.authState;
   }
 
   ngOnInit() {
@@ -48,38 +48,38 @@ export class AuthPage implements OnInit {
     });
   }
   
-  async loginWithFB() {
-    // this.whatabump();
-    const FACEBOOK_PERMISSIONS = ['email'];
-    const result = await <FacebookLoginResponse>FacebookLogin.login({ permissions: FACEBOOK_PERMISSIONS });
-    if (result.accessToken) {
-      // Login successful.
-      console.log(`Facebook access token is ${result.accessToken.token}`);
-      this.authService.getID(result.accessToken.token).subscribe((res : any) => {
-        let item = {
-          id : res.id,
-          access_token : result.accessToken.token
-        }
-        this.router.navigate(['/', 'auth', 'social'], {state: {item: JSON.stringify(item)}})
-      })
-    } else {
-      // Cancelled by user.
-    }
-  }
+  // async loginWithFB() {
+  //   // this.whatabump();
+  //   const FACEBOOK_PERMISSIONS = ['email'];
+  //   const result = await <FacebookLoginResponse>FacebookLogin.login({ permissions: FACEBOOK_PERMISSIONS });
+  //   if (result.accessToken) {
+  //     // Login successful.
+  //     console.log(`Facebook access token is ${result.accessToken.token}`);
+  //     this.authService.getID(result.accessToken.token).subscribe((res : any) => {
+  //       let item = {
+  //         id : res.id,
+  //         access_token : result.accessToken.token
+  //       }
+  //       this.router.navigate(['/', 'auth', 'social'], {state: {item: JSON.stringify(item)}})
+  //     })
+  //   } else {
+  //     // Cancelled by user.
+  //   }
+  // }
 
-  loginWithGoogle() {
-    let data = this.googleSignIn()
-  }
+  // loginWithGoogle() {
+  //   let data = this.googleSignIn()
+  // }
 
-  async googleSignIn() {
-    // this.whatabump()
-    // let googleUser = await Plugins.GoogleAuth.signIn().catch(err => console.log(err));
-    // if (googleUser) {
-    //   const credential = firebase.auth.GoogleAuthProvider.credential(googleUser.authentication.idToken);
-    //   console.log(credential)
-    //   return this.afAuth.auth.signInAndRetrieveDataWithCredential(credential);
-    // }
-  }
+  // async googleSignIn() {
+  //   // this.whatabump()
+  //   // let googleUser = await Plugins.GoogleAuth.signIn().catch(err => console.log(err));
+  //   // if (googleUser) {
+  //   //   const credential = firebase.auth.GoogleAuthProvider.credential(googleUser.authentication.idToken);
+  //   //   console.log(credential)
+  //   //   return this.afAuth.auth.signInAndRetrieveDataWithCredential(credential);
+  //   // }
+  // }
 
   async whatabump() {
     const alert = await this.alertCtrl.create({
