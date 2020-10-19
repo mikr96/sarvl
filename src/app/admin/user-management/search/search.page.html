@@ -1,0 +1,24 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+        <ion-back-button
+          [defaultHref]="'/pages/user-management'"
+        ></ion-back-button>
+      </ion-buttons>
+    <ion-searchbar (ionChange)="getItems($event)"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen>
+  <ion-list *ngIf="isItemAvailable">
+    <ion-item 
+    button 
+    class="users" 
+    line="full"
+    *ngFor="let item of userData"
+    (click)="viewMore(item)"
+    detail="true"
+  >
+    <ion-label text-wrap>{{item.username}}</ion-label>
+  </ion-item>
+  </ion-list>
+</ion-content>

@@ -7,7 +7,7 @@
       </ion-col>
     </ion-row>
     <ion-row class="ion-justify-content-center">
-      <ion-col size="7">
+      <ion-col size="8">
         <div style="display: flex; justify-content: center;">
           <img style="width: 100%; height: auto;"src="../assets/logo.png" />
         </div>
@@ -40,19 +40,25 @@
       </ion-row>
       <ion-row>
         <ion-col size="8" offset="2">
-          <ion-text class="forgot ion-float-right">
+          <ion-text class="forgot ion-float-right" (click)="resetPass()">
             Forgot password ?
           </ion-text>
         </ion-col>
       </ion-row>
       <ion-row class="ion-justify-content-center">
         <ion-col size="8" no-padding>
-          <ion-button [disabled]="!form.valid" (click)="onSubmit()" type="submit" color="primary" expand="block">SIGN IN
+          <ion-button (click)="onSubmit()" type="submit" color="primary" expand="block" style="margin-bottom: 8px;">SIGN IN
           </ion-button>
         </ion-col>
       </ion-row>
     </form>
-    <ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="8" no-padding>
+        <ion-button color="primary" routerLink="/auth/register" routerDirection="forward" fill="outline" expand="block">CREATE ACCOUNT
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <!-- <ion-row>
       <ion-col>
         <div></div>
       </ion-col>
@@ -62,8 +68,8 @@
       <ion-col>
         <div></div>
       </ion-col>
-    </ion-row>
-    <ion-row class="ion-justify-content-center">
+    </ion-row> -->
+    <!-- <ion-row class="ion-justify-content-center">
       <ion-col size="8" no-padding>
         <ion-button color="facebook ion-text-capitalize" (click)="loginWithFB()" expand="block">Sign-in with Facebook
         </ion-button>
@@ -74,8 +80,8 @@
         <ion-button color="google ion-text-capitalize" expand="block" (click)="loginWithGoogle()">Sign-in with Google+
         </ion-button>
       </ion-col>
-    </ion-row>
-    <ion-row>
+    </ion-row> -->
+    <!-- <ion-row>
       <ion-col size="8" offset="2">
         <ion-text color="medium" class="ion-float-left">
           Don't have an account?
@@ -84,6 +90,6 @@
           Register now !
         </ion-text>
       </ion-col>
-    </ion-row>
+    </ion-row> -->
   </ion-grid>
 </ion-content>

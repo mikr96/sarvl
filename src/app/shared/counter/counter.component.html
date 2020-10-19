@@ -1,0 +1,12 @@
+<ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+  <ion-refresher-content refreshingSpinner="circles" refreshingText="Refreshing..."></ion-refresher-content>
+</ion-refresher>
+<ion-grid margin-vertical>
+<ion-row>
+  <ion-col>
+    <div class="canvasContainer">
+      <canvas id="barChartCounter"></canvas>
+    </div>
+  </ion-col>
+</ion-row>
+</ion-grid>

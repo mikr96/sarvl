@@ -165,8 +165,9 @@ export class AppComponent implements OnInit, OnDestroy{
   goToCampaign(campaign: string) {
     // localStorage.setItem('campaign', campaign)
     this.open = false;
-    (campaign == "Welfare & Medical") ? campaign = "welfare-assistant" : campaign
-    if(campaign=="welfare-assistant" || campaign=="iGPS") {
+    (campaign == "Welfare & Medical") ? campaign = "welfare-assistant-admin" : campaign;
+    (campaign == "iGPS") ? campaign = "igps-admin" : campaign;
+    if(campaign=="welfare-assistant-admin" || campaign=="igps-admin") {
       this.router.navigate(['/', 'admin', campaign])
     } else {
       this.router.navigate(['/', 'admin', 'campaign', campaign])

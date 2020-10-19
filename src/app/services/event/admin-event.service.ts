@@ -228,6 +228,23 @@ export class AdminEventService {
     return this.http.get(URL + 'faqs')
   }
 
+  public getWelfare() {
+    return this.authService.token.pipe(
+      take(1),
+      switchMap(token => {
+        return this.http.get(URL + `welfare_assistants`, {
+          headers: {
+            Authorization: 'Bearer ' + token
+          }
+        })
+      })
+    )
+  }
+
+  public getCounter(){
+    return this.http.get(URL + 'playstore_click_counts', { })
+  }
+
   public makeAnnouncement(heading, content) {
     let today : any = new Date();
     let dd = String(today.getDate()).padStart(2, '0');

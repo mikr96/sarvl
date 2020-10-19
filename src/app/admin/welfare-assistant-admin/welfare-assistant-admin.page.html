@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button menu="volunteer"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Welfare & Medical</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content refreshingSpinner="circles" refreshingText="Refreshing..."></ion-refresher-content>
+  </ion-refresher>
+  <ion-grid *ngIf="isLoading" class="animated fast fadeIn">
+    <ion-row align-items-center justify-content-center>
+      <ion-col size="12" size-sm="8" offset-sm="2" text-center>
+        <ion-spinner name="crescent" color="primary"></ion-spinner>
+      </ion-col>
+    </ion-row>
+  </ion-grid>      
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <ion-list>
+          <ion-row *ngFor="let item of dataForm.data">
+            <ion-row *ngIf="!empty">
+              <ion-text>There are no medical & welfare existed</ion-text>
+            </ion-row>
+            <ion-item class="card pb-5" lines="full">
+              <ion-col size="5">
+                <div>
+                  <img style="width:100%; height: auto;" src="../../../assets/logo.png"/>
+                </div>
+              </ion-col>
+              <ion-col size="7" style="height: 100%">
+                  <ion-row class="no-padding no-margin" lines="none">
+                    <ion-icon name="calendar" slot="start"></ion-icon>
+                    <ion-text lines="none">Nama Pesakit : {{ item.name }}</ion-text>
+                  </ion-row>
+                  <ion-row class="no-padding no-margin" lines="none">
+                    <ion-text lines="none">Hospital : {{ item.hospital }}</ion-text>
+                  </ion-row>
+                  <ion-row class="no-padding no-margin" lines="none">
+                    <ion-text lines="none">Isu Kesihatan : {{ item.health_issues }}</ion-text>
+                  </ion-row>
+                  <ion-item lines="none" no-padding>
+                    <ion-icon name="body" color="primary"></ion-icon>
+                    <ion-button (click)="viewMore(item)" expand="block">Maklumat Lain</ion-button>
+                  </ion-item>
+              </ion-col>
+            </ion-item>
+          </ion-row>
+          <ion-grid *ngIf="this.dataForm.next_page_url">
+            <ion-row justify-content-center>
+              <ion-col size="5">
+                <ion-button color="light" (click)="loadMore()" expand="block">Load more</ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

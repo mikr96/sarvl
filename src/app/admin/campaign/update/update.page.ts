@@ -46,10 +46,11 @@ export class UpdatePage implements OnInit {
       })
     });
     this.item = JSON.parse(this.item)
+    console.log(this.item)
   }
 
   openPDF(url: string) {
-    this.iab.create(url,'_system')
+    this.iab.create(url,'_blank')
   }
 
   convertBase64ToBlob(b64Data, contentType): Blob {
@@ -164,6 +165,10 @@ export class UpdatePage implements OnInit {
       })
     });
     }
+  }
+
+  viewMore(user) {
+    this.router.navigate(['/', 'admin', 'user-management', 'user-detail'], {state: {user: JSON.stringify(user), status: false}})
   }
 
   async popToast(message: string) {

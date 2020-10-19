@@ -21,6 +21,10 @@ const routes: Routes = [
           {
             path: 'user-detail', 
             loadChildren: './user-management/user-detail/user-detail.module#UserDetailPageModule'
+          },
+          { 
+            path: 'search', 
+            loadChildren: './user-management/search/search.module#SearchPageModule' 
           }
         ]
       },
@@ -54,6 +58,27 @@ const routes: Routes = [
         path: 'announcement', 
         loadChildren: './announcement/announcement.module#AnnouncementPageModule' 
       },
+      { 
+        path: 'profile-admin', 
+        loadChildren: './profile-admin/profile-admin.module#ProfileAdminPageModule' 
+      },
+      { 
+        path: 'igps-admin', 
+        loadChildren: './igps-admin/igps-admin.module#IgpsAdminPageModule' 
+      },
+      { 
+        path: 'welfare-assistant-admin', 
+        children: [
+          {
+            path: '', 
+            loadChildren: './welfare-assistant-admin/welfare-assistant-admin.module#WelfareAssistantAdminPageModule' 
+          },
+          {
+            path: 'form-detail', 
+            loadChildren: './welfare-assistant-admin/detail-form/detail-form.module#DetailFormPageModule' 
+          }
+        ]
+      },
       {
         path: '',
         redirectTo: '/admin/dashboard',
@@ -66,7 +91,7 @@ const routes: Routes = [
     redirectTo: '/admin/dashboard',
     pathMatch: 'full'
   }
-];
+  ];
 
 
 @NgModule({

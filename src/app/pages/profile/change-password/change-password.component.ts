@@ -9,6 +9,7 @@ import { EventService } from 'src/app/services/event/event.service';
   styleUrls: ['./change-password.component.scss'],
 })
 export class ChangePasswordComponent implements OnInit {
+  
   form: FormGroup
   id: any
   constructor(private loadingCtrl: LoadingController, private toastCtrl: ToastController, private eventService: EventService, private navParams: NavParams, private modalCtrl: ModalController) { }

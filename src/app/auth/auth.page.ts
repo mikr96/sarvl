@@ -5,10 +5,11 @@ import "@codetrix-studio/capacitor-google-auth";
 import { AuthService, AuthResponseData } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { LoadingController, AlertController, Platform } from '@ionic/angular';
+import { LoadingController, AlertController, Platform, ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { Plugins } from '@capacitor/core';
 import { FacebookLoginResponse } from '@rdlabo/capacitor-facebook-login';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 const { FacebookLogin } = Plugins;
 
 @Component({
@@ -30,7 +31,7 @@ export class AuthPage implements OnInit {
   hasAccessTokenSubject: any;
   userRetrievedSuccessSubject: any;
   
-  constructor(private authService: AuthService, private router: Router, private loadingCtrl: LoadingController, private alertCtrl: AlertController, private platform: Platform, private afAuth: AngularFireAuth,) {
+  constructor(private modalCtrl: ModalController, private authService: AuthService, private router: Router, private loadingCtrl: LoadingController, private alertCtrl: AlertController, private platform: Platform, private afAuth: AngularFireAuth,) {
     this.user = this.afAuth.authState;
   }
 
@@ -142,5 +143,15 @@ export class AuthPage implements OnInit {
       this.status = false
       this.passwordElementRef.nativeElement.type = "text"
     }
+  }
+
+  async resetPass() {
+    const modal = await this.modalCtrl.create({
+      component: ForgotPasswordComponent,
+      componentProps: {
+        id: this.id
+      }
+    });
+    return await modal.present();
   }
 }

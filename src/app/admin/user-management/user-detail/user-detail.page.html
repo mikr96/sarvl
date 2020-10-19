@@ -53,7 +53,7 @@
           <ion-icon name="star-outline" slot="start"></ion-icon>
           <ion-label>Last Login : {{user.last_login}}</ion-label>
         </ion-item>
-        <ion-button color="primary" [disabled]="!tutup" expand="block" (click)="makeAdmin(user.id)">Make Admin
+        <ion-button *ngIf="status" color="primary" [disabled]="!tutup" expand="block" (click)="makeAdmin(user.id)">Make Admin
         </ion-button>
       </div>
   </ion-card>

@@ -116,6 +116,12 @@ export class AuthService {
     })
   }
 
+  forgotPassword(email: any) {
+    return this.http.post(`${URL}users/forgot-password`, {
+      email: email
+    })
+  }
+
   logout() {
     this._user.next(null);
     Storage.clear();

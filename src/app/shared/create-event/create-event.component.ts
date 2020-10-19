@@ -165,7 +165,8 @@ async selectAFile() {
     user_id: string;
   };
 
-  const uploadUrl = encodeURI("http://sarwkapps.myddns.me/pdf")
+  const uploadUrl = encodeURI("http://sarvl.my.to/pdf")
+  // const uploadUrl = encodeURI("http://sarwkapps.myddns.me/pdf")
 
   this.loadingCtrl
     .create({
@@ -226,9 +227,9 @@ async onSubmit() {
     return this.popToast('Please fill in the form')
   }
 
-  if (!this.pdf) {
-    return this.popToast('Please upload proposal')
-  }
+  // if (!this.pdf) {
+  //   return this.popToast('Please upload proposal')
+  // }
 
   this.loadingCtrl
     .create({

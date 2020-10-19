@@ -7,6 +7,8 @@ import { Event } from '../../models/event.model'
 import { AuthService } from '../auth.service';
 import * as moment from 'moment';
 import { Welfare } from '../../models/welfare.model'
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+
 
 export interface EventData {
   title: string,
@@ -36,7 +38,7 @@ export class EventService {
     return this._events.asObservable();
   }
 
-  constructor(private http: HttpClient, private authService: AuthService) { }
+  constructor(private http: HttpClient, private authService: AuthService, private iab:InAppBrowser) { }
   
   /**
    * getEvents
@@ -196,6 +198,15 @@ export class EventService {
       take(1),
       tap(events => {
         // this._events.next(events.next(newEvent));
+      })
+    )
+  }
+
+  public counter(){
+    return this.http.patch(URL + 'playstore_click_counts', { }).pipe(
+      take(1),
+      tap(() => {
+        this.iab.create('https://play.google.com/store/apps/details?id=com.baxter.myapp&hl=en','_system')  
       })
     )
   }

@@ -112,6 +112,9 @@ export class RegisterPage implements OnInit {
           }, (err : any) => {
             loadingEl.dismiss()
             this.error = Object.values(err.error)[0]
+            if(this.error == "The username has already been taken."){
+              this.error = "The email has already been taken."
+            }
             return this.popToast(this.error)
           })
       });
